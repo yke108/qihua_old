@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Center - Add New Product</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/member-addGoods-info.css">
+</head>
+<body>
+<include file="Public/member-head" />
+
+
+<div class="wrapper brand-wraper">
+    <div class="top-bar"><a href="<?php echo $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : U( 'Seller/products' )?>" class="blu">&lt;Back</a></div>
+    <div class="tl-bar">Add new Product</div>
+    <ul class="step-bar clearfix">
+        <li class="step-item">Step 1:  Select A Product Category</li>
+        <li class="step-item active">Step 2:  Fill in the Product Details</li>
+        <li class="step-item">Step 3:  Wait For Auditing</li>
+    </ul>
+
+    <div class="checked-tips">
+        <p class="tips">Your current  product category selection is:</p>
+        <p class="tag"><span><?php echo implode( ' > ', $selectedCategory )?></span><a href="{:U( 'Seller/selectCategory', array( 'firstCategory' => $firstCategory, 'secondCategory' => $secondCategory, 'thirdCategory' => $thirdCategory ) )}" class="modify">Modify</a></p>
+    </div>
+
+    <form action="" id="form-addGoods">
+        <input type="hidden" name="categoryList" value="<?php echo implode( ',', $selectedCategoryId )?>">
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Product Basic Information</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Chemical Name</span>
+                <input type="text" class="field fl" placeholder="Please enter product's English name （Chemical Name）" name="enName" value="">
+                <span class="fl tips-wrap"><em class="tips">Product's Chemical Name,<br>from 1 to 50 Characters</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Synonyms</span>
+                <textarea class="field fl" placeholder="Please enter product's English Alias" name="enAlias"></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Optional, 50 Characters at most</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Manufacturer/Supplier</span>
+                <!--<select type="text" class="field fl" name="producerId">-->
+                    <!--<option value="">Please select the Manufacturer/Supplier</option>-->
+                <!--</select>-->
+                <input type="hidden" name="producerId" class="saveId">
+                <input type="text" name="saveId" readonly="readonly" class="field fl js-chooseBox" data-name="producerId">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Brand</span>
+                <!--<select type="text" class="field fl" name="brandId">-->
+                    <!--<option value="">Please select the brand</option>-->
+                <!--</select>-->
+                <input type="hidden" name="brandId" class="saveId">
+                <input type="text" name="saveId" readonly="readonly" class="field fl js-chooseBox" data-name="brandId">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix js_area">
+                <span class="field-name fl">Origin</span>
+                <input type="hidden" name="placeList" value="">
+                <select type="text" class="field fl field-min js_country" prompt="Country">
+                    <option value='' disabled selected style="display:none;">Country</option>
+                    <?php
+                    foreach( $countries as $country ){
+                    ?>
+                    <option value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <select type="text" class="field fl field-min js_province" prompt="Province/Municipality">
+                    <option value='' disabled selected style="display:none;">Province/Municipality</option>
+                </select>
+                <select type="text" class="field fl field-min js_city" prompt="City">
+                    <option value='' disabled selected style="display:none;">City</option>
+                </select>
+            </div>
+            <div class="field-item clearfix js_area">
+                <span class="field-name fl">Product Location</span>
+                <input type="hidden" name="seatList" value="">
+                <select type="text" class="field fl field-min js_country">
+                    <option value='' disabled selected style="display:none;">Country</option>
+                    <?php
+                    foreach( $countries as $country ){
+                    ?>
+                    <option value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <select type="text" class="field fl field-min js_province" prompt="Province/Municipality">
+                    <option value='' disabled selected style="display:none;">Province/Municipality</option>
+                </select>
+                <select type="text" class="field fl field-min js_city" prompt="City">
+                    <option value='' disabled selected style="display:none;">City</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Key Indexes</span>
+                <span class="fr">The newly key index sequence is exactly the order of product details.</span>
+            </div>
+            <div class="field-item clearfix goods-item indicator">
+                <div class="combo-item">
+                    <i class="down"></i>
+                    <input type="text" data-combo="combo" placeholder="Select keywords">
+                    <input type="text" placeholder="Fill in the index">
+                    <a href="javascript:void(0)" class="add">Delete</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Product Properties</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Purity</span>
+                <input type="text" class="field fl" placeholder="eg.: 99.5%" name="format" value="">
+                <span class="fl tips-wrap"><em class="tips">The highest numerical value can be accurate <br>to two decimal plac</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Appearance</span>
+                <input type="text" class="field fl" placeholder="eg.: Solid" name="character" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Quality Grade</span>
+                <select type="text" class="field fl" name="qualityGradeID">
+                    <option value="">Select</option>
+                    <?php
+                    foreach( $qualityGrade as $value ){
+                    ?>
+                    <option value="<?php echo $value['value']?>"><?php echo $value['enTitle']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name fl">Item No/Model</span>-->
+                <!--<input type="text" class="field fl" placeholder="eg.: 123456" name="model" value="">-->
+                <!--<span class="fl tips-wrap"><em class="tips"></em></span>-->
+            <!--</div>-->
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Package</span>
+                <input type="text" class="field fl" placeholder="eg.: 100 kg/bag" name="pack" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">CAS NO.</span>
+                <input type="text" class="field fl" placeholder="eg.: 1234-234-23" name="cas" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">EINECS NO.</span>
+                <input type="text" class="field fl" placeholder="EINECS No." name="einecs_no" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Odor</span>
+                <input type="text" class="field fl" placeholder="eg.: Pungent" name="smell" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Melting Point</span>
+                <input type="text" class="field fl" placeholder="eg.: 18℃" name="melting" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Boiling Point</span>
+                <input type="text" class="field fl" placeholder="eg.: 18℃" name="boiling" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Flash Point</span>
+                <input type="text" class="field fl" placeholder="eg.: 18℃" name="flash" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">pH</span>
+                <input type="text" class="field fl" placeholder="eg.: 7.2" name="ph" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Relative Density</span>
+                <input type="text" class="field fl" placeholder="eg.: 100g/ml" name="density" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Solubility</span>
+                <input type="text" class="field fl" placeholder="" name="solubility" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name fl">Sensitivity</span>-->
+                <!--<input type="text" class="field fl" placeholder="" name="susceptibility" value="">-->
+                <!--<span class="fl tips-wrap"><em class="tips"></em></span>-->
+            <!--</div>-->
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name fl">PSA</span>-->
+                <!--<input type="text" class="field fl" placeholder="" name="psa" value="">-->
+                <!--<span class="fl tips-wrap"><em class="tips"></em></span>-->
+            <!--</div>-->
+            <div class="field-item clearfix">
+                <span class="field-name fl">Molecular Weight</span>
+                <input type="text" class="field fl" placeholder="" name="formula" value="">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Upload Document</span>
+                <div class="field fl up-wrap">
+                    <div class="up-item">
+                        <input type="hidden" name="msds" value="">
+                        <span class="up-name">MSDS</span>
+                        <div class="up-btn js_upFile">Upload</div>
+                    </div>
+                    <div class="up-item">
+                        <input type="hidden" name="tds" value="">
+                        <span class="up-name">TDS</span>
+                        <div class="up-btn js_upFile">Upload</div>
+                    </div>
+                    <div class="up-item">
+                        <input type="hidden" name="coa" value="">
+                        <span class="up-name">CoA</span>
+                        <div class="up-btn js_upFile">Upload</div>
+                    </div>
+                </div>
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+        </div>
+
+        <div class="field-col introduction">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Fill in the Product Details</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Brief Introduction</span>
+                <textarea class="field fl" name="summary"></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Please give a brief introduction to the product, <br>30-2000 characters</em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name fl">Features</span>-->
+                <!--<textarea class="field fl" name="features"></textarea>-->
+                <!--<span class="fl tips-wrap bt"><em class="tips">Please outline the features of the product, <br>10-500 characters</em></span>-->
+            <!--</div>-->
+            <div class="field-item clearfix">
+                <span class="field-name fl">Application</span>
+                <textarea class="field fl" name="purpose"></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Please describe the applications of the product,<br> 30-3000 characters</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Storage Condition</span>
+                <textarea class="field fl" name="condition"></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Please write down the product's storage methods  <br>and conditions,10-500 characters</em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name fl">Emergency Measures</span>-->
+                <!--<textarea class="field fl" name="emergency"></textarea>-->
+                <!--<span class="fl tips-wrap bt"><em class="tips">Please write down the product's emergency <br>processing measures, 10-1000 characters</em></span>-->
+            <!--</div>-->
+        </div>
+
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <input type="hidden" name="images" value="">
+                <span class="fl tl">Product's Photo</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+
+            <div class="photo-box">
+
+                <div class="up-box-wrap clearfix">
+                <div class="up-box fl">
+                    <p class="tips red">Main Photo</p>
+                    <div class="up-tips js_upImg">Upload</div>
+                    <div class="js_showwrap img-wrap">
+                        <img alt="">
+                        <div class="layer">
+                            <i class="icon-del"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="up-box fl">
+                    <p class="tips">Detail Photos</p>
+                    <div class="up-tips js_upImg">Upload</div>
+                    <div class="js_showwrap img-wrap">
+                        <img alt="">
+                        <div class="layer">
+                            <i class="icon-del"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="up-box fl">
+                    <p class="tips">Detail Photos</p>
+                    <div class="up-tips js_upImg">Upload</div>
+                    <div class="js_showwrap img-wrap">
+                        <img alt="">
+                        <div class="layer">
+                            <i class="icon-del"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="up-box fl">
+                    <p class="tips">Detail Photos</p>
+                    <div class="up-tips js_upImg">Upload</div>
+                    <div class="js_showwrap img-wrap">
+                        <img alt="">
+                        <div class="layer">
+                            <i class="icon-del"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="up-box fl">
+                    <p class="tips">Detail Photos</p>
+                    <div class="up-tips js_upImg">Upload</div>
+                    <div class="js_showwrap img-wrap">
+                        <img alt="">
+                        <div class="layer">
+                            <i class="icon-del"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="up-box fl">
+                    <p class="tips">Detail Photos</p>
+                    <div class="up-tips js_upImg">Upload</div>
+                    <div class="js_showwrap img-wrap">
+                        <img alt="">
+                        <div class="layer">
+                            <i class="icon-del"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="up-box fl">
+                    <p class="tips">Detail Photos</p>
+                    <div class="up-tips js_upImg">Upload</div>
+                    <div class="js_showwrap img-wrap">
+                        <img alt="">
+                        <div class="layer">
+                            <i class="icon-del"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="photo-tips">
+                    <p class="ph-tips">Prompt:</p>
+                    <p class="ph-tips">1.  Recommended image 2M Max.; jpg/jpeg/png formats only.</p>
+                    <p class="ph-tips">2.  The photo should be clear, do not blur. Background in white is Perfect.<span class="pop">View example <em class="pop-img"><img
+                            src="__PUBLIC__/Home/images/p2.jpg" alt=""></em></span></p>
+                    <p class="ph-tips">3.  Please upload at least 1 pictures.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-col productBasic">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Product Basic Information</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Sales Title</span>
+                <input type="text" class="field fl" placeholder="" name="title" value="">
+                <span class="fl tips-wrap"><em class="tips abs">Suggested Example: <br>
+【Brand Name】+ <br>
+【Purity/Specification】+【Product Name】+【Quality Grade】,<br>
+ike Lonkey 99.5%  Sodium hydroxide<br> industrial-grade</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Reference Price</span>
+                <div class="fl field-w">
+                    <span class="e js_cyseat">$</span>
+                    <input type="text" class="field field-min2" placeholder="" name="price" value="">
+                </div>
+                <span class="line fl">/</span>
+                <select class="fl field field-min3" name="weightUnit">
+                    <?php
+                    foreach( $weightUnit as $value ){
+?>
+                    <option value="<?php echo $value['value']?>"><?php echo $value['enTitle']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <span class="field-name field-name2 red fl">Currency</span>
+                <select class="fl field field-min3" name="currency">
+                    <?php
+                    foreach( $currency as $value ){
+?>
+                    <option value="<?php echo $value['value']?>" data-character="<?php echo $value['character']?>"><?php echo $value['enTitle']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Min. Order Quatity (MOQ)</span>
+                <input type="text" class="field fl field-min2" placeholder="" name="moq" value="">
+                <span class="line fl">&nbsp;</span>
+                <span class="fl tips-wrap js_unitseat kp">ton</span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name red fl">In Stock quantity</span>-->
+                <!--<input type="text" class="field fl field-min" placeholder="" name="inventory" value="">-->
+                <!--<span class="fl tips-wrap js_unitseat kp">ton</span>-->
+            <!--</div>-->
+            <div class="field-item clearfix stock-bar-wrap">
+                <span class="field-name red fl">In Stock Quantity</span>
+                <div class="fl stock-bar stock-bar1 active">
+                    <label class="bar-name">
+                        <input type="radio" checked name="inventoryType" class="inventoryType" value="1">
+                        <span>In Stock</span>
+                    </label>
+                    <div class="stock-bar-content stock-avail">
+                        <label>
+                            <input type="radio" name="inventory" class="inventory" value="2" checked>
+                            <span>No Inventory</span>
+                        </label>
+                        <label class="label-inventoryNum">
+                            <input type="radio" name="inventory" class="inventory" value="1">
+                            <span>Inventory</span>
+                            <input type="text" class="text short inventoryNum" name="inventoryNum" id="inventoryNum" placeholder="Fill in the inventory quantity" disabled>
+                            <span class="count-tips weightUnit js_unitseat">ton</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="fl stock-bar stock-bar2">
+                    <label class="bar-name">
+                        <input type="radio" name="inventoryType" class="inventoryType" value="2">
+                        <span>Out Of Stock</span>
+                    </label>
+                </div>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Payment Mode</span>
+                <label class="fl tips-wrap"><input type="checkbox" disabled checked>Contract Agreement </label>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Logistics Mode</span>
+                <label class="fl tips-wrap"><input type="checkbox" disabled checked>Contract Agreement </label>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="submit-next">Submit</div>
+
+</div>
+
+<include file="Public/footer" />
+
+</body>
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/member-addGoods-info.js"></script>
+</html>

@@ -1,0 +1,58 @@
+.toolbar {
+    padding: 10px;
+    overflow: hidden;
+}
+.toolbar .btns {
+    float: left;
+}
+.easyui-linkbutton {
+    outline: none;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+.tree-node {
+    height: 26px;
+}
+.tree-title {
+    height: 26px;
+    line-height: 26px;
+}
+.tree-expanded, .tree-collapsed, .tree-folder, .tree-file, .tree-checkbox, .tree-indent {
+    margin-top: 4px;
+}
+
+.easyui-tabs form {
+    display: none;
+}
+form {  
+    margin-top: 20px;
+}
+form .item {
+    width: 300px; 
+    display: inline-block;
+    margin-bottom: 20px;
+}
+form .item-2 {
+    margin-bottom: 20px;
+}
+form  label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+.operate-dialog {
+    display: none;
+}
+
+.easyui-tabs {
+    visibility: hidden;
+}
+.form-item {
+    margin-bottom: 20px;
+}
+#btns {
+    text-align: center;
+}

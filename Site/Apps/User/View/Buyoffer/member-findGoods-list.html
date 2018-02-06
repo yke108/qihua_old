@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>My Buy Offers - List</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-findGoods-list.css">
+</head>
+<body>
+<include file="Public/user-notice" />
+<include file="Public/member-head" />
+<div class="wrapper clearfix member-wraper">
+
+<include file="Public/member-side" />
+    <div class="fl member-main">
+        <div class="top-bar clearfix"><span class="fl bar-tl">My Buy Offers</span>
+        <?php if(!empty($companyName)){ ?>
+        <a href="{:U('Buyoffer/BuyOfferRelease')}" class="fr re-btn" data-complete="{$IsCompleteInfo}">Post Buying Request</a>
+        <?php }else{ ?>
+        <a href="javascript:void(0);" class="fr re-btn" data-complete="{$IsCompleteInfo}">Post Buying Request</a>
+        <?php } ?>
+        </div>
+
+        <div class="main-content">
+            <div class="list-search">
+                <div class="btns clearfix"><span class="fl btn checkall">Select All</span> <span class="fl btn uncheckall">Unselect All</span> <span class="fl btn multi-delete" data-complete="{$IsCompleteInfo}">Delete</span></div>
+                <div class="search-bar clearfix">
+                    <notempty name='pageinfo'><span class="size-sp fl"><em class="red">{$pageinfo.count}</em>results <em class="red">{$pageinfo.page}</em>/{$pageinfo.pagecount}</span></notempty>
+                    <form action="__ACTION__" method='get' class="js_searchForm">
+                    <label class="key-label fr"><input type="text" name='title' value="<?php if(!empty($_GET['title'])){ echo htmlspecialchars($_GET['title']); } ?>" placeholder="Enter a Keywords"><span class="submit-btn"><i class="icon-gl"></i></span></label>
+
+                    <label class="sr-label fr">
+                        <span class="field-name">State</span>
+                        <select name="state" class="field">
+                            <option value="">select</option>
+                            <?php if(!empty($_GET['state'])){ ?>
+	                            <volist name="state" id='vo'>
+	                                <option <?php if($_GET['state']!=''&&$_GET['state']==$key)echo "selected"; ?>  value="{$key}">{$vo}</option>
+	                            </volist>
+                            <?php }else{ ?>
+                                 <volist name="state" id='vo'>
+                                    <option value="{$key}">{$vo}</option>
+                                </volist>
+                            <?php } ?>
+                        </select>
+                    </label>
+                    <label class="sr-label fr">
+                        <span class="field-name">Type</span>
+                        <select name="type" class="field">
+                        	<option value="">select</option>
+                        <?php if(!empty($_GET['type'])){ ?>
+                        <volist name='type' id='vo'>
+                            <option <?php if($_GET['type']==$key)echo "selected"; ?> value="{$key}">{$vo}</option>
+                        </volist>
+                        <?php }else{ ?>
+                            <volist name='type' id='vo'>
+                                <option  value="{$key}">{$vo}</option>
+                            </volist>
+                        <?php } ?>
+                        </select>
+                    </label>
+                    </form>
+                </div>
+<notempty name='list'>
+                <table class="findGoods-list">
+                    <tr>
+                        <th colspan="2" width="225">Title</th>
+                        <th width="155">Type</th>
+                        <th width="160">State</th>
+                        <th width="230">Create/Modify Time</th>
+                        <th width="136">Operation</th>
+                    </tr>
+                    <volist name='list' id="vo">
+                    <tr class="list-item" data-id="{$vo.id}">
+                        <td><input type="checkbox" class="checkone"></td>
+                        <td><div class="inner">{$vo.title}</div></td>
+                        <td>{$vo.type}</td>
+                        <td>{$vo.state}</td>
+                        <td>{$vo.updateTime|date="H:i:s F d,Y",###}</td>
+                        <td>
+                            <a href="{:U('Buyoffer/modify')}?id={$vo.id}"><span class="icon-edit" data-complete="{$IsCompleteInfo}"></span></a>
+                            <a href="javascript:void(0);" class="del"><span class="icon-del" data-complete="{$IsCompleteInfo}"></span></a>
+                        </td>
+                    </tr>
+                    </volist>
+                </table>
+<else />
+				  <!--我的收藏列表为空-->
+			        <div class="list-none">
+			            <div class="warn-wrap">
+			                <i class="icon-warn"></i>
+			                <p class="tips">No Buy Offer</p>
+			                <?php if(!empty($companyName)){ ?>
+			                <a href="{:U('Buyoffer/BuyOfferRelease')}" class="link re-btn-link" data-complete="{$IsCompleteInfo}">Post Buying Request Now</a>
+			                <?php }else{ ?>
+        					<a href="javascript:void(0);" class="link re-btn-link" data-complete="{$IsCompleteInfo}">Post Buying Request Now</a>
+       						 <?php } ?>
+			            </div>
+			        </div>
+</notempty>
+                <div class="pagination">
+                    <div class="handle">
+                    	{$show}
+                       <!--<a href="" class="prev"><i class="icon-prev"></i>Previous Page</a>
+                        <a href="" class="size">1</a>
+                        <a href="" class="size current">2</a>
+                        <a href="" class="size">3</a>
+                        <a href="" class="size">4</a>
+                        <span class="sl">…</span>
+                        <a href="" class="size">20</a>
+                        <a href="" class="next">Next Page<i class="icon-next"></i></a>
+                        -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<include file="Public/footer" />
+</body>
+    <script src="__PUBLIC__/User/js/member-findGoods-list.js"></script>
+</html>

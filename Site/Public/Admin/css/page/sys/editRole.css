@@ -1,0 +1,102 @@
+form {
+    padding-top: 50px;
+    margin-left: 50px;
+}
+.form-item {
+    margin-bottom: 15px;
+}
+.form-item > label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    font-size: 14px;
+    line-height: 30px;
+    vertical-align: top;
+}
+.form-item label span {
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 4px;
+    color: #f00;
+}
+.role-wrap {
+    visibility: hidden;
+}
+.line {
+    margin-bottom: 15px;
+    height:0;
+    border-top: 1px solid #ddd;
+    width: 50%;
+}
+.easyui-linkbutton {
+    outline: none;
+}
+.rbac {
+    display: inline-block;
+    padding: 10px 10px 0 10px;
+    width: 80%;
+    border: 1px solid #95B8E7;
+    border-radius: 5px;
+}
+.rbac table {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.rbac td {
+    border: 1px solid #95B8E7;
+}
+.rbac td div{
+    display: inline-block;
+    padding: 10px;
+}
+.rbac .check {
+    text-align: left;
+}
+
+
+.left-auto {
+        position: absolute;
+        top:0;
+        left: 0;
+        bottom: 0;
+        width: 20%;
+
+        border-right: 1px solid #95B8E7;
+    }
+    .left-auto .inner {
+        margin: auto;  
+        position: absolute; 
+        height: 30px; 
+        line-height: 30px;
+        text-align: center;
+        top: 0; left: 0; bottom: 0; right: 0; 
+    }
+    .wrap {
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #95B8E7;
+        border-bottom: none;
+        margin-bottom: 10px;
+    }
+    .left {
+        border-bottom: 1px solid #95B8E7;
+        text-align: center;
+    }
+    .right {
+        margin-left: 20%;
+        overflow: hidden;
+    }
+    .item {
+        position: relative;
+        line-height: 40px;
+        border-bottom: 1px solid #95B8E7;
+    }
+    .check-wrap {
+        margin-left: 20%;
+        padding-left: 10px;
+    }
+    .check {
+        display: inline-block;
+        margin-right: 20px;
+    }

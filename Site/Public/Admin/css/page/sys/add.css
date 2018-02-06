@@ -1,0 +1,32 @@
+form {
+    padding-top: 50px;
+    margin-left: 100px;
+}
+.form-item {
+    margin-bottom: 15px;
+}
+.form-item label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    font-size: 14px;
+    line-height: 30px;
+}
+.form-item label span {
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 4px;
+    color: #f00;
+}
+.role-wrap {
+    visibility: hidden;
+}
+.line {
+    margin-bottom: 15px;
+    height:0;
+    border-top: 1px solid #ddd;
+    width: 50%;
+}
+.easyui-linkbutton {
+    outline: none;
+}

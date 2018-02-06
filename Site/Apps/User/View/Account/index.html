@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-index.css">
+</head>
+<body>
+<!-- 滚动公告 -->
+<include file="Public/user-notice" />
+
+<!-- 网站头部 -->
+<include file="Public/member-head" />
+
+<div class="wrapper clearfix member-wraper">
+    <!-- 左边导航 -->
+    <include file="Public/member-side" />
+
+    <div class="fl member-main">
+        <div class="top-bar">Dashboard</div>
+        <div class="main-content">
+
+            <div class="memnber-info clearfix">
+                <div class="face fl">
+                    <div class="pic-wrap">
+                        <img id="userImg" src="<?php echo !empty($_SESSION['userHeadImg']) ? $_SESSION['userHeadImg'] : '/Public/User/images/user_hd_pic.png' ?>" alt="">
+                        <div id="js_upavatar" class="up-load">Upload Avatar</div>
+                    </div>
+                    <p class="name"><?php echo $memberObj['username'] ?></p>
+                </div>
+
+                <div class="info fl">
+                    <div class="info-item"><span class="f-name">Country:</span><span class="f-val"><?php  echo empty($memberObj['country']) ? ''  : $country[$memberObj['country']] ?></span></div>
+                    <?php if (session('country') == 'CN' && !empty($memberObj['phone'])) { ?>
+                    <div class="info-item"><span class="f-name">Mobile:</span><a href="{:U('User/AccountSecurity/bindPhone')}" class="f-val">86 <?php echo $memberObj['phone']; if (($memberObj['bind'] + 0 & C('STATUS_BIND')['BIND_PHONE']) > 0) { ?><i class="icon-auth"></i><?php } ?><i class="icon-edit"></i></a></div>
+                    <?php } ?>
+                    <?php if (!empty($memberObj['email'])) { ?>
+                    <div class="info-item"><span class="f-name">Email Address: </span><a href="{:U('User/AccountSecurity/bindEmail')}" class="f-val"><?php echo $memberObj['email']; if (($memberObj['bind'] + 0 & C('STATUS_BIND')['BIND_EMAIL']) > 0) { ?><i class="icon-auth"></i><?php } ?><i class="icon-edit"></i></a></div>
+                    <?php } ?>
+                </div>
+
+            </div>
+
+            <div class="member-status <?php if(!empty($memberObj['country'])){ echo $memberObj['country'] == 'CN' ? '' : 'lang-en';}else{ echo 'lang-en';}  ?>">
+                <div class="status-bar"><span class="txt">Status</span></div>
+                <ul class="clearfix">
+                    <?php if (session('country') == 'CN') { ?>
+                    <li class="status-item">
+                        <a href="{:U('/Seller/products')}">
+                            <p class="p-icon"><i class="icon-sts1"></i><span class="num"><?php echo $productCount ?></span></p>
+                            <p class="spec">Selling Products </p>
+                        </a>
+                    </li>
+                    <?php } ?>
+                    <li class="status-item">
+                        <a href="{:U('User/Message/mailBox')}">
+                            <p class="p-icon"><i class="icon-sts2"></i><span class="num"><?php echo $unreadMessages ?></span></p>
+                            <p class="spec">Unread Messages </p>
+                        </a>
+                    </li>
+                    <li class="status-item">
+                        <a href="{:U('User/Buyoffer/BuyOfferList')}">
+                            <p class="p-icon"><i class="icon-sts3"></i><span class="num"><?php echo $buyOffers + 0 ?></span></p>
+                            <p class="spec">Buy Offers </p>
+                        </a>
+                    </li>
+                    <li class="status-item">
+                        <a href="{:U('User/Member/favorites')}">
+                            <p class="p-icon"><i class="icon-sts4"></i><span class="num"><?php echo $favoritesItems ?></span></p>
+                            <p class="spec">Favorites Items </p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="member-status">
+                <?php if (!empty($recentMessage)) { ?>
+                <div class="status-bar clearfix"><span class="fl txt">Recent Message</span><a class="morelink fr" href="{:U('User/Message/mailBox',array('send'=>1))}"">More ></a></div>
+                <ul class="clearfix">
+                    <?php foreach($recentMessage as $row) { ?>
+                    <li class="msg-item">
+                        <a class="txt" href="{:U('User/Message/mailDetail',array('id'=>$row['id'],'send'=>1))}"><?php echo $row['subject'] ?></a>
+                        <a href="{:U('User/Message/mailDetail',array('id'=>$row['id'],'send'=>1))}" class="see-btn">see detail</a>
+                    </li>
+                    <?php } ?>
+                </ul>
+                <?php } else { ?>
+                <div class="status-bar clearfix"><span class="fl txt">Recent Message</span></div>
+                <p class="msg-none"><i class="icon-msg-nu"></i>No Messages</p>
+                <?php } ?>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 网页尾部 -->
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/User/js/member-index.js"></script>
+</html>

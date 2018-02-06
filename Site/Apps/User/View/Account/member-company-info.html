@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-company-info.css">
+</head>
+
+<body>
+    <!-- 网站顶部 -->
+    <!-- 滚动公告 -->
+    <include file="Public/user-notice" />
+
+    <!-- 网站头部 -->
+    <include file="Public/member-head" />
+
+    <!-- 网页主体内容 -->
+    <div class="wrapper clearfix member-body">
+    <include file="Public/member-side" />
+
+    <?php
+      if($IsCompleteInfo == 1){
+         $ret = 'check-info';
+      }else{
+        $ret = 'modify';
+      }
+    ?>
+        <div class="member-main {$ret}">
+            <!-- 显示信息使用class="check-info" 修改信息使用class="modify" -->
+            <p class="main-title">
+                Profile
+                <a class="edit js_edit" href="javascript:void(0)" >Edit</a>
+            </p>
+            <p class="info-title">
+                Company Info.
+            </p>
+            <form class="form" data-country="{$Base.country}" data-complete="{$IsCompleteInfo}">
+                <div class="company-info">
+                    <div class="form-item">
+                        <label for=""><span>*</span>Company Name</label>
+                        <input type="text" class="text company-text" name="companyName" id="companyName" value="{$data.companyName}">
+                        <span class="isauth">
+                        </span>
+                        <!-- 已经认证的资料无法修改 -->
+                        <!-- <input type="text" class="text company-text" name="companyName" id="companyName" disabled > -->
+                        <!-- <span class="isauth">[Verified]</span> -->
+                    </div>
+                    <div class="form-item">
+                        <label for=""><span>*</span> Industry</label>
+                        <div class="simulat-select text">
+                            <input class="value" name="trade" type="hidden" value="{$data.trade}" id="trade" />
+                            <i class="icon-select"></i>
+                            <if condition="$data['trade']">
+                                <p class="title selecting"><php>echo $trade[$data['trade']]['title'];</php></p>
+                                <else/>
+                                <p class="title">select</p>
+                            </if>
+                            <ul class="options">
+                                <foreach name="trade" item="vo">
+                                    <li data-selectId="{$vo.id}"><?php echo isset($vo['title'])?$vo['title']:''?></li>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label for=""><span></span>Business type</label>
+                        <div class="simulat-select text">
+                            <input class="value" name="model" type="hidden" value="{$data.model}" id="model" />
+                            <i class="icon-select"></i>
+                            <if condition="$data['trade']">
+                                <p class="title selecting"><php>echo isset($model[$data['model']]['title'])?$model[$data['model']]['title']:'';</php></p>
+                                <else/>
+                                <p class="title">select</p>
+                            </if>
+                            <ul class="options">
+                                <foreach name="model" item="vo">
+                                    <li data-selectId="{$vo.id}"><?php echo isset($vo['title'])?$vo['title']:'';?></li>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label for="">Number of Employees</label>
+                        <div class="simulat-select text">
+                            <input class="value" name="employee" type="hidden" value="{$data.employee}" id="employee" />
+                            <i class="icon-select"></i>
+                            <if condition="$data['employee']">
+                                <p class="title selecting"><php>echo isset($employee[$data['employee']]['title'])?$employee[$data['employee']]['title']:'';</php></p>
+                                <else/>
+                                <p class="title">select</p>
+                            </if>
+                            <ul class="options">
+                                <foreach name="employee" item="vo">
+                                    <li data-selectId="{$vo.id}"><?php echo isset($vo['title'])?$vo['title']:'';?></li>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-item even">
+                        <label for=""><span>*</span> Annual Turnover</label>
+                        <div class="simulat-select text">
+                            <input class="value" name="turnover" type="hidden" value="{$data.turnover}" id="turnover" />
+                            <i class="icon-select"></i>
+                            <if condition="$data['turnover']">
+                                <p class="title selecting"><php>echo isset($turnover[$data['turnover']]['title'])?$turnover[$data['turnover']]['title']:'';</php></p>
+                                <else/>
+                                <p class="title">select</p>
+                            </if>
+                            <ul class="options">
+                                <foreach name="turnover" item="vo">
+                                    <li data-selectId="{$vo.id}"><?php echo isset($vo['title'])?$vo['title']:'';?></li>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-item large clearfix">
+                        <label for="">Business Range</label>
+                        <textarea name="businessScope" id="businessScope" class="text">{$data.businessScope}</textarea>
+
+                    </div>
+                    <div class="form-item large clearfix">
+                        <label for="">Introduction</label>
+                        <textarea name="companyIntroduction" id="companyIntroduction" class="text">{$data.companyIntroduction}</textarea>
+
+                    </div>
+                    <p class="info-title">
+                        Contact Info.
+                    </p>
+                    <div class="form-item">
+                        <label for=""><span>*</span> Contact Name</label>
+                        <input type="text" class="text" name="contact" id="contact" value="{$data.contact}">
+                        <span class="isauth">
+                        </span>
+                        <!-- 已经认证的资料无法修改 -->
+                        <!-- <input type="text" class="text" name="contact" disabled  id="contact"> -->
+                        <!-- <span class="isauth">[Verified]</span> -->
+                    </div>
+                    <div class="form-item">
+                        <label for="">Job Title</label>
+                        <input type="text" class="text" name="position" id="position" value="<?php echo empty($data['other']['position']) ? '' : $data['other']['position'] ?>">
+                    </div>
+
+                    <div class="form-item">
+                        <label for=""><span><?php echo $Base['country'] == 'CN' ? '' :'*';?></span>Email Address</label>
+                        <input type="text" class="text" name="email" id="email" <?php echo $Base['country'] == 'CN' ?'':'disabled="disabled"'?> value="{$Base.email}">
+                        <span class="isauth">
+                            <?php
+                              if($Base['bind']){
+                               echo '[Bound]';
+                              }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="form-item form-item-area clearfix">
+                        <label for=""><span>*</span> Contact Address</label>
+                        <div class="area-select text">
+                            <div class="area-title">Country/Region</div>
+                            <div class="simulat-select text">
+                                <input class="value" name="country" type="hidden" value="<?php echo empty($data['other']['country'])? '' : $data['other']['country'] ?>" id="country" />
+                                <?php if(!empty($data['other']['country'])){ ?>
+                                <p class="title selecting"><?php echo empty($area['country']['title'])? '' : $area['country']['title'] ?></p>
+                                <?php }else{ ?>
+                                <p class="title">Country/Region</p>
+                                <?php } ?>
+                                <i class="icon-select"></i>
+                                <ul class="options countryNode">
+
+                                </ul>
+                            </div>
+                            <div class="area-title">State/Province/Region</div>
+                            <div class="simulat-select text">
+                                <input class="value" name="area_s" type="hidden" value="<?php echo empty($data['other']['area_s'])? '' : $data['other']['area_s'] ?>" id="area_s" />
+                                <if condition="$data['other']['area_s']">
+                                    <p class="title selecting"><?php echo empty($area['area_s']['title'])? '' : $area['area_s']['title'] ?></p>
+                                    <else/>
+                                    <p class="title">State/Province/Region</p>
+                                </if>
+                                <i class="icon-select"></i>
+                                <ul class="options provinceNode">
+
+                                </ul>
+                            </div>
+                            <div class="area-title">City</div>
+                            <div class="simulat-select text">
+                                <input class="value" name="area_c" type="hidden" value="{$data.other.area_c}" id="area_c" />
+                                <if condition="$data['other']['area_c']">
+                                    <p class="title selecting">{$area.area_c.title}</p>
+                                    <else/>
+                                    <p class="title">City</p>
+                                </if>
+                                <i class="icon-select"></i>
+                                <ul class="options cityNode">
+
+                                </ul>
+                            </div>
+                            <div class="area-title">Street</div>
+                            <input type="text" class="text" name="address" id="address" value="{$data.other.address}">
+
+
+
+                            <div class="area-title">Zip/Postal Code</div>
+                            <input type="text" class="text" name="zip" id="zip" value="{$data.other.zip}">
+                            <div id="area-tips"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-item tel-num">
+                        <label for="">Tel.</label>
+                        <if condition="$Base['country'] neq 'CN'">
+                          <input type="text" class="country-code text" id="tel_contryCode" name="tel_contryCode"  placeholder="Country-Code" value="<?php echo empty($data['other']['tel_contryCode']) ?'': $data['other']['tel_contryCode'] ?>">
+                        <else/>
+                            <input type="text" class="country-code text" name="tel_contryCode"  disabled="disabled" value="86">
+                        </if>
+                        <span class="link">-</span>
+                        <input type="text" class="text area-code" name="tel_a" id="cityCode" placeholder="Area-Code" value="{$data.other.tel_a}">
+                        <span class="link"> - </span>
+                        <input type="text" class="text tel" name="tel" id="tel" placeholder="Number" value="{$data.other.tel}">
+                        <div id="telTips">
+
+                        </div>
+                    </div>
+
+                    <div class="form-item tel-num">
+                        <label for=""><span><?php echo $Base['country'] == 'CN' ? '*' :'';?></span> Mobile</label>
+                        <if condition="$Base['country'] neq 'CN'">
+                          <input type="text" class="country-code text mobileCountryCode" placeholder="Country-Code" id="phone_contryCode" name="phone_contryCode"   value="<?php echo empty($data['other']['phone_contryCode']) ? '': $data['other']['phone_contryCode'] ?>">
+                         <else/>
+                            <input type="text" class="country-code text mobileCountryCode" name="phone_contryCode"  disabled="disabled" value="86">
+                        </if>
+                        <span class="link"> - </span>
+                        <input type="text" class="text mobile" name="mobile" id="mobile" placeholder="Mobile Number"  <?php echo $Base['country'] == 'CN' ?'disabled="disabled"':''?> value="{$Base.phone}">
+                        <span class="isauth">
+                             <?php
+                              if($Base['country']== 'CN' && $Base['phone'] ){
+                               echo '[Bound]';
+                              }
+                            ?>
+                        </span>
+                        <div id="mobileTips">
+
+                        </div>
+                    </div>
+
+                    <div class="form-item tel-num">
+                        <label for="">Fax</label>
+                        <if condition="$Base['country'] neq 'CN'">
+                        <input type="text" class="country-code text" id="fax_contryCode" placeholder="Country-Code" name="fax_contryCode"   value="<?php echo empty($data['other']['fax_contryCode']) ? '' : $data['other']['fax_contryCode'] ?>">
+                        <else/>
+                            <input type="text" class="country-code text" name="fax_contryCode"  disabled="disabled" value="86">
+                        </if>
+                        <span class="link"> - </span>
+                        <input type="text" class="text area-code" id="faxCityCode" name="fax_a" placeholder="Area-Code" value="{$data.other.fax_a}">
+                        <span class="link"> - </span>
+                        <input type="text" class="text tel" id="fax" name="fax" placeholder="Number" value="{$data.other.fax}">
+                        <div id="faxTips">
+
+                        </div>
+                    </div>
+                    <div class="operate">
+                        <a href="javascript:void(0)" class="js_edit">Edit</a>
+                        <div>
+                            <a href="javascript:void(0)" class="js_save">Save</a>
+                            <if condition="!empty($data['companyName'])">
+                             <a href="javascript:void(0)" class="js_cansel">Cancel</a>
+                         </if>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="succ-info-wrap">
+            <div class="content">
+                <i class="succ-icon"></i>
+                <div class="info">
+                    <p class="title">Saved successfully</p>
+
+                    <p class="link">
+                        <a href="{:U('/User/Account/info')}" class="auth">Back</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <include file="Public/footer"/>
+
+</body>
+<script src="__PUBLIC__/User/js/member-company-info.js"></script>
+
+</html>

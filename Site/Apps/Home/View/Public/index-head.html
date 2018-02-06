@@ -1,0 +1,95 @@
+<!-- 滚动公告 -->
+<?php //$noticeList = D('Home/Contents')->getLastestNoticeList() ?>
+<?php if (!empty($noticeList)) { ?>
+<div id="js_scrollNews" class="scroll-news">
+    <div class="news-wrapper clearfix">
+        <span class="title"><i class="icon-news"> </i>Notice:</span>
+        <div class="list-wrap">
+            <ul class="list">
+                <?php foreach($noticeList as $row) { ?>
+                <li><a href="#"><?php echo $row['content'] ?></a></li>
+                <?php } ?>
+            </ul>
+        </div>
+        <span class="txt-close">×</span>
+    </div>
+</div>
+<?php } ?>
+
+<?php
+    $_XXSource = array(
+        'product/index' => 'Mall',
+        'buyoffer/indexlist' => 'Buy offers',
+		'supply/lists' => 'Supply offers',
+		'supplier/lists' => 'Suppliers',
+    );
+    $x = strtolower( CONTROLLER_NAME ).'/'.strtolower( ACTION_NAME );
+    if(!empty($_XXSource[$x])){
+        $matchTitle = $_XXSource[$x];
+    }
+    if( !empty( $matchTitle ) ){
+        $_controllerAndAction = CONTROLLER_NAME.'/'.ACTION_NAME;
+    }else{
+        $_controllerAndAction = 'Product/index';
+        $matchTitle = 'Mall';
+    }
+
+	$count=getUnReadMessage();
+?>
+<!-- 网站头部 -->
+<div class="header">
+    <div class="wrapper header-wrapper">
+        <div class="clearfix">
+            <div class="lang-toggle fr">
+                <p class="current-lang"><a href="<?php echo C('CN_KEYWA_SITE') ?>"><i class="icon-cn"></i><span class="text">中文</span></a></p>
+                <!-- <ul class="lang-list">
+                    <li class="lang"><a href="<?php echo C('CN_KEYWA_SITE') ?>"><span class="text">Chinese</span></a></li>
+                    <li class="lang active"><a href="<?php echo C('EN_KEYWA_SITE') ?>"><i class="icon-en"></i><span class="text">English</span></a></li>
+
+                </ul> -->
+            </div>
+            <div class="fr top-tags">
+                <a class="tag" href="/"><i class="icon-home"></i>Home</a>
+                <a class="tag" href="{:U('User/Account/index')}"><i class="icon-user"></i>My Account</a>
+                <a class="tag" href="mailto:service@keywa.com"><i class="icon-email"></i>service@keywa.com</a>
+            </div>
+        </div>
+        <div class="logo-search clearfix">
+            <div class="logo fl">
+                <a href="/"><img src="__PUBLIC__/Home/images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="header-search">
+                <div class="select">
+                    <ul class="select-list">
+                        <li data-action="{:U( 'Product/index' )}">Mall</li>
+                        <li data-action="{:U( 'Buyoffer/indexlist' )}">Buy offers</li>
+                        <li data-action="{:U( 'Supply/lists' )}">Supply offers</li>
+                        <li data-action="{:U( 'Supplier/lists' )}">Suppliers</li>
+                    </ul>
+                    <p class="select-title"><?php echo $matchTitle?></p>
+                    <span class="select-btn"><i class="icon-arrow"></i></span>
+                </div>
+                <form action="<php>echo !empty($matchTitle)?'/'.$_controllerAndAction:'/Product/index'</php>" class="header-form">
+                    <input type="hidden" name="type">
+                    <input type="text" name="keyword" class="keyword" placeholder="Search for products or buy offers" value="<?php if(!empty($_GET['keyword'])){ echo htmlspecialchars(urldecode( $_GET['keyword'] )); }?>">
+                    <span class="search-btn js_headerSearch"><i class="icon-gl"></i>search</span>
+                </form>
+            </div>
+
+            <div class="part-rt">
+                <?php ?>
+                <?php if(session('Uid')) { ?>
+                 	<?php if($count>0&&$count<10){ ?>
+            		<div class="msg-num">…<!--  <?php echo $count; ?>--></div>
+            		<?php }elseif($count>=10){ ?>
+					<div class="msg-num">…</div>
+					<?php } ?>
+                <p class="user-p logout"><a href="{:U('User/Account/index')}"><img class="hd-pic" src="<?php echo !empty(session('userHeadImg')) ? session('userHeadImg') : '/Public/User/images/user_hd_pic.png' ?>" alt=""></a><a href="{:U('User/Index/logout')}" class="name">Sign out</a></p>
+                <?php }else{ ?>
+                <span class="user-p sign-in"><a class="u-link" href="{:U('User/Index/login')}">Sign in</a><em class="cut-line">or</em><a class="u-link" href="{:U('User/Index/register')}">Register</a></span>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>

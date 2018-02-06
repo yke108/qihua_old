@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Media Report - Detail</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/media-report-datail.css">
+</head>
+<body>
+<!-- 滚动公告 -->
+
+<!-- 网站头部 -->
+<include file="Public/index-head" />
+
+<!-- 网站导航 -->
+<include file="Public/index-nav" />
+
+<!-- 网页主体内容 -->
+<div class="wrapper clearfix member-wraper">
+    <include file="Public/aboutus-left-nav" />
+
+    <div class="main">
+        <h3>Media Report</h3>
+        <div class="article">
+            <?php if (!empty($news)) { ?>
+            <p class="title">
+                <?php echo $news['title'] ?>
+            </p>
+            <span class="times"><?php echo $news['referer'] ?> | <?php echo str_replace('-', '.', $news['reportDate']) ?></span>
+            <div class="content">
+                <?php echo html_entity_decode($news['content'])?>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/Home/js/media-report-datail.js"></script>
+</html>

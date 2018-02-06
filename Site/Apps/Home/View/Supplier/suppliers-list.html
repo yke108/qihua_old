@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Supply - List</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/suppliers-list.css">
+</head>
+<body>
+<include file="Public/index-head" />
+<include file="Public/index-nav" />
+<!-- 网站导航 -->
+<!-- 网页主体内容 -->
+<div class="wrapper">
+    <div class="findgood-main clearfix">
+
+        <!-- 搜索选择栏 -->
+        <div class="main-filter">
+            <div class="filter-title">Filter</div>
+
+            <div class="filter-col last-col">
+                <div class="col-tl">Country</div>
+                <div class="col-opts">
+                    <ul class="checkbox-list">
+                    <volist name='country' id='vo'>
+                        <li class="checkbox-item"><label data-country="{$vo.id}"><i <?php if(in_array($vo['id'],$select)) { ?> class="icon-cked" <?php }else{ ?>class="icon-ck" <?php } ?> ></i>{$vo.title}</label></li>
+                    </volist>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+           <?php 
+if(empty($_GET['keyword'])){
+?>
+			<notempty name='pageinfo' >
+			<div class="results">
+                <p class="no-search">
+                    <span class="red">{$pageinfo.count}</span>
+                    <span>results</span>
+                    <!--  <span class="no-search">of "<span class="red">Amino1-propano</span>" </span>
+                    <span>-->
+                        <span class="red page">{$pageinfo.page}</span>
+                        <span>/</span>
+                        <span>{$pageinfo.pagecount}</span>
+                    </span>
+                </p>
+            </div>
+            <else />
+            	<div class="search-none">
+                <div class="inner">
+                    <i class="icon-warn"></i>
+                    <p class="tips">Did not match any Company.</p>
+                    <dl>
+                        <dt>You may consider to:</dt>
+                        <dd>• Check the spelling </dd>
+                        <dd>• Use less keywords</dd>
+                        <dd>• Use different keyword</dd>
+                    </dl>
+                </div>
+            </div>
+            
+            </notempty>
+<?php
+}else{
+if($pageinfo){
+
+?>
+			<div class="results">
+                <p>
+                    <span class="red">{$pageinfo.count}</span>
+                    <span>results</span>
+                    <span class="no-search">of "<span class="red">{$Think.get.keyword}</span>" </span>
+                    <span>
+                        <span class="red page">{$pageinfo.page}</span>
+                        <span>/</span>
+                        <span>{$pageinfo.pagecount}</span>
+                    </span>
+                </p>
+                
+            </div>
+
+<?php
+}else{
+
+?>
+
+            <div class="results">
+                <p>
+                    <span class="red">{$pageinfo.count|intval}</span>
+                    <span>results</span>
+                    <span class="no-search">of "<span class="red">{$Think.get.keyword}</span>" </span>
+                    <span>
+                       
+                    </span>
+                </p>
+              
+            </div>
+		<div class="search-none">
+                <div class="inner">
+                    <i class="icon-warn"></i>
+                    <p class="tips">Your search <em class="keyword r">"{$Think.get.keyword}"</em> Did not match any Company.</p>
+                    <dl>
+                        <dt>You may consider to:</dt>
+                        <dd>• Check the spelling </dd>
+                        <dd>• Use less keywords</dd>
+                        <dd>• Use different keyword</dd>
+                    </dl>
+                </div>
+            </div>
+
+<?php
+}
+	}
+	?>
+
+        <!-- 求购列表 -->
+        <ul class="findgood-list">
+            <!-- 每页20条记录 -->
+            <volist name='list' id='vo' >
+            <li class="findgood-item clearfix">
+                <div class="findgood-inner">
+                  <a href="{:U('Supplier/profile',array('uid'=>$vo['id']))}" target="_blank">  <p class="findgood-title">{$vo.companyName}</p></a>
+                    <div class="findgood-content">
+                      <?php
+                                    echo trim( mb_substr( strip_tags( html_entity_decode( $vo['companyIntroduction'] ) ), 0, 480, 'UTF-8' ) ).'...';
+?>
+
+					</div>
+                    <p class="loc">
+                        {$vo.country}
+                    </p>
+                </div>
+                <a class="alink" href="{:U('Supplier/productList',array('uid'=>$vo['id']))}" target="_blank">Products</a>
+                <a class="alink" href="{:U('Supplier/profile',array('uid'=>$vo['id']))}" target="_blank">Profile</a>
+            </li>
+           </volist>
+        </ul>
+    </div>
+	        <div class="pagination">
+            <div class="handle">
+            {$show}
+            </div>
+        </div>
+   
+</div>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer" />
+
+</body>
+    <script src="__PUBLIC__/User/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/suppliers-list.js"></script>
+</html>

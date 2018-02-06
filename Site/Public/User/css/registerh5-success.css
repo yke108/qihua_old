@@ -1,0 +1,79 @@
+.wrapper {
+  position: relative;
+  margin: 0 auto;
+  max-width: 640px;
+  overflow: hidden;
+  height: 100%; }
+
+.content {
+  position: absolute;
+  top: 150px;
+  z-index: 10;
+  overflow: hidden; }
+
+.info {
+  width: 100%;
+  margin: 0 auto; }
+
+.success-tips {
+  margin: 0 auto;
+  width: 80%;
+  background-color: #d6e8ff;
+  border-radius: 5px;
+  padding: .3rem; }
+  .success-tips .bold-tips {
+    font-weight: bold;
+    color: #3b3b3b; }
+  .success-tips .my-email {
+    color: #3287f1;
+    font-weight: bold;
+    display: inline-block;
+    width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  .success-tips .blue-tips {
+    color: #4791f2;
+    font-size: .08rem;
+    font-size: .22rem; }
+
+.text-group {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: .4rem;
+  text-align: center; }
+  .text-group .text-title {
+    color: #333333;
+    font-size: .23rem;
+    line-height: .32rem;
+    text-align: left; }
+  .text-group .intention {
+    width: 90%;
+    margin: 0 auto;
+    height: 1.7rem;
+    margin-top: .15rem;
+    border: 1px solid #cdcdcd;
+    border-radius: 5px;
+    outline: none;
+    padding: .2rem;
+    resize: none; }
+  .text-group .error-tips {
+    display: inline-block;
+    height: .4rem;
+    width: 100%;
+    line-height: .4rem;
+    text-align: center;
+    color: red; }
+  .text-group .confirm {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #3287f1;
+    background-color: #fff;
+    border-radius: 7px;
+    height: .8rem;
+    line-height: .8rem;
+    margin: 0 auto .1rem;
+    color: #3287f1; }
+    .text-group .confirm.active-confirm {
+      background-color: #3287f1;
+      color: #fff; }

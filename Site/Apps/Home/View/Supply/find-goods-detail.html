@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Supply details</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/find-goods-detail.css">
+</head>
+<body>
+    <!-- 网站头部 -->
+<include file="Public/index-head" />
+    <!-- 网站导航 -->
+<include file="Public/index-nav" />
+<div class="wrapper">
+    <div class="crumbs">
+        <a class="crumb-item" href="{:U( 'lists' )}">Supply offers</a>
+        <a class="crumb-item current" href="">> Details</a>
+    </div>
+    <div class="main clearfix">
+        <div class="fl part-lt">
+            <div class="details">
+                <p class="title">{$res.title}</p>
+                <?php 
+                    $content = str_replace( "\r\n", '<br/>', $res['content'] );
+                    $content = str_replace( "\n", '<br/>', $content );
+                ?>
+                <div class="info"><?php echo $content?></div>
+            </div>
+            <ul class="detail-tag">
+            <li class="tag-item"><span class="tag-name">Info.No.:</span><span class="tag-val">{$res.number}</span></li>
+            	<li class="tag-item"><span class="tag-name">Post:</span><span class="tag-val">{$res.updateTime|date="F d,Y",###}</span></li>
+                <li class="tag-item"><span class="tag-name">Exp:</span><span class="tag-val">{$res.times|date="F d,Y",###}</span></li>
+                <li class="tag-item"><span class="tag-name">Type:</span><span class="tag-val">{$res.type}</span></li>
+                <li class="tag-item"><span class="tag-name">Location:</span><span class="tag-val">{$res.location}</span></li>
+            </ul>
+        </div>
+        <div class="fl part-rt">
+            <div class="user-info">
+                <div class="info-wrap">
+                    <?php
+                        if (empty($user['img'])) {
+                            $user['img'] = '__PUBLIC__/Home/images/logo.png';
+                        }
+                    ?>
+                    <img src="<?php echo $user['img'] ?>" alt="">
+                    <p class="name">{$user.username}</p>
+                    <p class="ltd"> {$user.companyName} </p>
+                    <p class="country">{$user.country}</p>
+                </div>
+                
+                 <?php if(!empty($loginUid)){
+						if(!empty($companyName)&&$companyName!=-1){ ?>
+						<a href="{:U( '/User/Message/sendMessage',array( 'id' => $res['Uid'] ))}" target="_blank" class="contact-btn">Contact Now</a>
+						<?php }elseif($companyName==-1){ ?>
+                    	
+						<?php }else{ ?>
+							<a href="javascript:void(0);" class="contact-btn">Contact Now</a>
+						<?php }}else{ ?>
+						<a href="{:U( '/User/index/login' )}" class="contact-btn">Contact Now</a>
+						
+						<?php } ?>
+            </div>
+			<?php if($companyName!=-1) { ?>
+                <?php
+                    if( empty( $loginUid ) ){
+?>
+            <a href="{:U( '/User/index/login' )}" class="favorites js_collect"><i class="icon-star"></i>Add to Favorites</a>
+            <?php
+                    }else{
+                        if( !$isCollect ){
+                        ?>
+            <a href="javascript:void(0);" class="favorites js_collect" data-id="<?php echo intval( $_GET['id'] )?>" data-type="2"><i class="icon-star"></i>Add to Favorites</a>
+            <?php
+                        }else{
+                        ?>
+            <a href="javascript:void(0);" class="favorites collected js_collectCancel" data-id="<?php echo intval( $_GET['id'] )?>" data-type="0"><i class="icon-star"></i>In your Favorites</a>
+            <?php
+                        }
+                    }
+ }
+
+?>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<include file="Public/footer" />
+</body> 
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/find-goods-detail.js"></script>
+</html>

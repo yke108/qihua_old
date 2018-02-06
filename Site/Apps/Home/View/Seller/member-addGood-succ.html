@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Center - Success</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/member-addGood-succ.css">
+</head>
+<body>
+<include file="Public/member-head" />
+
+
+<div class="wrapper brand-wraper">
+    <div class="tl-bar">Add new Product</div>
+    <ul class="step-bar clearfix">
+        <li class="step-item">Step 1:  Select A Product Category</li>
+        <li class="step-item">Step 2:  Fill in the Product Details</li>
+        <li class="step-item active">Step 3:  Wait For Auditing</li>
+    </ul>
+
+    <div class="succ-info-wrap">
+        <div class="content">
+            <i class="succ-icon"></i>
+            <div class="info">
+                <p class="title">Have been submitted,<br>please wait for the auditing</p>
+                <p class="tips">
+                    After approved, can be checked in 【 <a href="{:U( 'Seller/products', array( 'state' => 1 ) )}" class="blu">Valid</a>】
+                </p>
+            </div>
+        </div>
+
+        <p class="lin-bar">
+            <a href="{:U( 'Seller/addProduct' )}" class="again-link">Add Again</a>
+            <a href="{:U( 'Seller/products', array( 'state' => 2 ) )}" class="return-link">Returned to Warehouse</a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<include file="Public/footer" />
+
+</body> 
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/member-addGood-succ.js"></script>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Warehouse</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/member-store-valid.css">
+</head>
+<body>
+    <include file="Public/member-head" />
+
+    <!-- 网页主体内容 -->
+    <div class="wrapper clearfix member-wraper">
+
+        <include file="Public/seller-side" />
+
+        <div class="main">
+            <h3>Product Warehouse  <a href="{:U( 'Seller/addProduct' )}" class="addGood checkAuth" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Add new Product</a></h3>
+            <?php
+            $matchState = isset($_GET['state']) ? $_GET['state'] : '';
+            $searchState = empty($_GET['state']) ? '' : $_GET['state'];
+            $validClass = '';
+            $auditPendingClass = '';
+            $auditDisapprovalClass = '';
+            $unShelveClass = '';
+            if( $matchState === '' || $matchState == 1 ){
+                $validClass = 'active';
+                $searchState = 1;
+                $emptyTip = 'No valid items in the warehouse';
+            }elseif( $matchState == 2 ){
+                $auditPendingClass = 'active';
+                $emptyTip = 'No Audit Pending items';
+            }elseif( $matchState === '0' ){
+                $auditDisapprovalClass = 'active';
+                $emptyTip = 'No Audit Disapproval items';
+
+            }elseif( $matchState == 3 ){
+                $unShelveClass = 'active';
+                $emptyTip = 'No Unshelve items';
+            }
+?>
+            <div class="store-tab">
+                <a href="{:U( 'Seller/products', array( 'state' => 1 ) )}"><span class="<?php echo $validClass;?>">Valid</span></a>
+                <a href="{:U( 'Seller/products', array( 'state' => 2 ) )}"><span class="<?php echo $auditPendingClass;?>">Audit Pending</span></a>
+                <a href="{:U( 'Seller/products', array( 'state' => 0 ) )}"><span class="<?php echo $auditDisapprovalClass;?>">Audit Disapproval<?php echo $unreadRefuseCount > 0 ? '<i class="number">'.$unreadRefuseCount.'</i>':'';?></span></a>
+                <a href="{:U( 'Seller/products', array( 'state' => 3 ) )}"><span class="<?php echo $unShelveClass;?>">Unshelve<?php echo $unreadRevokeCount > 0 ? '<i class="number">'.$unreadRevokeCount.'</i>':'';?></span></a>
+            </div>
+            <div class="main-search">
+                <div class="select">
+                    <?php
+            if( $validClass == 'active' && $totalCount>'0'){
+?>
+                    <a href="javascript:void(0)" class="selectBtn js_selectAll">Select All</a>
+                    <a href="javascript:void(0)" class="selectBtn js_unselectAll">Unselect All</a>
+                    <a href="javascript:void(0)" class="selectBtn js_multiUnshelve">Unshelve</a>
+                    <?php
+            }
+?>
+                </div>
+
+                <div class="search">
+                    <p><span class="red"><?php echo intval( $totalCount )?></span> <?php echo $totalCount > 1 ?'results':'result';?> <span class="red"><?php echo $page;?></span>/<?php echo ceil( $totalCount / $page_size ) == 0 ? 1 : ceil( $totalCount / $page_size )?></p>
+                    <div>
+                        <form action="{:U( 'Seller/products' )}" method="get" class="searchform">
+                            <input type="hidden" name="state" value="<?php echo $searchState?>">
+                            <input type="text" placeholder="Product Number/English Name/CAS No." name="keyword" value="<?php if(!empty($_GET['keyword'])){ echo htmlspecialchars(urldecode( $_GET['keyword'] ) ); } ?>">
+                            <a href="javascript:void(0)" class="js_searchGoods">
+                                <i class="icon-search"></i>
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+            if( !empty( $lists ) ){
+?>
+            <ul class="goods-list">
+                <?php
+                foreach( $lists as $product ){
+?>
+                <li>
+                    <div class="list-head">
+                        <div class="col-number">
+                            <p class="tl">Product No.</p>
+                            <p class="val"><?php echo $product['productCode']?></p>
+                        </div>
+                        <div class="col-status">
+                            <p class="tl">state</p>
+                            <p class="val hidden"><?php echo $states[$product['state']]['enTitle']?></p>
+                            <p class="status-tag status-fail"><?php echo $states[$product['state']]['enTitle']?>
+                                <?php
+                                if( !empty( $product['lastHistory']['reason'] ) ){
+?>
+                                [ <span class="rs">View the reason</span> ] <span class="rs-content"><?php echo $product['lastHistory']['reason']?></span>
+                                <?php
+                                }
+?>
+                            </p>
+                        </div>
+                        <div class="col-time">
+                            <p class="tl">Create / Modify Time</p>
+                            <p class="val"><?php echo date( 'H:i:s M d,Y', $product['updateTime'] )?></p>
+                        </div>
+                    </div>
+                    <div class="goods-info">
+                        <input type="checkbox" class="checkone fl" data-id="<?php echo $product['id']?>" <?php echo in_array( $product['state'], array( 0, 2, 3, 4, 5, 6 ) ) ? 'style="display:none"' : '';?>>
+                        <img src="<?php echo $product['images'][0]?>" alt="<?php echo $product['title']?>" class="fl">
+                        <div class="info">
+                            <a href="<?php echo $product['state'] == 1 ? U( 'Product/detail', array( 'id' => $product['id'] ) ) : U( 'Seller/editProduct', array( 'id' => $product['id'] ) );?>" class="checkAuth" data-cert="{$cert_state}"><?php echo $product['title']?></a>
+                            <div>CAS No.: <span><?php echo $product['cas']?></span></div>
+                            <div>Price: <span class="red"><?php echo isset($currency[$product['currency']]['character'])?$currency[$product['currency']]['character']:''; ?> <?php echo sprintf( '%0.2f', $product['price'] )?> / <?php echo $weightUnit[$product['weightUnit']]['enTitle']?></span></div>
+                            <div>MOQ: <span><?php echo $product['moq']?> <?php echo $weightUnit[$product['weightUnit']]['enTitle']?> </span></div>
+                            <div>Stock:
+                                <span>
+                                <?php if ($product['inventoryType'] == 1 && $product['inventoryNum'] == 0) {?>
+	                            <?php echo 'In Stock' ?>
+	                            <?php } else if ($product['inventoryType'] == 1 && $product['inventoryNum'] > 0 && $product['inventory'] == 1) {?>
+	                            <?php echo $product['inventoryNum']?> </span><?php echo $weightUnit[$product['weightUnit']]['enTitle'] ?>
+	                            <?php } else if($product['inventoryType'] == 1 && $product['inventoryNum'] > 0 && $product['inventory'] == 0){ ?>
+	                            <?php echo 'In Stock' ?>
+	                            <?php } else if ($product['inventoryType'] == 2) {?>
+	                            <?php echo 'Out of stock' ?>
+	                            <?php } ?>
+                                
+                                
+                                </span>
+                                <?php
+                                $class = $inventoryTip = '';
+                                $showStockState = FALSE;
+                                if( $product['inventory'] <= 0 ){
+                                    $showStockState = TRUE;
+                                    $class = 'out';
+                                    $inventoryTip = 'Out of stock';
+                                }/*elseif( $newData['inventory'] < $newData['moq'] ){
+                                    $showStockState = TRUE;
+                                    $inventoryTip = 'Understock';
+                                }*/
+                                if( $showStockState ){
+?>
+                                <div class="stock-tips <?php echo $class;?>">
+                                    <div class="trigon"></div>
+                                    <div class="tips">
+                                        <?php echo $inventoryTip;?>
+                                    </div>
+                                </div>
+                                <?php
+                                }
+?>
+                            </div>
+                            <div>Category: <span><?php echo implode( ' > ', $product['selectedCategory'] )?></span></div>
+                            <div>Sales on: <span>Mall </span></div>
+                        </div>
+                        <?php
+                        $operationModify = $operationUnshelve = $operationShelve = false;
+                        switch( $product['state'] ){
+                            case $states[0]['value']:
+                                $operationModify = true;
+                            break;
+                            case $states[1]['value']:
+                                $operationModify = true;
+                                $operationUnshelve = true;
+                            break;
+                            case $states[2]['value']:
+                                $operationModify = true;
+                            break;
+                            case $states[3]['value']:
+                                $operationModify = true;
+                            break;
+                            case $states[4]['value']:
+                                $operationModify = true;
+                                $operationShelve = true;
+                            break;
+                            case $states[5]['value']:
+                                $operationModify = true;
+                            break;
+                            case $states[6]['value']:
+                                $operationModify = true;
+                            break;
+                        }
+                        $operationCount = 0;
+                        if( $operationModify ){
+                            $operationCount++;
+                        }
+                        if( $operationUnshelve ){
+                            $operationCount++;
+                        }
+                        if( $operationShelve ){
+                            $operationCount++;
+                        }
+                        $activeClass = '';
+                        if( $product['state'] == 1 ){
+                            $activeClass = 'productActive';
+                        }
+                        if( $operationCount > 1 ){
+?>
+                        <div class="oper">
+                            <p>Operation</p>
+                            <i class="ar-down"></i>
+                            <i class="ar-top"></i>
+                            <div>
+                                <?php
+                                if( $operationModify ){
+                                ?>
+                                <a href="{:U( 'Seller/editProduct', array( 'id' => $product['id'] ) )}" class="<?php echo $activeClass?> checkAuth" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Modify</a>
+                                <?php
+                                }
+                                if( $operationUnshelve ){
+                                ?>
+                                <a href="javascript:void(0)" class="js_unshelve checkAuth" data-id="<?php echo $product['id']?>" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Unshelve</a>
+                                <?php
+                                }
+                                if( $operationShelve ){
+                                ?>
+                                <a href="javascript:void(0)" class="js_shelve checkAuth" data-id="<?php echo $product['id']?>" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Shelve</a>
+                                <?php
+                                }
+?>
+
+                            </div>
+                        </div>
+                        <?php
+                        }else{
+                        ?>
+                        <div class="oper oper-one">
+                            <p>
+                                <?php
+                                if( $operationModify ){
+                                ?>
+                                <a href="{:U( 'Seller/editProduct', array( 'id' => $product['id'] ) )}" class="<?php echo $activeClass?> checkAuth" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Modify</a>
+                                <?php
+                                }
+                                if( $operationUnshelve ){
+                                ?>
+                                <a href="javascript:void(0)" class="js_unshelve checkAuth" data-id="<?php echo $product['id']?>" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Unshelve</a>
+                                <?php
+                                }
+                                if( $operationShelve ){
+                                ?>
+                                <a href="javascript:void(0)" class="js_shelve checkAuth" data-id="<?php echo $product['id']?>" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Shelve</a>
+                                <?php
+                                }
+?>
+                            </p>
+                        </div>
+                        <?php
+                        }
+?>
+                    </div>
+                </li>
+                <?php
+                }
+?>
+                <div class="pagination">
+                    <div class="handle">
+                        {$page_html}
+                    </div>
+                </div>
+            </ul>
+            <?php
+            }else{
+?>
+            <div class="search-none">
+                <div class="inner">
+                    <i class="icon-warn"></i>
+                    <p class="tips"><?php echo $emptyTip?></p>
+                    <?php
+                    if(!empty($validClass)){
+                    if( $validClass == 'active' ){
+?>
+                    <a href="{:U( 'Seller/addProduct' )}" class="addGood checkAuth" data-complete="{$IsCompleteInfo}" data-cert="{$cert_state}">Add new Product</a>
+                    <?php
+                    } }
+?>
+                </div>
+            </div>
+            <?php
+            }
+?>
+        </div>
+    </div>
+
+    <include file="Public/footer" />
+</body>
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/member-store-valid.js"></script>
+</html>

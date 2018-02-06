@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy Offers</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/find-goods.css">
+</head>
+<body>
+    <!-- 网站顶部 -->
+    <!-- 滚动公告 -->
+
+<include file="Public/index-head" />
+
+    <!-- 网站导航 -->
+<include file="Public/index-nav" />
+    <!-- 网页主体内容 -->
+    <div class="wrapper">
+        <div class="stepwrap">
+            <h3>
+                How to post your buying request ?
+            </h3>
+            <div>
+                <div class="step">
+                    <p class="step-title">
+                        step 1
+                    </p>
+                    <p class="step-cont">
+                        <i class="icon-step1"></i>
+                        <span>Register as a Member</span>
+                    </p>
+                </div>
+                <i class="icon-next"></i>
+                <div class="step">
+                    <p class="step-title">
+                        step 2
+                    </p>
+                    <p class="step-cont">
+                        <i class="icon-step2"></i>
+                        <span>Improve your information</span>
+                    </p>
+                </div>
+                <i class="icon-next"></i>
+                <div class="step">
+                    <p class="step-title">
+                        step 3
+                    </p>
+                    <p class="step-cont">
+                        <i class="icon-step3"></i>
+                        <span>Get free inquiry immediately </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="js_filterChecked" class="filered clearfix">
+        <notempty name="str">
+            <span class="filered-item">
+                Type: <em class="text">{$str}</em>
+                <em class="txt-close" data-key="companyModel">×</em>
+            </span>
+         </notempty>
+           <!--  <span class="filered-item">
+                Brands: <em class="text">Petroleum Chemical</em>
+                <em class="txt-close" data-key="brand">×</em>
+            </span>
+            --> 
+        </div>
+
+        <div class="findgood-main clearfix">
+
+            <!-- 搜索选择栏 -->
+            <div class="main-filter">
+                <div class="filter-title">Filter</div>
+                <div class="filter-col">
+                    <div class="col-tl">Type</div>
+                    <?php if(empty($gettype)){ $gettype=array();} ?>
+                    <ul class="checkbox-list">   
+                        <volist name='type' id='vo'>
+                            <li class="checkbox-item"><label data-model="{$key}"><i <?php if(in_array($key,$gettype)) { ?> class="icon-cked" <?php }else{ ?>class="icon-ck" <?php } ?> ></i>{$vo}</label></li>
+                        </volist>
+
+                    </ul>
+
+                </div>
+
+     <!--             <div class="filter-col">
+                    <div class="col-tl">Country</div>
+                    <div class="col-opts">
+                        <ul class="checkbox-list">
+                            <li class="checkbox-item"><label data-country=""><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label data-country=""><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business typebusiness typebusiness typebusiness typebusiness typebusiness typebusiness type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-cked"></i>business type</label></li>
+                            <li class="checkbox-item"><label><i class="icon-ck"></i>business type</label></li>
+                        </ul>
+                    </div>
+                </div>-->
+            </div>
+
+           <?php 
+if(empty($_GET['keyword'])){
+?>
+			<notempty name='pageinfo' >
+			<div class="results">
+                <p class="no-search">
+                    <span class="red"><?php if(!empty($pageinfo['count'])){ echo $pageinfo['count'];}else{ echo 0; } ?></span>
+                    <span><if condition="$pageinfo.count gt 1">results<else />result</if></span>
+                    <!--  <span class="no-search">of "<span class="red">Amino1-propano</span>" </span>
+                    <span>-->
+                        <span class="red page">{$pageinfo.page}</span>
+                        <span>/</span>
+                        <span>{$pageinfo.pagecount}</span>
+                    </span>
+                </p>
+                <?php if(!empty($loginUid)){
+						if(!empty($companyName)){ ?>
+						<a href="{:U( '/User/Buyoffer/buyofferRelease')}">Post Buying Request</a>
+						
+						<?php }else{ ?>
+							<a href="javascript:void(0);">Post Buying Request</a>
+						<?php }}else{ ?>
+						<a href="{:U( '/User/index/login' )}">Post Buying Request</a>
+						
+						<?php } ?>
+            </div>
+            <else />
+                <div class="results">
+                    <p class="no-search">
+                        <span class="red">0</span>
+                        <span>result</span>
+                       
+                    </p>
+                    <?php if(!empty($loginUid)){
+                            if(!empty($companyName)){ ?>
+                            <a href="{:U( '/User/Buyoffer/buyofferRelease')}">Post Buying Request</a>
+                            
+                            <?php }else{ ?>
+                                <a href="javascript:void(0);">Post Buying Request</a>
+                            <?php }}else{ ?>
+                            <a href="{:U( '/User/index/login' )}">Post Buying Request</a>
+                            
+                            <?php } ?>
+                </div>
+            	<div class="search-none">
+                <div class="inner">
+                    <i class="icon-warn"></i>
+                    <p class="tips">Did not match any Buyoffers.</p>
+                    <dl>
+                        <dt>You may consider to:</dt>
+                        <dd>• Check the spelling </dd>
+                        <dd>• Use less keywords</dd>
+                        <dd>• Use different keywords</dd>
+                    </dl>
+                </div>
+
+            </div>
+            
+            </notempty>
+<?php
+}else{
+if($pageinfo){
+
+?>
+			<div class="results">
+                <p>
+                    <span class="red">{$pageinfo.count}</span>
+                    <span><if condition="$pageinfo.count gt 1">results<else />result</if></span>
+                    <span class="no-search">of "<span class="red">{$Think.get.keyword}</span>" </span>
+                    <span>
+                        <span class="red page">{$pageinfo.page}</span>
+                        <span>/</span>
+                        <span>{$pageinfo.pagecount}</span>
+                    </span>
+                </p>
+                 <?php if(!empty($loginUid)){
+						if(!empty($companyName)){ ?>
+						<a href="{:U( '/User/Buyoffer/buyofferRelease')}">Post Buying Request</a>
+						
+						<?php }else{ ?>
+							<a href="javascript:void(0);">Post Buying Request</a>
+						<?php }}else{ ?>
+						<a href="{:U( '/User/index/login' )}">Post Buying Request</a>
+						
+						<?php } ?>
+            </div>
+
+<?php
+}else{
+
+?>
+
+            <div class="results">
+                <p>
+                    <span class="red">{$pageinfo.count|intval}</span>
+                    <span>result</span>
+                    <span class="no-search">of "<span class="red">{$Think.get.keyword}</span>" </span>
+                    <span>
+                       
+                    </span>
+                </p>
+                <?php if(!empty($loginUid)){
+						if(!empty($companyName)){ ?>
+                <a href="{:U( '/User/Buyoffer/buyofferRelease')}">Post Buying Request</a>
+
+                <?php }else{ ?>
+                <a href="javascript:void(0);">Post Buying Request</a>
+                <?php }}else{ ?>
+                <a href="{:U( '/User/index/login' )}">Post Buying Request</a>
+
+                <?php } ?>
+            </div>
+		<div class="search-none">
+                <div class="inner">
+                    <i class="icon-warn"></i>
+                    <p class="tips">Your search <em class="keyword r">"{$Think.get.keyword}"</em> Did not match any Buyoffers.</p>
+                    <dl>
+                        <dt>You may consider to:</dt>
+                        <dd>• Check the spelling </dd>
+                        <dd>• Use less keywords</dd>
+                        <dd>• Use different keywords</dd>
+                    </dl>
+                </div>
+            </div>
+
+<?php
+}
+	}
+	?>
+
+            <!-- 求购列表 -->
+            <ul class="findgood-list">
+                <!-- 每页20条记录 -->
+                <volist name='list' id='vo'>
+                <li>
+                    <div>
+                        <p class="findgood-title">{$vo.title}</p>
+                        <div class="findgood-content">
+                            <!-- {$vo.content} -->
+                                    <!--echo trim( mb_substr( strip_tags( html_entity_decode( $vo['content'] ) ), 0, 480, 'UTF-8' ) ).'...';-->
+
+                        </div>
+                        <P>
+                            <span class="type">Type: <span> {$vo.type}</span></span>
+                            <span>Location: <span><i class="country-CN"></i>{$vo.location}</span></span>
+                        </P>
+                    </div>
+                    <a href="{:U('Buyoffer/BuyOfferDetails')}?id={$vo.id}">View Details</a>
+                </li>
+                </volist>
+                    
+            </ul>
+        </div>
+        <!-- 页码 -->
+        <div class="pagination">
+            <div class="handle">
+            {$show}
+            <!--  
+                <a href="" class="prev"><i class="icon-prev"></i>Previous Page</a>
+                <a href="" class="size">1</a>
+                <a href="" class="size current">2</a>
+                <a href="" class="size">3</a>
+                <a href="" class="size">4</a>
+                <span class="sl">…</span>
+                <a href="" class="size">20</a>
+                <a href="" class="next">Next Page<i class="icon-next"></i></a>
+                -->
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 页面通用底部 -->
+<include file="Public/footer" />
+</body>
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/find-goods.js"></script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>My Buy Offers - Operation Record</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-findGoods-operHistory.css">
+</head>
+<body>
+<include file="Public/user-notice" />
+<include file="Public/member-head" />
+<div class="wrapper clearfix member-wraper">
+<include file="Public/member-side" />
+
+
+    <div class="fl member-main">
+        <div class="top-bar clearfix"><a href="{:U('Buyoffer/modify')}?id={$Think.get.id}" class="fl re-btn">Back</a></div>
+
+        <div class="main-content">
+            <div class="list-search">
+                <div class="b-tl">Operation History</div>
+                <table class="findGoods-list">
+                    <tr>
+                        <th>Operation Item</th>
+                        <th>Operation Time</th>
+                        <th>Operator</th>
+                    </tr>
+                    <volist name='opera' id='vo'>
+                    <tr>
+                        <td>
+                            <div class="inner">
+                                
+                                <notempty name="vo['reason']"><div class="red">[Reason:{$vo.reason}]</div></notempty>
+                            	<p class="title">{$vo.opera}</p>
+                            </div>
+                        </td>
+                        <td>{$vo.addTime|date="H:i:s F d,Y",###}</td>
+                        <td>{$vo.otype}</td>
+                    </tr>
+                    </volist>
+                </table>
+
+
+            </div>
+					<div class="pagination">
+                <div class="handle">
+                    {$show}
+                </div>
+            </div>
+        </div>
+		
+
+    </div>
+</div>
+<include file="Public/footer" />
+</body> 
+    <script src="__PUBLIC__/User/js/member-findGoods-operHistory.js"></script>
+</html>

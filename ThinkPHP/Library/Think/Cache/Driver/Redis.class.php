@@ -1,0 +1,338 @@
+<?php
+// +----------------------------------------------------------------------
+// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: liu21st <liu21st@gmail.com>
+// +----------------------------------------------------------------------
+namespace Think\Cache\Driver;
+use Think\Cache;
+defined('THINK_PATH') or exit();
+
+/**
+ * Redis缓存驱动  用于test环境和正式环境
+ * 要求安装phpredis扩展：https://github.com/nicolasff/phpredis
+ */
+class Redis extends Cache {
+	 /**
+	 * 架构函数
+     * @param array $options 缓存参数
+     * @access public
+     */
+    public function __construct($options=array()) {
+        if ( !extension_loaded('redis') ) {
+            E(L('_NOT_SUPPORT_').':redis');
+        }
+        $options = array_merge(array (
+            'host'          => C('REDIS_HOST') ? : '127.0.0.1',
+            'port'          => C('REDIS_PORT') ? : 6379,
+            'timeout'       => C('DATA_CACHE_TIMEOUT') ? : false,
+            'auth'       => C('REDIS_AUTH') ? : false,
+            'persistent'    => false,
+            'db'          => C('REDIS_DB') ? : 2,
+        ),$options);
+
+        $this->options =  $options;
+        $this->options['expire'] =  isset($options['expire'])?  $options['expire']  :   C('DATA_CACHE_TIME');
+        $this->options['prefix'] =  isset($options['prefix'])?  $options['prefix']  :   C('DATA_CACHE_PREFIX');        
+        $this->options['length'] =  isset($options['length'])?  $options['length']  :   0;
+        $func = $options['persistent'] ? 'pconnect' : 'connect';
+        $this->handler  = new \Redis;
+        $options['timeout'] === false ?
+            $this->handler->$func($options['host'], $options['port']) :
+            $this->handler->$func($options['host'], $options['port'], $options['timeout']);
+
+        $options['auth'] === false ?
+            '':
+            $this->handler->auth($options['auth']);
+            $this->handler->select($options['db']);
+//            $this->handler->ZREVRANGEBYSCORE();
+
+            $this->options['keyConfig'] = C('REDIS_KEYS') ? C('REDIS_KEYS') : false;
+            
+            return $this->handler;
+    }
+
+    /**
+     * 读取缓存
+     * @access public
+     * @param string $name 缓存变量名
+     * @return mixed
+     */
+//    public function get($name) {
+//        N('cache_read',1);
+//        $value = $this->handler->get($this->options['prefix'].$name);
+//        $jsonData  = json_decode( $value, true );
+//        return ($jsonData === NULL) ? $value : $jsonData;	//检测是否为JSON数据 true 返回JSON解析数组, false返回源数据
+//    }
+
+    /**
+     * 写入缓存
+     * @access public
+     * @param string $name 缓存变量名
+     * @param string $name 缓存变量名
+     * @param mixed $value  存储数据
+     * @param integer $expire  有效时间（秒）
+     * @return boolean
+     */
+//    public function set($name, $value, $expire = null) {
+//        N('cache_write',1);
+//        if(is_null($expire)) {
+//            $expire  =  $this->options['expire'];
+//        }
+//        $name   =   $this->options['prefix'].$name;
+//        //对数组/对象数据进行缓存处理，保证数据完整性
+//        $value  =  (is_object($value) || is_array($value)) ? json_encode($value) : $value;
+//        if(is_int($expire) && $expire) {
+//            $result = $this->handler->setex($name, $expire, $value);
+//        }else{
+//            $result = $this->handler->set($name, $value);
+//        }
+//        if($result && $this->options['length']>0) {
+//            // 记录缓存队列
+//            $this->queue($name);
+//        }
+//        return $result;
+//    }
+//
+//    /**
+//     * 删除缓存
+//     * @access public
+//     * @param string $name 缓存变量名
+//     * @return boolean
+//     */
+//    public function rm($name) {
+//        return $this->handler->delete($this->options['prefix'].$name);
+//    }
+//
+//    /**
+//     * 清除缓存
+//     * @access public
+//     * @return boolean
+//     */
+//    public function clear() {
+//        return $this->handler->flushDB();
+//    }
+//
+//    public function hset($name,$field,$value) {
+//        return $this->handler->hSet($this->options['prefix'].$name, $field,$value);
+//    }
+//
+//    public function hsetnx($name,$field,$value) {
+//        return $this->handler->hSetNx($this->options['prefix'].$name, $field,$value);
+//    }
+//
+//    public function hGet($name,$field) {
+//        return $this->handler->hGet($this->options['prefix'].$name, $field);
+//    }
+//
+//    public function incr($name) {
+//        return $this->handler->incr($this->options['prefix'].$name);
+//    }
+//
+//    public function hMset($name,$array){
+//        return $this->handler->hMset($this->options['prefix'].$name,$array);
+//    }
+//
+//    public function sAdd($key, $value1, $value2 = null, $valueN = null){
+//        return $this->handler->sAdd($key, $value1, $value2, $valueN);
+//    }
+//
+//    public function select($num){
+//        return $this->handler->select($num);
+//    }
+//
+//    public function SMEMBERS($name){
+//        return $this->handler->sMembers($name);
+//    }
+
+    
+    
+    /**
+     * hash的公共检测方法,
+     * @access public
+     */
+    protected function checkHashKey($key, $field){
+    	if(!$this->options['keyConfig']){
+    		return false;
+    	}
+    
+    	$hashKeys	 = $this->options['keyConfig']['hash'];
+    	$hashFields	 = $this->options['keyConfig']['hashFields'];
+    
+    	$pass = false;
+    	foreach ($hashKeys as $index=>$hKey){
+    		if(preg_match($hKey, $key)){
+    			$pass	 = true;
+    			$kIndex	 = $index;
+    			break;
+    		}
+    	}
+    
+    	if(!$pass){
+    		return false;
+    	}
+    
+    	$keyFields = $hashFields[$kIndex];
+    	if(is_array($keyFields)){
+    		if(!in_array($field, $keyFields)){
+    			return false;
+    		}
+    	}else{
+    		if(!preg_match($keyFields, $field)){
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+
+    
+    
+    /**
+     * 重写hSet方法,
+     * @access public
+     * @return
+     */
+    public function hSet($key, $field, $value) {
+    	
+    	$result = $this->handler->hSet($key, $field, $value);
+    	
+    	if ($result && $this->checkHashKey($key, $field)) {
+    		//写入列表
+    		$this->pushHashIdToList($key, $field);
+    	}
+    	
+    	return $result;
+    }
+    
+    
+    
+    /**
+     * 重写hSetNx方法,
+     * @access public
+     * @return
+     */
+    public function hSetNx($key, $field, $value) {
+    	
+    	$result = $this->handler->hSetNx($key, $field, $value);
+    	
+    	if ($result && $this->checkHashKey($key, $field)) {
+    		//写入列表
+    		$this->pushHashIdToList($key, $field);
+    	}
+    	
+    	return $result;
+    }
+    
+    
+    /**
+     * 重写hMSet方法,
+     * @access public
+     * @return
+     */
+    public function hMSet($key, array $fields) {
+    	$canPushList = true;
+    	if(!$this->options['keyConfig']){
+    		$canPushList = false;
+    	}
+    
+    	$hashKeys	 = $this->options['keyConfig']['hash'];
+    	$hashFields	 = $this->options['keyConfig']['hashFields'];
+    
+    	$pass = false;
+    	foreach ($hashKeys as $index=>$hKey){
+    		if(preg_match($hKey, $key)){
+    			$pass	 = true;
+    			$kIndex	 = $index;
+    			break;
+    		}
+    	}
+    
+    	if(!$pass){
+    		$canPushList = false;
+    	}
+    
+    	if(!is_array($fields)){
+    		$canPushList = false;
+    	}
+    
+    	$inputFields = array_keys($fields);
+    	$keyFields	 = $hashFields[$kIndex];
+    	foreach($inputFields as $hField){
+    		if(is_array($keyFields)){
+    			if(!in_array($hField, $keyFields)){
+    				$canPushList = false;
+    			}
+    		}else{
+    			if(!preg_match($keyFields, $hField)){
+    				$canPushList = false;
+    			}
+    		}
+    	}
+    	
+    	$result = $this->handler->hMSet($key, $fields);
+    	
+    	if($result && $canPushList) {
+    		//写入列表
+    		$this->pushHashIdToList($key, $fields);
+    	}
+    	
+    	return $result;
+    }
+    
+    
+    
+    
+    /**
+     * 将修改hash的ID写入列表
+     * @access public
+     * $key string hash键
+     * $fields string/array hash键域，
+     */
+    public function pushHashIdToList($key , $fields){
+    	//不用同步的数据
+    	if( in_array($key, array('hash:category:cache', 'hash:country:name') ) ){
+    		return ;
+    	}
+    	 
+    	$hashKeys	 = $this->options['keyConfig']['hash'];
+    	$listKeys	 = $this->options['keyConfig']['list'];
+    	$historyHash	 = $this->options['keyConfig']['historyHash'];
+    	 
+    	$kIndex = null;
+    	foreach ($hashKeys as $index=>$hKey){
+    		if(preg_match($hKey, $key, $match)){
+    			$kIndex	 = $index;
+    			break;
+    		}
+    	}
+    	 
+    	if(!is_null($kIndex)){
+    		$id = $match[1];
+    		if(isset($listKeys[$kIndex])){
+    			$listKey = $listKeys[$kIndex];
+    			$listKey = str_replace('/^', '', str_replace('$/', '', $listKey));//var_dump($listKey);exit;
+    			if(in_array($kIndex, $historyHash)){
+    				if(is_array($fields)){
+    					foreach ($fields as $field=>$val){
+    						$value = $id.'_'.$field;
+    						$this->lpush($listKey, $value);
+    					}
+    				}else{
+    					$value = $id.'_'.$fields;
+    					$this->lpush($listKey, $value);
+    				}
+    
+    			}else{
+    
+    				$this->lpush($listKey, $id);
+    			}
+    		}
+    	}
+    }
+
+}

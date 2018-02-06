@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>keywa,the global leader in chemical industry resource integration</title>
+<meta name="keywords" content="奇化网，全球化工产业链资源整合平台"/>
+<meta name="description" content="奇化网，率先在中国推出B2P商业模式，致力于打造全球化工产业链整合平台，依托专业的线上线下化工产业互联网模式，挖掘链接全球化工产业资源，实现产业资源无缝对接，进而撬动数十万亿的化工产业市场。"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta name="format-detection" content="telephone=no, email=no"/>
+<meta name="HandheldFriendly" content="true">
+<meta name="screen-orientation" content="portrait">
+<meta name="full-screen" content="yes">
+<meta name="browsermode" content="application">
+<meta name="x5-orientation" content="portrait">
+<meta name="x5-fullscreen" content="true">
+<meta name="x5-page-mode" content="app">
+<script>;(function(){var clientWidth=document.documentElement.clientWidth;if(clientWidth>640){clientWidth=640};document.getElementsByTagName("html")[0].style.fontSize=clientWidth/6.4+"px";})();</script>
+<link href="__PUBLIC__/User/css/commonh5.css" type="text/css" rel="stylesheet"/>
+<link href="__PUBLIC__/User/css/registerh5.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="wrapper">
+    <!-- 头部背景 -->
+    <div class="header-bg"></div>
+
+    <div class="content">
+        <div class="info">
+            <form>
+                <div class="form-item border-1px">
+                    <input type="text" name="username" placeholder="Member ID" />
+                </div>
+                <div class="form-item border-1px country-select">
+                    <div class="select-btn"><span></span></div>
+                    <input type="text" name="country" placeholder="Country"/>
+                    <span class="country-data">Country</span>
+                </div>
+                <div class="form-item border-1px">
+                    <input type="text" name="company" placeholder="Company"/>
+                </div>
+                <div class="form-item border-1px">
+                    <input type="text" name="contact" placeholder="Name"/>
+                </div>
+                <div class="form-item border-1px">
+                    <input type="text" name="email" placeholder="Email Address"/>
+                </div>
+                <div class="form-item border-1px">
+                    <input type="password" name="password" placeholder="Password"/>
+                </div>
+                <div class="form-item border-1px">
+                    <input type="password" name="repassword" placeholder="Confirm Password"/>
+                    <input type="hidden" name="uv_r" value="<php>echo mobileCache();</php>" id="uv_r">
+                </div>
+                <!-- <div class="form-item border-1px">
+                    <input type="password" name="password" placeholder="密码"/>
+                    <span class="icon-eye hock_password"></span>
+                </div> -->
+                <div class="rules">
+                    <p>
+                        <input type="checkbox" class="rules-checkbox"  name="rulesCheck">
+                        By creating an account,you agree to keywa's
+                        <a href="{:U('/mobile/exhibit/lawDetail')}">legal statement</a> and <a href="{:U('/mobile/exhibit/privacyPolicy')}">terms of use</a>.
+                    </p>
+                </div>
+                
+                <div class="join-btn">
+                    <div id="error-tips"></div>
+                    <input type="button" value="Join Free" class="join">
+                </div>
+                <!-- <div class="tips-wrap">
+                    <p class="tips" id="error-tips"></p>
+                </div> -->
+                
+            </form>
+        </div>
+    </div>
+    <!-- 底部背景 -->
+    <div class="footer-bg"></div>
+
+
+</div>
+
+<div class="country-wrap">
+    <div class="layer"></div>
+    <div class="container">
+        <div class="title">Your Country</div>
+        <div class="country-content">
+            <ul class="country-list">
+                <?php foreach($countryList as $k => $v) { ?>
+                <li class="country-item" data-id="<?php echo $k ?>"><?php echo $v ?><i class="icon-mark"></i></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="__PUBLIC__/User/lib/jquery/jquery-1.9.1.min.js"></script>
+
+<script src="__PUBLIC__/User/lib/validator/jquery.validator.min.js"></script>
+<script src="__PUBLIC__/User/lib/validator/jquery.validatorConfig.js"></script>
+
+
+<script src="__PUBLIC__/User/js/registerh5.js"></script>
+</html>

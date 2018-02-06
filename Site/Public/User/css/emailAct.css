@@ -1,0 +1,205 @@
+/**
+ *  ---------------------------------------------
+ *      author : admin
+ *      data   : 2017-04-19 11:26:04
+ *  ---------------------------------------------
+ */
+.scroll-news {
+  position: relative;
+  z-index: 20; }
+
+.head {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 25px 0;
+  height: 80px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 3px 4px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 4px 3px rgba(0, 0, 0, 0.1); }
+  .head .d-logo {
+    width: 96px;
+    padding-right: 30px;
+    margin-top: -3px; }
+    .head .d-logo .logo {
+      display: block;
+      max-width: 100%; }
+  .head .head-tag {
+    padding-left: 25px;
+    height: 30px;
+    line-height: 30px;
+    color: #0096e0;
+    font-size: 16px;
+    border-left: 1px solid #0096e0; }
+    .head .head-tag .alink {
+      position: relative;
+      color: #666;
+      font-size: 16px;
+      margin-right: 40px; }
+      .head .head-tag .alink.active {
+        color: #ff7422; }
+        .head .head-tag .alink.active:after {
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          margin-left: -14px;
+          display: block;
+          width: 28px;
+          content: '';
+          border-top: 2px solid #eb691c; }
+  .head .part-rt {
+    position: relative;
+    float: right;
+    color: #666; }
+    .head .part-rt .user-p {
+      display: block;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #666; }
+    .head .part-rt .user-p {
+      display: block;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #666; }
+      .head .part-rt .user-p .u-link {
+        color: #666; }
+        .head .part-rt .user-p .u-link:hover {
+          color: #4496f9; }
+      .head .part-rt .user-p .cut-line {
+        padding: 0 5px;
+        font-style: normal; }
+    .head .part-rt .logout .name {
+      color: #666; }
+      .head .part-rt .logout .name:hover {
+        color: #4496f9; }
+    .head .part-rt .hd-pic {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 45px;
+      margin-right: 10px; }
+
+.msg-num {
+  position: absolute;
+  padding: 1px 4px;
+  top: -7px;
+  left: 20px;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 12px;
+  color: #fff;
+  background-color: #ff3232;
+  -webkit-border-radius: 6px 6px 6px 0;
+  border-radius: 6px 6px 6px 0;
+  min-width: 12px;
+  text-align: center;
+  text-indent: 0; }
+
+.top-barline {
+  position: relative;
+  z-index: 3px;
+  background: #fff;
+  border-bottom: 1px solid #f4f4f4; }
+
+.top-tags {
+  height: 30px;
+  line-height: 30px; }
+  .top-tags .tag {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+    color: #999; }
+  .top-tags .icon-home, .top-tags .icon-email {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -3px;
+    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    background-image: url(../icons/emailAct/sprite.png);
+    background-position: 0px 0px; }
+  .top-tags .icon-email {
+    margin-top: -1px;
+    width: 16px;
+    height: 12px;
+    background-image: url(../icons/emailAct/sprite.png);
+    background-position: 0px -14px; }
+  .top-tags .tag:hover {
+    color: #4496f9; }
+    .top-tags .tag:hover .icon-home, .top-tags .tag:hover .icon-email {
+      background-image: url(../icons/emailAct/sprite.png);
+      background-position: -14px 0px; }
+    .top-tags .tag:hover .icon-email {
+      background-image: url(../icons/emailAct/sprite.png);
+      background-position: -28px 0px; }
+
+body {
+  background: #f4f4f4; }
+
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+.tag-bar {
+  width: 900px;
+  margin: 20px auto 10px;
+  height: 58px;
+  line-height: 58px;
+  border-bottom: 1px solid #ccc; }
+  .tag-bar .tl {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333; }
+  .tag-bar .sign-link {
+    color: #4496f9;
+    font-size: 16px; }
+
+.wrap-center {
+  text-align: center; }
+
+.email-active {
+  color: #666;
+  width: 340px;
+  text-align: left;
+  margin: 120px auto 0; }
+  .email-active .b-tips {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 26px; }
+    .email-active .b-tips b {
+      color: #ff7422; }
+  .email-active .tips {
+    font-size: 12px;
+    margin-top: 10px; }
+  .email-active .btns {
+    margin-top: 20px; }
+    .email-active .btns .tips {
+      color: #4496f9;
+      display: block; }
+  .email-active .btn-link {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 15px;
+    margin-top: 6px;
+    width: 150px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+    color: #fff;
+    background: #4496f9;
+    border-radius: 3px; }
+  .email-active .out-bar {
+    display: none;
+    margin-top: 35px;
+    height: 35px;
+    line-height: 35px; }
+    .email-active .out-bar .btn-link {
+      margin-top: 0;
+      background: #cccccc;
+      cursor: not-allowed; }

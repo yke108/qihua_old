@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/goods-list.css">
+</head>
+<body>
+<include file="Public/index-head" />
+<include file="Public/index-nav" />
+
+    <!-- 网页主体内容 -->
+
+    <div class="wrapper">
+        <?php
+        if( isset($hotProducts) ){
+?>
+        <div class="slider-wraper">
+            <h3 class="b-title">Recommended</h3>
+            <div id="js_hot" class="slider">
+                <div class="bd">
+                    <ul class="list clearfix">
+                        <?php
+                        foreach( $hotProducts as $product ){
+?>
+                        <li class="item">
+                            <div class="product">
+                                <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="pic-wrap"><img src="<?php echo $product['images'][0]?>" alt="<?php echo $product['title']?>" class="pic"></a>
+                                <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="name"><?php echo $product['title']?></a>
+                                <p class="price"><?php echo $product['priceTip']?><em class="t">/<?php echo $product['weightUnitTip']?></em></p>
+                                <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="detail-link">Details</a>
+                            </div>
+                        </li>
+                        <?php
+                        }
+?>
+                    </ul>
+                </div>
+                <span class="slider-handle prev"><i class="icon-slider-left"></i></span>
+                <span class="slider-handle next"><i class="icon-slider-right"></i></span>
+            </div>
+        </div>
+        <?php
+        }
+?>
+
+        <div id="js_filterChecked" class="filered clearfix">
+            <?php
+            if( !empty( $category ) ){
+?>
+            <span class="filered-item">
+                Categories: <em class="text"><?php echo $category['title']?></em>
+                <em class="txt-close" data-key="category">×</em>
+            </span>
+            <?php
+            }
+            if( !empty( $brand ) ){
+?>
+            <span class="filered-item">
+                Brands: <em class="text"><?php echo implode( '+', $brand )?></em>
+                <em class="txt-close" data-key="brand">×</em>
+            </span>
+            <?php
+            }
+            if( !empty( $area ) ){
+            ?>
+            <span class="filered-item">
+                Country: <em class="text"><?php echo implode( '+', $area )?></em>
+                <em class="txt-close" data-key="Country">×</em>
+            </span>
+            <?php
+            }
+            if( !empty( $companyModel ) ){
+            ?>
+            <span class="filered-item">
+                Business Type: <em class="text"><?php echo implode( '+', $companyModel )?></em>
+                <em class="txt-close" data-key="companyModel">×</em>
+            </span>
+            <?php
+            }
+            if( !empty( $priceBetween ) ){
+            ?>
+            <span class="filered-item">
+                Price: <em class="text"><?php echo $priceBetween?></em>
+                <em class="txt-close" data-key="price">×</em>
+            </span>
+            <?php
+            }
+?>
+        </div>
+
+        <div class="products-wraper clearfix">
+            <div class="fl filter-wraper">
+                <div class="tag-title">Filter</div>
+                <div class="filter-col">
+                    <div class="col-tl">Categories</div>
+                    <div id="js_lv" class="col-opts">
+
+                        <?php
+                        foreach( $categories as $category ){
+?>
+                        <dl class="lv-item <?php echo $category['id'] == $_GET['categoryFirst'] ?'open':'';?>">
+                            <dt class="lv-name"><i class="icon-aw"></i><span class="sp" data-category-first="<?php echo $category['id']?>"><?php echo $category['text']?></span></dt>
+                            <?php
+                            if( !empty( $category['children'] ) ){
+?>
+                            <dd class="lv-sub">
+                                <?php
+                                    foreach( $category['children'] as $subCategory ){
+?>
+                                <dl class="lv-item <?php echo $subCategory['id'] == $_GET['categorySecond'] ?'open':'';?>">
+                                    <dt class="lv-name"><i class="icon-aw"></i><span class="sp" data-category-first="<?php echo $category['id']?>" data-category-second="<?php echo $subCategory['id']?>"><?php echo $subCategory['text']?></span></dt>
+                                    <?php
+                                if( !empty( $subCategory['children'] ) ){
+?>
+                                    <dd class="lv-sub">
+                                        <ul class="cate-lv3">
+                                            <?php
+                                    foreach( $subCategory['children'] as $subFinalCategory ){
+?>
+                                            <li class="lv-item lv-name <?php echo $subFinalCategory['id'] == $_GET['categoryThird'] ?'selected':'';?>"><span class="sp" data-category-first="<?php echo $category['id']?>" data-category-second="<?php echo $subCategory['id']?>" data-category-third="<?php echo $subFinalCategory['id']?>"><?php echo $subFinalCategory['text']?></span></li>
+                                            <?php
+                                    }
+?>
+                                        </ul>
+                                    </dd>
+                                    <?php
+                                }
+?>
+                                </dl>
+                                <?php
+                                    }
+?>
+                            </dd>
+                            <?php
+                                }
+?>
+                        </dl>
+                        <?php
+                        }
+?>
+                    </div>
+                </div>
+                <div class="filter-col" style="display: none">
+                    <div class="col-tl">Brands</div>
+                    <div class="col-opts">
+                        <ul class="checkbox-list">
+                            <?php
+                        foreach( $brands as $brand ){
+?>
+                            <li class="checkbox-item"><label data-brand="<?php echo $brand['id']?>"><i class="<?php echo in_array( $brand['id'], $selectBrand ) ? 'icon-cked':'icon-ck';?>"></i><?php echo $brand['title']?></label></li>
+                            <?php
+                        }
+?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter-col">
+                    <div class="col-tl">Country</div>
+                    <div class="col-opts">
+                   <?php if(!empty($countries)){  ?>
+                        <ul class="checkbox-list">
+                            <?php
+                        foreach( $countries as $country ){
+?>
+                            <li class="checkbox-item"><label data-country="<?php echo $country['id']?>"><i class="<?php echo in_array( $country['id'], $selectCountries ) ? 'icon-cked':'icon-ck';?>"></i><?php echo $country['text']?></label></li>
+                            <?php
+                        }
+?>
+                        </ul>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="filter-col">
+                    <div class="col-tl">Business Type</div>
+
+                    <ul class="checkbox-list">
+                        <?php
+                        foreach( $companyModels as $companyModel ){
+?>
+                        <li class="checkbox-item"><label data-model="<?php echo $companyModel['id']?>"><i class="<?php echo in_array( $companyModel['id'], $selectModels ) ? 'icon-cked':'icon-ck';?>"></i><?php echo $companyModel['text']?></label></li>
+                        <?php
+                        }
+?>
+                    </ul>
+
+                </div>
+                <div class="filter-col filter-">
+                    <div class="col-tl">Price</div>
+                    <label><input class="ipt" type="text" name="minPrice" placeholder="Min." value="<?php if(!empty($_GET['minPrice'])){ echo $_GET['minPrice']; }?>"></label>
+                    <span class="lk">to</span>
+                    <label><input class="ipt" type="text" name="maxPrice" placeholder="Max." value="<?php if(!empty($_GET['maxPrice'])){ echo $_GET['maxPrice']; }?>"></label>
+                    <span id="js_setPrice" class="red-rw"><i class="icon-wrt"></i></span>
+                </div>
+            </div>
+            <div class="fl product-part">
+                <div class="sort-bar clearfix">
+                    <div class="pgtion fl">
+                        <span class="red"><?php echo intval( $totalCount )?></span> <?php echo $totalCount > 1 ? 'results':'result';?> <?php echo !empty($_GET['keyword']) ? ' of "<span class="keyname red">'.urldecode( $_GET['keyword'] ).'</span>"' : '';?><span class="pg-size"><em class="red"><?php echo intval( $page )?></em>/<?php echo $totalPageCount == 0 ? 1 : $totalPageCount?></span>
+                    </div>
+                    <label class="fr">
+                        <span class="sp">Sort</span>
+                        <select name="by" id="">
+                            <option <?php echo empty($_GET['by'])||$_GET['by'] == 1 ? 'selected="selected"' : '';?> value="1">Time:newly</option>
+                            <option <?php echo !empty($_GET['by'])&&$_GET['by'] == 2 ? 'selected="selected"' : '';?> value="2">Price:lowest first</option>
+                        </select>
+                    </label>
+
+                </div>
+                <?php
+                if( !empty( $products ) ){
+?>
+                <ul class="product-list clearfix">
+                    <?php
+                    foreach( $products as $product ){
+?>
+                    <li class="product product5">
+                        <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="pic-wrap"><img src="<?php echo $product['images'][0]?>" alt="<?php echo $product['title']?>" class="pic"></a>
+                        <p class="price"><?php echo $product['priceTip']?><em class="t">/<?php echo $product['weightUnitTip']?></em></p>
+                        <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="name"><?php echo $product['title']?></a>
+                        <p class="spec" title="<?php echo $product['seat']?>"><?php echo $product['firstSeat']?></p>
+                    </li>
+                    <?php
+                    }
+?>
+                </ul>
+                <div class="pagination">
+                    <div class="handle">
+                        {$page_html}
+                    </div>
+                </div>
+                <?php
+                }else{
+                ?>
+                <div class="search-none">
+                    <div class="inner">
+                        <i class="icon-warn"></i>
+                        <p class="tips">Did not match any products.</p>
+                        <dl>
+                            <dt>You may consider to:</dt>
+                            <dd>• Check the spelling </dd>
+                            <dd>• Use less keywords</dd>
+                            <dd>• Use different keywords</dd>
+                        </dl>
+                    </div>
+                </div>
+                <?php
+                }
+?>
+
+            </div>
+        </div>
+
+    </div>
+
+
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/Home/js/goods-list.js"></script>
+
+</html>

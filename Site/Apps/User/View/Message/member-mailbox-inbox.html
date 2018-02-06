@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Mailbox</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-mailbox-inbox.css">
+</head>
+<body>
+    <!-- 网站头部 -->
+    <include file="Public/user-notice" />
+<include file="Public/member-head" />
+    <div class="wrapper clearfix">
+<include file="Public/member-side" /> 
+        <div class="main">
+            <h4>Mailbox</h4>
+            <div class="choose">
+                <a href="__ACTION__?send=1" <?php if(empty($_GET['send'])||$_GET['send']==1){echo "class='select'";}else{echo " ";} ?> >Inbox</a>
+                <a href="__ACTION__?send=2" <?php if(!empty($_GET['send']) && $_GET['send']==2){echo "class='select'";}else{echo " ";}  ?>  >Sent</a>
+            </div>
+            <!--有信息 start-->
+			<?php if(!empty($list)){ ?>
+            <div class="filter">
+                <a href="javascript:void(0)" class="js_selectAll filter-btn checkall">Select All</a>
+                <a href="javascript:void(0)" class="js_unselectAll filter-btn  uncheckall">Unselect All</a>
+                <a href="javascript:void(0)" class="js_delete filter-btn multi-delete">Delete</a>
+                <?php if(empty($_GET['send'])||$_GET['send']==1){ ?>
+                <div class="simulat-select filter-btn">
+                    <i class="ar-down"></i>
+                    <input class="value" name="trade" type="hidden" value="" id="trade" />
+                    <i class="icon-select"></i>
+                    <p class="title">Mark as</p>
+                    <ul class="options">
+                        <li class="read" data-selectId="1">Read</li>
+                        <li class="unread" data-selectId="2">Unread</li>
+                    </ul>
+                    
+                </div>
+                <?php }else{?>
+                <?php }?>
+                <notempty name='pageinfo'><p class="results"><span>{$pageinfo.count}</span> results <span>{$pageinfo.page}</span>/{$pageinfo.pagecount}</p></notempty>
+                <form action="__ACTION__" method='get' class="js_searchForm">
+                <div class="seach">
+                    <input type="text" name='keyword' value="<?php if(!empty($_GET['keyword'])){ echo htmlspecialchars($_GET['keyword']); } ?>" class="searchkey" placeholder="Enter a Keywords">
+                    <input type="hidden" name='send' value="<?php if(!empty($_GET['send'])){ echo htmlspecialchars($_GET['send']); } ?>" class="searchkey" >
+                    <a href="javascript:void(0)" class="searchbtn"><i class="icon-search"></i></a>
+                </div>
+                </form>
+            </div>
+            <div class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="225px"><?php if(empty($_GET['send'])||$_GET['send']==1){echo "From";}else{echo "To";} ?></th>
+                            <th width="550px">Subject</th>
+                            <th width="158px"><?php if(empty($_GET['send'])||$_GET['send']==1){echo "Received";}else{echo "Sent";} ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <volist name='list' id='vo'>
+                        <tr class="list-item" data-id="{$vo.id}" <?php if(empty($vo['read'])){echo "class='unread'";}else{echo "class='read'";} ?>>
+                            <td>
+                                <input type="checkbox" class="checkone">
+                                <i class="icon-CN country"></i>
+                                <span><?php if(empty($_GET['send'])||$_GET['send']==1){echo $vo['from'];}else{echo $vo['to'];} ?></span>
+                            </td>
+                            <td><a href="/User/Message/mailDetail?id={$vo.id}&send=<?php echo isset($_GET['send'])?$_GET['send']:1;?>">{$vo.subject}</a></td>
+                            <td>{$vo.send|date="H:i:s F d,Y",###}</td>
+                        </tr>
+                        </volist>
+                        
+                    </tbody>
+                </table>
+                <?php $_GET['send'] = isset($_GET['send'])?$_GET['send']:1; ?>
+                 <if condition="($_GET['send'] eq 1) OR ($_GET['send'] eq null) ">
+                <input type='hidden' name='send' value='1' />
+                <else/>
+                <input type='hidden' name='send' value='2' />
+                </if>
+                <!-- 页码 -->
+                <div class="pagination">
+                    <div class="handle">
+                      {$show}
+                    </div>
+                </div>
+            </div>
+			<?php }else{ ?>
+            <!--有信息 end-->
+            <!--无信息 start-->
+            <div class="msg-none"><i class="icon-msg-nu"></i>No Messages</div>
+            <!--无信息 end-->
+			<?php } ?>
+        </div>
+    </div>
+
+</div>
+
+
+
+<include file="Public/footer" />
+</body>
+    <script src="__PUBLIC__/User/js/member-mailbox-inbox.js"></script>
+</html>

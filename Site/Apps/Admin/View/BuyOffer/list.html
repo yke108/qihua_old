@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<?php
+  $arr = D('Admin/Auth')->getAuthRules();
+$rules=array('name' =>'Admin/BuyOffer/expFind');
+$field = 'id';
+$expAuth = D('Admin/Auth')->getAuthId($rules,$field);
+?>
+<head>
+    <title>求购管理</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/findGoods/list.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+
+</head>
+
+<body>
+    <table id="dataGrid"></table>
+
+    <!-- 表单操作栏 -->
+    <div id="toolbar">
+        <div class="serch">
+            <input id="js_no" name="no" class="easyui-textbox" data-options="prompt:'信息编号'" style="width:120px;height:26px">
+            <input id="js_title" name="title" class="easyui-textbox" data-options="prompt:'标题'" style="width:120px;height:26px">
+            <select id="js_typeSelect" class="easyui-combobox"  name="type" style="width:120px;height:26px;">
+                <option value="0">消息类型-全部</option>
+                <?php
+                foreach( $type as $k=>$v){
+                echo '<option value="'.$k.'">'.$v.'</option>';
+                }
+                ?>
+
+            </select>
+            <input id="js_userName" name="userName" class="easyui-textbox" data-options="prompt:'用户名'" style="width:120px;height:26px">
+            <!--<input id="js_company" name="company" class="easyui-textbox" data-options="prompt:'公司名称'" style="width:120px;height:26px">-->
+
+            <!--<a href="javascript:void(0);" id="js_getAreaData" class="easyui-linkbutton">货物所在地</a>-->
+
+            <!--<span class="area-select js_select_province">-->
+                <!--<input type="text" id="js_province" data-options="prompt:'省份'" class="easyui-combobox area-select" name="city" style="width:100px;height:26px;">-->
+            <!--</span>-->
+            <!--<span class="area-select js_select_city">-->
+                <!--<input type="text" id="js_city" data-options="prompt:'城市'" class="easyui-combobox area-select" name="city" style="width:100px;height:26px;">-->
+            <!--</span>-->
+             <!-- <span class="area-select js_select_area">
+                <input type="text" id="js_area" data-options="prompt:'城市'" class="easyui-combobox area-select" name="city" style="width:100px;height:26px;">
+            </span> -->
+            <select id="js_statusSelect" class="easyui-combobox"  name="state" style="width:120px;height:26px;">
+                <option value="">状态-全部</option>
+                <?php
+                foreach( $state as $k=>$v){
+                    echo '<option value="'.$k.'">'.$v.'</option>';
+                }
+                ?>
+
+            </select>
+
+            <!--<input id="js_operator" name="operator" class="easyui-textbox" data-options="prompt:'审核人'" style="width:120px;height:26px">-->
+            <a href="javascript:void(0);" id="js_userListSearch" class="easyui-linkbutton" iconCls="icon-search">搜  索</a>
+        </div>
+    </div>
+    <?php if(in_array($expAuth['id'],$arr) || $arr == 'Admin'){?>
+    <div id="footerBar">
+        <a id="js_express" href="javascript:void(0);" data-operation="export" class="easyui-linkbutton" style="float: left;"  iconCls="icon-save" >批量导出</a>
+    </div>
+    <?php };?>
+    <!-- 审核不通过弹窗 -->
+    <div id="dlg" class="operate-dialog">
+        <form id="js_revokeForm" method="post">
+            <div class="form-wrap">
+                <label for="reason">原因:</label>
+                <input id="js_revokeReason" type="text" data-options="required:true"  name="reason" class="easyui-validatebox" style="width: 60%" />
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/page/findGoods/list.js"></script>
+</body>
+
+</html>

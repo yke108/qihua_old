@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>内容管理--用户协议</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/content/protocol.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+    <form action="">
+      <div class="wrapper">
+          <p class="title">标题：</p>
+          <input type="text" id='protocol'  class="easyui-textbox js_newsDialogTitle" data-options=""  style="width:280px; height:30px" value="{$data.title}">
+          <p class="title">内容：</p>
+          <textarea  id="editProtol">{$data.content}</textarea>
+
+          <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_saveEditProtol" data-options="iconCls:'icon-save'">提交</a>
+      </div>
+    </form>
+   
+    <script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/editor/kindeditor-all-min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/page/content/protocol.js"></script>
+</body>
+
+</html>

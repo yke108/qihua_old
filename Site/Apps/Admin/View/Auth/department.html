@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>系统管理--管理员列表</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/page/sys/department.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+<script>
+    var authUserUrl="{:U('Auth/departmentList')}";
+    var departmentSave="{:U('Auth/departmentSave')}";
+    var departmentDel="{:U('Auth/departmentDel')}";
+</script>
+<div class="easyui-layout" style="width:100%; height: 500px;">
+    <div data-options="region:'north'" style="width: 100%; height: 50px">
+        <div id="toolbar">
+            <div class="btns">
+                <a href="javascript:void(0);" class="easyui-linkbutton addParent" data-options="iconCls:'icon-add',disabled:true">新增一级部门</a>
+                <a href="javascript:void(0);" class="easyui-linkbutton addChild"  data-options="iconCls:'icon-add',disabled:true">新增子部门</a>
+                <a href="javascript:void(0);" class="easyui-linkbutton remove js_removeDepartment" data-options="iconCls:'icon-remove',disabled:true">删除</a>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'west'" style="width:300px;">
+        <ul id="tree"></ul>
+    </div>
+    <div data-options="region:'center'">
+        <form id="departmentForm">
+            <div class="item">
+                <label for="departmentName">部门名称：</label>
+                <input type="text" id="name" class="easyui-textbox" name="name" style="width:180px; height:30px" data-options="required:true" value="名称">
+            </div>
+
+            <div class="item-2">
+                <label >&nbsp;</label>
+                <a href="javascript:void(0);" class="easyui-linkbutton js_departmentSubmit" data-options="iconCls:'icon-save'" data-options="required:true" style="padding: 6px 18px;">保 存</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- 新增一级部门 -->
+<div id="addParentDialog" class="operate-dialog">
+    <form id="addParentForm" method="post">
+        <div class="form-item">
+            <label><span>*</span>部门名称：</label><input type="text" id="name" class="easyui-textbox" name="name" style="width:200px; height:30px" data-options="required:true">
+            <input type="hidden" name="parentid" id="parentid"/>
+        </div>
+
+
+        <div id="btns">
+            <a href="javascript:void(0);" class="easyui-linkbutton js_saveAddParentForm" iconCls="icon-save" style="width:90px">保存</a>
+        </div>
+    </form>
+</div>
+
+<!-- 新增子部门 -->
+<div id="addChildDialog" class="operate-dialog">
+    <form id="addChildForm" method="post">
+        <div class="form-item">
+            <label><span>*</span>部门名称：</label><input type="text" id="name" class="easyui-textbox" name="name" style="width:200px; height:30px" data-options="required:true">
+            <input type="hidden" name="parentid" id="parentid"/>
+        </div>
+
+
+        <div id="btns">
+            <a href="javascript:void(0);" class="easyui-linkbutton js_saveAddChildForm" iconCls="icon-save" style="width:90px">保存</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/data/staticData.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/page/sys/department.js"></script>
+</body>
+
+</html>

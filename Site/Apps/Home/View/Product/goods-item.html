@@ -1,0 +1,362 @@
+   <!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/goods-item.css">
+</head>
+
+<body>
+<include file="Public/index-head" />
+<include file="Public/index-nav" />
+    <!-- 网页主体内容 -->
+    <div class="wrapper clearfix">
+        <div class="crumb-nav">
+            <span>Current Location：</span>
+            <a href="{:U( '/Product' )}">Mall</a>&gt;
+            <?php
+            $key = 0;
+            foreach( $productDepotCategory as $value ){
+                if( $key == 0 ){
+                    $keyname = 'categoryFirst';
+                }elseif( $key == 1 ){
+                    $keyname = 'categorySecond';
+                }elseif( $key == 2 ){
+                    $keyname = 'categoryThird';
+                }
+                $param[$keyname] = $value['id'];
+                $key++;
+            ?>
+            <a href="{:U( 'Product/index', $param )}"><?php echo $value['title']?></a>&gt;
+            <?php
+            }
+?>
+            <span class="cur"><?php echo $product['title']?></span>
+        </div>
+        <!-- 商品图片和购买 -->
+        <div class="good-main">
+            <div class="item-preview">
+                <div class="preview">
+                    <div class="original-wrap">
+                        <div class="original">
+                            <img src="<?php echo $product['images'][0]?>"/>
+                        </div>
+                    </div>
+                    <div class="thumb">
+                        <div class="scrollbutton prev disabled"></div>
+                        <div class="thumb-list-wrap">
+                            <ul>
+                                <?php
+                                $i = 0;
+                                foreach( $product['images'] as $image ){
+                                ?>
+                                <li class="<?php echo $i == 0 ? 'active':'';?>"><img src="<?php echo $image?>" /></li>
+                                <?php
+                                $i++;
+                                }
+?>
+                            </ul>
+                        </div>
+                        <div class="scrollbutton next"></div>
+                    </div>
+                    <div class="enlarged " style="display:none;"><img /></div>
+                </div>
+            </div>
+            <div class="item-info">
+                <p class="good-title"><?php echo $product['title']?></p>
+                <div class="info">
+                    <div class="price-wrap">
+                        <p class="price-title">price</p>
+                            <span class="unit"><?php echo $product['currencyTip']?></span><span class="price"><?php echo $product['priceTip']?></span><span class="unit">/<?php echo $product['weightUnitTip']?></span>
+                        <div class="tips">Tips: The Final Sale Price depens on the Bilateral Negotiation</div>
+                    </div>
+                </div>
+                <div class="attr">
+                    <dl>
+                        <dt>Suppliers</dt>
+                        <dd><?php echo $product['sellerInfo']['companyName']?></dd>
+                    </dl>
+                    <dl>
+                        <dt>Product Location</dt>
+                        <dd>
+                        <foreach name="productDepotSeat" key="key" item="value">
+                                {$value['title']}&nbsp;
+                        </foreach></dd>
+                    </dl>
+                    <dl>
+                        <dt>Stock</dt>
+                        <dd><span class="max">
+                            <?php if ($product['inventoryType'] == 1 && $product['inventoryNum'] == 0) {?>
+                            <?php echo 'In Stock' ?>
+                            <?php } else if ($product['inventoryType'] == 1 && $product['inventoryNum'] > 0 && $product['inventory'] == 1) {?>
+                            <?php echo $product['inventoryNum']?> </span><?php echo $product['weightUnitTip']?>
+							<?php } else if($product['inventoryType'] == 1 && $product['inventoryNum'] > 0 && $product['inventory'] == 0){ ?>
+							<?php echo 'In Stock' ?>
+                            <?php } else if ($product['inventoryType'] == 2) {?>
+                            <?php echo 'Out Of Stock' ?>
+                            <?php } ?>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>MOQ </dt>
+                        <dd><span class="less-moq"><?php echo $product['moq']?> </span><?php echo $product['weightUnitTip']?></dd>
+                    </dl>
+                </div>
+                <?php if($companyName!=-1){ ?>
+                <div class="contact-now">
+
+                 <?php if(!empty($loginUid)){
+						if(!empty($companyName)&&$companyName!=-1){ ?>
+                    	<a href="{:U( '/User/Message/sendMessage', array( 'id' => $product['Uid'] ))}" class="buy-now" target="_blank"  data-uid="<?php echo $product['Uid']?>"><i class="icon-contact"></i><span>Contact Now</span></a>
+						<?php }else{ ?>
+						<a href="javascript:void(0);" class="buy-now" data-uid="<?php echo $product['Uid']?>"><i class="icon-contact"></i><span>Contact Now</span></a>
+						<?php }}else{ ?>
+						<a href="{:U( '/User/index/login' )}" class="buy-now" data-uid="<?php echo $product['Uid']?>"><i class="icon-contact"></i><span>Contact Now</span></a>
+						<?php } ?>
+
+
+                    <?php
+                    if( empty( $loginUid ) ){
+?>
+                    <a href="{:U( '/User/index/login' )}" class="favorites"><i class="icon-star"></i>Add to Favorites</a>
+                    <?php
+                    }else{
+                        if( !$isCollect ){
+                        ?>
+                    <a href="javascript:void(0);" class="favorites js_collect" data-id="<?php echo $product['id']?>" data-type="1"><i class="icon-star"></i>Add to Favorites</a>
+                        <?php
+                        }else{
+                        ?>
+                    <a href="javascript:void(0);" class="favorites collected js_collectCancel" data-id="<?php echo $product['id']?>" data-type="1"><i class="icon-star"></i>In your Favorites</a>
+                    <?php
+                        }
+                    }
+
+?>
+                    &nbsp;&nbsp;&nbsp;   Product No.:{$product.productCode}
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+        <!-- 推荐商品 -->
+        <div class="hot">
+            <div class="main-title">
+                <p>Hot Commodity</p>
+            </div>
+            <?php if(!empty($hotProducts)){ ?>
+            <foreach name="hotProducts" item="hotProduct">
+                <div class="hot-goods">
+                    <a href="{:U( 'Product/detail', array( 'id' => $hotProduct['id'] ) )}"><img src="{$hotProduct['images'][0]}" alt="{$hotProduct['title']}"></a>
+                    <a href="{:U( 'Product/detail', array( 'id' => $hotProduct['id'] ) )}" class="hot-title">{$hotProduct['title']}</a>
+                    <p class="hot-price">{$hotProduct['priceTip']}/{$hotProduct['weightUnitTip']}</p>
+                </div>
+            </foreach>
+            <?php } ?>
+        </div>
+        <!-- 产品详情 -->
+        <div class="good-details">
+            <div class="main-title">
+                <p>Description</p>
+            </div>
+            <div class="details">
+                <dl class="col-12">
+                    <dt>Chemical Name:&nbsp;</dt>
+                    <dd><?php echo empty($product['enName'])?"":$product['enName'] ?></dd>
+                </dl>
+                <dl class="col-12">
+                    <dt>Synonyms:&nbsp;</dt>
+                    <dd><?php echo empty($product['enAlias'])?"": $product['enAlias'] ?></dd>
+                </dl>
+                <dl class="col-4">
+                    <dt>Manufacturer/Supplier:&nbsp;</dt>
+                    <dd><?php echo empty($product['producer'])?"": $product['producer']?></dd>
+                </dl>
+                <dl class="col-4">
+                    <dt>Brand:&nbsp;</dt>
+                    <dd><?php echo empty($product['brand'])?"": $product['brand'] ?></dd>
+                </dl>
+                <dl class="col-4">
+                    <dt>Origin:&nbsp;</dt>
+                    <if condition="!empty($productDepotPlace)">
+                        <foreach name="productDepotPlace" key="key" item="value">
+                                <dd title="{$value['title']}">{$value['title']}</dd>&nbsp;
+                        </foreach>
+                        <else/>
+                        <dd></dd>
+                    </if>
+                </dl>
+                <dl class="col-4">
+                    <dt>Purity:&nbsp;</dt>
+                    <dd><?php echo empty($product['attribute']['format'])?'' : $product['attribute']['format'] ?></dd>
+                </dl>
+                <dl class="col-4">
+                    <dt>Appearance:&nbsp;</dt>
+                    <dd><?php echo empty($product['attribute']['character'])?'' : $product['attribute']['character'] ?></dd>
+                </dl>
+                <dl class="col-4">
+                    <dt>Quality Grade:&nbsp;</dt>
+                    <dd>
+                       <?php echo empty($product['attribute']['qualityGradeTip'])?'' : $product['attribute']['qualityGradeTip'] ?>
+                    </dd>
+                </dl>
+                <dl class="col-4">
+                    <dt>Package:&nbsp;</dt>
+                    <dd><?php echo empty($product['attribute']['pack'])?'' : $product['attribute']['pack'] ?></dd>
+                </dl>
+                <dl class="col-4">
+                    <dt>Download:&nbsp;</dt>
+                    <dd>
+                        <?php
+                            $undownload = $undownload2 = $undownload3 = false;
+                             if(empty($product['attribute']['msds'])){
+                                $msdsUrl = 'javascript:void(0);';
+                                $undownload = true;
+                             }else{
+                                $msdsUrl = U('Product/download',array('id'=> $product['id'],'attr'=> 'msds') );
+                            }
+                            if(empty($product['attribute']['tds'])){
+                                $tdsUrl = 'javascript:void(0);';
+                                $undownload2 = true;
+                            }else{
+                                $tdsUrl = U('Product/download',array('id'=> $product['id'],'attr'=> 'tds') );
+                            }
+
+                            if(empty($product['attribute']['coa'])){
+                                $coaUrl = 'javascript:void(0);';
+                                $undownload3 = true;
+                            }else{
+                                $coaUrl = U('Product/download',array('id'=> $product['id'],'attr'=> 'coa') );
+                            }
+                        ?>
+                        <a href="<?php echo $msdsUrl?>" <?php echo $undownload ? 'class="undownload"' : '' ?>><span>MSDS</span><i class="icon-download"></i></a><a href="<?php echo $tdsUrl?>" <?php echo $undownload2 ? 'class="undownload"' : '' ?>><span>TDS</span><i class="icon-download"></i></a><a href="<?php echo $coaUrl?>" <?php echo $undownload3 ? 'class="undownload"' : '' ?>><span>CoA</span><i class="icon-download"></i></a></dd>
+                </dl>
+            </div>
+            <?php if(!empty($product['attribute'])){ ?>
+            <div class="introduce">
+                <p class="details-title">Brief Introduction</p>
+                <?php if(!empty($product['attribute']['summary'])){ ?>
+                <p>
+                    {$product['attribute']['summary']|strip_tags}
+                </p>
+                <?php } ?>
+            </div>
+            <div class="introduce">
+                <!--<p class="details-title">Properties</p>-->
+               <?php if(!empty($product['attribute']['features'])){ ?>
+                <!--<p>-->
+                    <!--{$product['attribute']['features']|strip_tags}-->
+                <!--</p>-->
+                <?php } ?>
+                <div class="intr-list">
+                    <table class="table">
+                        <?php if (!empty($product['keyIndex'])) { ?>
+                        <?php $index = 0 ?>
+                            <?php foreach($product['keyIndex'] as $k => $row) { ?>
+                                <?php if (++$index % 2 ==1) { ?>
+                                <tr>
+                                <?php } ?>
+                                    <td class="td-name"><?php echo $k ?></td>
+                                    <td><span class="sp"><?php echo $row ?></span></td>
+                                <?php if ($index % 2 ==0) { ?>
+                                </tr>
+                                <?php } ?>
+                                <?php if ($index == count($product['keyIndex']) && count($product['keyIndex']) % 2 ==1) { ?>
+                                    <td class="td-name"></td>
+                                    <td><span class="sp"></span></td>
+                                <?php } ?>
+                            <?php } ?>
+                        <?php } ?>
+                        <tr>
+                            <td class="td-name">CAS NO.</td>
+                            <td><span class="sp"><?php echo empty($product['cas']) ? '' : $product['cas'] ?></span></td>
+                            <td class="td-name">Relative Density</td>
+                            <td><span class="sp"><?php echo empty($product['attribute']['density']) ? '' : $product['attribute']['density'] ?></span></td>
+                        </tr>
+                        <tr>
+                            <td class="td-name">Odor</td>
+                            <td><span class="sp"><?php echo empty($product['attribute']['smell']) ? '' : $product['attribute']['smell'] ?></span></td>
+                            <td class="td-name">Solubility</td>
+                            <td><span class="sp"><?php echo empty($product['attribute']['solubility']) ? '' : $product['attribute']['solubility'] ?></span></td>
+                        </tr>
+                        <tr>
+                            <td class="td-name">Melting Point</td>
+                            <td><span class="sp"><?php echo empty($product['attribute']['melting']) ? '' : $product['attribute']['melting'] ?></span></td>
+                            <td class="td-name">EINECS NO.</td>
+                            <td><span class="sp"><?php echo empty($product['einecsNO']) ? '' : $product['einecsNO'] ?></span></td>
+                        </tr>
+                        <tr>
+                            <td class="td-name">Flash Point</td>
+                            <td><span class="sp"><?php echo empty($product['attribute']['flash']) ? '' : $product['attribute']['flash'] ?></span></td>
+                            <td class="td-name">Molecular Weight </td>
+                            <td><span class="sp"><?php echo empty($product['attribute']['formula']) ? '' : $product['attribute']['formula'] ?></span></td>
+                        </tr>
+                        <tr>
+                            <td class="td-name">pH</td>
+                            <td><span class="sp"><?php echo empty($product['attribute']['ph']) ? '' : $product['attribute']['ph'] ?></span></span></td>
+                            <td class="td-name">Boiling Point</td>
+                            <td><span class="sp"><?php echo !empty($product['attribute']['boiling']) ? $product['attribute']['boiling'] : '' ?></span></span></td>
+                        </tr>
+                       <!-- <tr>
+                            <td class="td-name">Quality Grade</td>
+                            <td><span class="sp"><span class="sp"><?php echo !empty($product['attribute']['qualityGradeTip']) ? $product['attribute']['qualityGradeTip'] : '' ?></span></span></td>
+                            <td class="td-name"></td>
+                            <td></td>
+                        </tr>
+						-->
+                    </table>
+                </div>
+
+            </div>
+            <div class="introduce">
+                <p class="details-title">Application</p>
+                <p>
+                    <?php echo empty($product['attribute']['purpose']) ? '' : strip_tags($product['attribute']['purpose'])   ?>
+
+                </p>
+            </div>
+            <div class="introduce">
+                <p class="details-title">Storage Condition </p>
+                <p>
+                    <?php echo empty($product['attribute']['condition']) ? '' : strip_tags($product['attribute']['condition']) ?>
+
+                </p>
+            </div>
+            <!--<div class="introduce">-->
+                <!--<p class="details-title">Emergency Treatment </p>-->
+                <!--<p>-->
+                    <!--<?php echo empty($product['attribute']['emergency']) ? '' : strip_tags($product['attribute']['emergency'])  ?>-->
+                <!--</p>-->
+            <!--</div>-->
+        </div>
+        <?php } ?>
+        <!-- 其它同类产品 -->
+        <div class="similar">
+            <div class="main-title">
+                <p>
+                    Other similar products
+                </p>
+            </div>
+            <ul class="list">
+            <?php if(!empty($relateProducts)){ ?>
+                <foreach name="relateProducts" item="relateProduct">
+                    <li>
+                        <div></div>
+                        <a href="{:U( 'Product/detail', array( 'id' => $relateProduct['id'] ) )}" class="img-link"><img src="{$relateProduct['images'][0]}" alt="<?php echo isset($relateProduct['title'])?$relateProduct['title']:'';?>"></a>
+                        <a href="{:U( 'Product/detail', array( 'id' => $relateProduct['id'] ) )}" class="good-title"><php>if(mb_strlen($relateProduct['title'])<=23 ) {echo $relateProduct['title'];}else{echo mb_substr($relateProduct['title'],0,22,'utf-8').'...';}</php></a>
+                        <p class="price"><?php echo isset($relateProduct['priceTip'])?$relateProduct['priceTip']:'';?>/<?php echo isset($relateProduct['weightUnitTip'])?$relateProduct['weightUnitTip']:'';?></p>
+                    </li>
+                </foreach>
+             <?php } ?>
+            </ul>
+        </div>
+        <!-- 其它同类产品 end-->
+    </div>
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/Home/js/goods-item.js"></script>
+
+</html>

@@ -1,0 +1,855 @@
+<?php
+// +----------------------------------------------------------------------
+// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: liu21st <liu21st@gmail.com>
+// +----------------------------------------------------------------------
+namespace Think\Cache\Driver;
+use Think\Cache;
+defined('THINK_PATH') or exit();
+
+/**
+ * Redis缓存驱动 
+ * 要求安装phpredis扩展：https://github.com/nicolasff/phpredis
+ */
+class Redis extends Cache {
+	 /**
+	 * 架构函数
+     * @param array $options 缓存参数
+     * @access public
+     */
+    public function __construct($options=array()) {
+        if ( !extension_loaded('redis') ) {
+            E(L('_NOT_SUPPORT_').':redis');
+        }
+        $options = array_merge(array (
+            'host'          => C('REDIS_HOST') ? : '127.0.0.1',
+            'port'          => C('REDIS_PORT') ? : 6379,
+            'timeout'       => C('DATA_CACHE_TIMEOUT') ? : false,
+            'auth'       => C('REDIS_AUTH') ? : false,
+            'persistent'    => false,
+            'db'          => C('REDIS_DB') ? : 2,
+        ),$options);
+
+        $this->options =  $options;
+        $this->options['expire'] =  isset($options['expire'])?  $options['expire']  :   C('DATA_CACHE_TIME');
+        $this->options['prefix'] =  isset($options['prefix'])?  $options['prefix']  :   C('DATA_CACHE_PREFIX');        
+        $this->options['length'] =  isset($options['length'])?  $options['length']  :   0;
+        $func = $options['persistent'] ? 'pconnect' : 'connect';
+        $this->handler  = new \Redis;
+        $options['timeout'] === false ?
+            $this->handler->$func($options['host'], $options['port']) :
+            $this->handler->$func($options['host'], $options['port'], $options['timeout']);
+
+        $options['auth'] === false ?
+            '':
+            $this->handler->auth($options['auth']);
+            $this->handler->select($options['db']);
+//            $this->handler->ZREVRANGEBYSCORE();
+
+            $this->options['keyConfig'] = C('REDIS_KEYS') ? C('REDIS_KEYS') : false;
+            
+            return $this->handler;
+    }
+
+    /**
+     * 读取缓存
+     * @access public
+     * @param string $name 缓存变量名
+     * @return mixed
+     */
+//    public function get($name) {
+//        N('cache_read',1);
+//        $value = $this->handler->get($this->options['prefix'].$name);
+//        $jsonData  = json_decode( $value, true );
+//        return ($jsonData === NULL) ? $value : $jsonData;	//检测是否为JSON数据 true 返回JSON解析数组, false返回源数据
+//    }
+
+    /**
+     * 写入缓存
+     * @access public
+     * @param string $name 缓存变量名
+     * @param string $name 缓存变量名
+     * @param mixed $value  存储数据
+     * @param integer $expire  有效时间（秒）
+     * @return boolean
+     */
+//    public function set($name, $value, $expire = null) {
+//        N('cache_write',1);
+//        if(is_null($expire)) {
+//            $expire  =  $this->options['expire'];
+//        }
+//        $name   =   $this->options['prefix'].$name;
+//        //对数组/对象数据进行缓存处理，保证数据完整性
+//        $value  =  (is_object($value) || is_array($value)) ? json_encode($value) : $value;
+//        if(is_int($expire) && $expire) {
+//            $result = $this->handler->setex($name, $expire, $value);
+//        }else{
+//            $result = $this->handler->set($name, $value);
+//        }
+//        if($result && $this->options['length']>0) {
+//            // 记录缓存队列
+//            $this->queue($name);
+//        }
+//        return $result;
+//    }
+//
+//    /**
+//     * 删除缓存
+//     * @access public
+//     * @param string $name 缓存变量名
+//     * @return boolean
+//     */
+//    public function rm($name) {
+//        return $this->handler->delete($this->options['prefix'].$name);
+//    }
+//
+//    /**
+//     * 清除缓存
+//     * @access public
+//     * @return boolean
+//     */
+//    public function clear() {
+//        return $this->handler->flushDB();
+//    }
+//
+//    public function hset($name,$field,$value) {
+//        return $this->handler->hSet($this->options['prefix'].$name, $field,$value);
+//    }
+//
+//    public function hsetnx($name,$field,$value) {
+//        return $this->handler->hSetNx($this->options['prefix'].$name, $field,$value);
+//    }
+//
+//    public function hGet($name,$field) {
+//        return $this->handler->hGet($this->options['prefix'].$name, $field);
+//    }
+//
+//    public function incr($name) {
+//        return $this->handler->incr($this->options['prefix'].$name);
+//    }
+//
+//    public function hMset($name,$array){
+//        return $this->handler->hMset($this->options['prefix'].$name,$array);
+//    }
+//
+//    public function sAdd($key, $value1, $value2 = null, $valueN = null){
+//        return $this->handler->sAdd($key, $value1, $value2, $valueN);
+//    }
+//
+//    public function select($num){
+//        return $this->handler->select($num);
+//    }
+//
+//    public function SMEMBERS($name){
+//        return $this->handler->sMembers($name);
+//    }
+
+    
+    /**
+     * hash的公共检测方法,
+     * @access public
+     */
+    protected function checkHashKey($key, $field){
+    	if(!$this->options['keyConfig']){
+    		die('redis数据字典没有配置！');
+    	}
+    	 
+    	$hashKeys	 = $this->options['keyConfig']['hash'];
+    	$hashFields	 = $this->options['keyConfig']['hashFields'];
+    	 
+    	$pass = false;
+    	foreach ($hashKeys as $index=>$hKey){
+    		if(preg_match($hKey, $key)){
+    			$pass	 = true;
+    			$kIndex	 = $index;
+    			break;
+    		}
+    	}
+    	 
+    	if(!$pass){
+    		die('关键字：'.$key.'不合法！');
+    	}
+    	 
+    	$keyFields = $hashFields[$kIndex];
+    	if(is_array($keyFields)){
+    		if(!in_array($field, $keyFields)){
+    			die('关键字：'.$key.'的域“'.$field.'”不合法！');
+    		}
+    	}else{
+    		if(!preg_match($keyFields, $field)){
+    			die('关键字：'.$key.'的域“'.$field.'”不合法！');
+    		}
+    	}
+    }
+    
+    
+    /**
+     * 重写hSet方法,
+     * @access public
+     * @return
+     */
+    public function hSet($key, $field, $value) {
+    	$this->checkHashKey($key, $field);
+    
+    	return $this->handler->hSet($key, $field, $value);
+    }
+    
+    
+    
+    /**
+     * 重写hSetNx方法,
+     * @access public
+     * @return
+     */
+    public function hSetNx($key, $field, $value) {
+    	$this->checkHashKey($key, $field);
+    
+    	return $this->handler->hSetNx($key, $field, $value);
+    }
+    
+    
+    /**
+     * 重写hMSet方法,
+     * @access public
+     * @return
+     */
+    public function hMSet($key, array $fields) {
+    	if(!$this->options['keyConfig']){
+    		die('redis数据字典没有配置！');
+    	}
+    
+    	$hashKeys	 = $this->options['keyConfig']['hash'];
+    	$hashFields	 = $this->options['keyConfig']['hashFields'];
+    
+    	$pass = false;
+    	foreach ($hashKeys as $index=>$hKey){
+    		if(preg_match($hKey, $key)){
+    			$pass	 = true;
+    			$kIndex	 = $index;
+    			break;
+    		}
+    	}
+    
+    	if(!$pass){
+    		die('关键字：'.$key.'不合法！');
+    	}
+    
+    	if(!is_array($fields)){
+    		die('设置关键字：'.$key.'的值出错！');
+    	}
+    	 
+    	$inputFields = array_keys($fields);
+    	$keyFields	 = $hashFields[$kIndex];
+    	foreach($inputFields as $hField){
+    		if(is_array($keyFields)){
+    			if(!in_array($hField, $keyFields)){
+    				die('关键字：'.$key.'的域“'.$hField.'”不合法！');
+    			}
+    		}else{
+    			if(!preg_match($keyFields, $hField)){
+    				die('关键字：'.$key.'的域“'.$hField.'”不合法！');
+    			}
+    		}
+    	}
+    	 
+    
+    	return $this->handler->hMSet($key, $fields);
+    }
+    
+    
+    
+    /**
+     * 重写hIncrBy方法,
+     * @access public
+     * @return
+     */
+    public function hIncrBy($key, $field, $value) {
+    	$this->checkHashKey($key, $field);
+    
+    	return $this->handler->hIncrBy($key, $field, $value);
+    }
+    
+    
+    /**
+     * 重写hIncrByFloat方法,
+     * @access public
+     * @return
+     */
+    public function hIncrByFloat($key, $field, $value) {
+    	$this->checkHashKey($key, $field);
+    
+    	return $this->handler->hIncrByFloat($key, $field, $value);
+    }
+    
+    
+    
+    /**
+     * 公共检测方法,检测已知类型的关键字
+     * @access public
+     * $key 关键字
+     * $type 关键字类型
+     */
+    protected function checkKeyByType($key, $type){
+    	if(!$this->options['keyConfig']){
+    		die('redis数据字典没有配置！');
+    	}
+    
+    	$keys = $this->options['keyConfig'][$type];
+    
+    	$pass = false;
+    	foreach ($keys as $sKey){
+    		if(preg_match($sKey, $key)){
+    			$pass	 = true;
+    			break;
+    		}
+    	}
+    
+    	if(!$pass){
+    		die('关键字：'.$key.'不合法！');
+    	}
+    }
+    
+    
+    
+    /**
+     * 重写set方法,
+     * @access public
+     * @return
+     */
+    public function set($key, $value, $options=array()) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->set($key, $value, $options);
+    }
+    
+    
+    /**
+     * 重写setNx方法,
+     * @access public
+     * @return
+     */
+    public function setNx($key, $value) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->setNx($key, $value);
+    }
+    
+    
+    /**
+     * 重写append方法,
+     * @access public
+     * @return
+     */
+    public function append($key, $value) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->append($key, $value);
+    }
+    
+    
+    /**
+     * 重写setEx方法,
+     * @access public
+     * @return
+     */
+    public function setEx($key, $seconds, $value) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->setEx($key, $seconds, $value);
+    }
+    
+    
+    /**
+     * 重写pSetEx方法,
+     * @access public
+     */
+    public function pSetEx($key, $seconds, $value) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->pSetEx($key, $seconds, $value);
+    }
+    
+    
+    /**
+     * 重写setRange方法,
+     * @access public
+     */
+    public function setRange($key, $offset, $value) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->setRange($key, $offset, $value);
+    }
+    
+    
+    /**
+     * 重写setBit方法,
+     * @access public
+     */
+    public function setBit($key, $offset, $value) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->setBit($key, $offset, $value);
+    }
+    
+    
+    /**
+     * mSet、mSetNx的公共检测方法,
+     */
+    protected function checkMSetKey($keys, $funcName){
+    	if(!$this->options['keyConfig']){
+    		die('redis数据字典没有配置！');
+    	}
+    	 
+    	if(!is_array($keys)){
+    		die($funcName.'方法的参数出错！');
+    	}
+    
+    	$stringKeys = $this->options['keyConfig']['string'];
+    
+    	$inputKeys = array_keys($keys);
+    	foreach($inputKeys as $sKey){
+    		$pass = false;
+    
+    		foreach($stringKeys as $key){
+    			if(preg_match($key, $sKey)){
+    				$pass = true;
+    				break;
+    			}
+    		}
+    
+    		if(!$pass){
+    			die('关键字：'.$sKey.'不合法！');
+    		}
+    	}
+    }
+    
+    
+    /**
+     * 重写mSet方法,
+     * @access public
+     */
+    public function mSet($keys) {
+    	$this->checkMSetKey($keys, 'mSet');
+    
+    	return $this->handler->mSet($keys);
+    }
+    
+    
+    /**
+     * 重写mSetNx方法,
+     * @access public
+     */
+    public function mSetNx($array) {
+    	$this->checkMSetKey($array, 'mSetNx');
+    
+    	return $this->handler->mSetNx($array);
+    }
+    
+    
+    /**
+     * 重写incr方法,
+     * @access public
+     * @return
+     */
+    public function incr($key) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->incr($key);
+    }
+    
+    
+    /**
+     * 重写incrBy方法,
+     * @access public
+     */
+    public function incrBy($key) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->incrBy($key);
+    }
+    
+    
+    /**
+     * 重写incrByFloat方法,
+     * @access public
+     */
+    public function incrByFloat($key) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->incrByFloat($key);
+    }
+    
+    
+    /**
+     * 重写decr方法,
+     * @access public
+     */
+    public function decr($key) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->decr($key);
+    }
+    
+    
+    /**
+     * 重写decrBy方法,
+     * @access public
+     */
+    public function decrBy($key) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->decrBy($key);
+    }
+    
+    
+    /**
+     * 重写getSet方法,
+     * @access public
+     */
+    public function getSet($key, $value) {
+    	$this->checkKeyByType($key, 'string');
+    
+    	return $this->handler->getSet($key, $value);
+    }
+    
+    
+    /**
+     * 重写bitOp方法,
+     * @access public
+     */
+    public function bitOp($operation, $destkey, $keys) {
+    	if(!is_array($keys)){
+    		die('bitOp的第三个参数要以数组的形式传递！');
+    	}
+    	 
+    	$this->checkKeyByType($destkey, 'string');
+    
+    	return $this->handler->bitOp($operation, $destkey, $keys);
+    }
+    
+    
+    
+    /**
+     * 重写sAdd方法,
+     * @access public
+     */
+    public function sAdd($key, $member1, $member2=null) {
+    	if(!is_null($member2)){
+    		die('限制了sAdd()方法只能同时加入1个元素！');
+    	}
+    	 
+    	$this->checkKeyByType($key, 'set');
+    
+    	return $this->handler->sAdd($key, $member1);
+    }
+    
+    
+    /**
+     * 重写sDiffStore方法
+     * @access public
+     */
+    public function sDiffStore($dstKey, $key1, $key2=null, $key3=null, $key4=null, $key5=null) {
+    	if(func_num_args()>6){
+    		die('sDiffStore方法只支持统计5个集合的差集！');
+    	}
+    	 
+    	$this->checkKeyByType($dstKey, 'set');
+    
+    	return $this->handler->sDiffStore($dstKey, $key1, $key2, $key3, $key4, $key5);
+    }
+    
+    
+    
+    /**
+     * 重写sInterStore方法
+     * @access public
+     */
+    public function sInterStore($dstKey, $key1, $key2=null, $key3=null, $key4=null, $key5=null) {
+    	$num = func_num_args();
+    	if($num > 6){
+    		die('sInterStore方法只支持统计5个集合的交集！');
+    	}
+    	 
+    	$this->checkKeyByType($dstKey, 'set');
+    	 
+    	switch ($num){
+    		case 2:return $this->handler->sInterStore($dstKey, $key1); break;
+    		case 3:return $this->handler->sInterStore($dstKey, $key1, $key2); break;
+    		case 4:return $this->handler->sInterStore($dstKey, $key1, $key2, $key3); break;
+    		case 5:return $this->handler->sInterStore($dstKey, $key1, $key2, $key3, $key4); break;
+    		case 6:return $this->handler->sInterStore($dstKey, $key1, $key2, $key3, $key4, $key5); break;
+    	}
+    
+    	 
+    }
+    
+    
+    /**
+     * 重写sMove方法
+     * @access public
+     */
+    public function sMove($source, $dstKey, $member) {
+    
+    	$this->checkKeyByType($dstKey, 'set');
+    
+    	return $this->handler->sMove($source, $dstKey, $member);
+    }
+    
+    
+    /**
+     * 重写sUnionStore方法
+     * @access public
+     */
+    public function sUnionStore($dstKey, $key1, $key2=null, $key3=null, $key4=null, $key5=null) {
+    	if(func_num_args()>6){
+    		die('sUnionStore方法只支持统计5个集合的差集！');
+    	}
+    
+    	$this->checkKeyByType($dstKey, 'set');
+    
+    	return $this->handler->sUnionStore($dstKey, $key1, $key2, $key3, $key4, $key5);
+    }
+    
+    
+    /**
+     * 重写zAdd方法,
+     * @access public
+     */
+    public function zAdd($key, $score1, $member1, $score2=null) {
+    	if(!is_null($score2)){
+    		die('限制了zAdd()方法只能同时加入1个元素！');
+    	}
+    
+    	$this->checkKeyByType($key, 'zset');
+    
+    	return $this->handler->zAdd($key, $score1, $member1);
+    }
+    
+    
+    /**
+     * 重写zIncrBy方法
+     * @access public
+     */
+    public function zIncrBy($key, $increment, $member) {
+    
+    	$this->checkKeyByType($key, 'zset');
+    
+    	return $this->handler->zIncrBy($key, $increment, $member);
+    }
+    
+    
+    /**
+     * 重写zInter方法
+     * @access public
+     */
+    public function zInter($dstKey, $keys, $score=array(), $aggregate='') {
+    
+    	$this->checkKeyByType($dstKey, 'zset');
+    
+    	$num = func_num_args();
+    	switch ($num){
+    		case 2:return $this->handler->zInter($dstKey, $keys); break;
+    		case 3:return $this->handler->zInter($dstKey, $keys, $score); break;
+    		case 4:return $this->handler->zInter($dstKey, $keys, $score, $aggregate); break;
+    	}
+    }
+    
+    
+    /**
+     * 重写zInterStore方法
+     * @access public
+     */
+    public function zInterStore($dstKey, $keys, $score=array(), $aggregate='') {
+    
+    	$this->checkKeyByType($dstKey, 'zset');
+    
+    	$num = func_num_args();
+    	switch ($num){
+    		case 2:return $this->handler->zInterStore($dstKey, $keys); break;
+    		case 3:return $this->handler->zInterStore($dstKey, $keys, $score); break;
+    		case 4:return $this->handler->zInterStore($dstKey, $keys, $score, $aggregate); break;
+    	}
+    }
+    
+    
+    /**
+     * 重写zUnion方法
+     * @access public
+     */
+    public function zUnion($dstKey, $keys, $score=array(), $aggregate='') {
+    
+    	$this->checkKeyByType($dstKey, 'zset');
+    	 
+    	$num = func_num_args();
+    	switch ($num){
+    		case 2:return $this->handler->zUnion($dstKey, $keys); break;
+    		case 3:return $this->handler->zUnion($dstKey, $keys, $score); break;
+    		case 4:return $this->handler->zUnion($dstKey, $keys, $score, $aggregate); break;
+    	}
+    
+    	 
+    }
+    
+    
+    /**
+     * 重写zUnionStore方法
+     * @access public
+     */
+    public function zUnionStore($dstKey, $keys, $score=array(), $aggregate='') {
+    
+    	$this->checkKeyByType($dstKey, 'zset');
+    
+    	$num = func_num_args();
+    	switch ($num){
+    		case 2:return $this->handler->zUnionStore($dstKey, $keys); break;
+    		case 3:return $this->handler->zUnionStore($dstKey, $keys, $score); break;
+    		case 4:return $this->handler->zUnionStore($dstKey, $keys, $score, $aggregate); break;
+    	}
+    }
+    
+    
+    /**
+     * 重写bRPopLPush方法
+     * @access public
+     */
+    public function bRPopLPush($source, $dstKey, $timeout) {
+    
+    	$this->checkKeyByType($dstKey, 'list');
+    
+    	return $this->handler->bRPopLPush($source, $dstKey, $timeout);
+    }
+    
+    
+    /**
+     * 重写lInsert方法
+     * @access public
+     */
+    public function lInsert($key, $position, $pivot, $value) {
+    
+    	$this->checkKeyByType($key, 'list');
+    
+    	return $this->handler->lInsert($key, $position, $pivot, $value);
+    }
+    
+    
+    /**
+     * 重写lPush方法,
+     * @access public
+     */
+    public function lPush($key, $value1, $value2=null) {
+    	if(!is_null($value2)){
+    		die('限制了lPush()方法只能同时加入1个元素！');
+    	}
+    
+    	$this->checkKeyByType($key, 'list');
+    
+    	return $this->handler->lPush($key, $value1);
+    }
+    
+    
+    /**
+     * 重写rPopLPush方法
+     * @access public
+     */
+    public function rPopLPush($source, $dstKey) {
+    
+    	$this->checkKeyByType($dstKey, 'list');
+    
+    	return $this->handler->rPopLPush($source, $dstKey);
+    }
+    
+    
+    /**
+     * 重写rPush方法
+     * @access public
+     */
+    public function rPush($key, $value1, $value2=null) {
+    	if(!is_null($value2)){
+    		die('限制了lPush()方法只能同时加入1个元素！');
+    	}
+    
+    	$this->checkKeyByType($key, 'list');
+    
+    	return $this->handler->rPush($key, $value1);
+    }
+    
+    
+    /**
+     * 公共检测方法,检测未知类型的关键字
+     * @access public
+     * $key 关键字
+     */
+    protected function checkKeyByAll($key){
+    	if(!$this->options['keyConfig']){
+    		die('redis数据字典没有配置！');
+    	}
+    
+    	$keyConfig	 = $this->options['keyConfig'];
+    	$hashKeys	 = array_values($keyConfig['hash']);
+    	$keys		 = array();
+    	$keys		 = array_merge($keys, $hashKeys, $keyConfig['string'], $keyConfig['set'], $keyConfig['zset'], $keyConfig['list']);
+    
+    	$pass = false;
+    	foreach ($keys as $sKey){
+    		if(preg_match($sKey, $key)){
+    			$pass	 = true;
+    			break;
+    		}
+    	}
+    
+    	if(!$pass){
+    		die('关键字：'.$key.'不合法！');
+    	}
+    }
+    
+    
+    
+    /**
+     * 重写restore方法
+     * @access public
+     */
+    public function restore($key, $ttl, $value) {
+    	$this->checkKeyByAll($key);
+    
+    	return $this->handler->restore($key, $ttl, $value);
+    }
+    
+    
+    /**
+     * 重写rename方法
+     * @access public
+     */
+    public function rename($key, $newkey) {
+    	$this->checkKeyByAll($newkey);
+    
+    	return $this->handler->rename($key, $newkey);
+    }
+    
+    
+    /**
+     * 重写renameKey方法
+     * @access public
+     */
+    public function renameKey($key, $newkey) {
+    	$this->checkKeyByAll($newkey);
+    
+    	return $this->handler->renameKey($key, $newkey);
+    }
+    
+    
+    /**
+     * 重写renameNx方法
+     * @access public
+     */
+    public function renameNx($key, $newkey) {
+    	$this->checkKeyByAll($newkey);
+    
+    	return $this->handler->renameNx($key, $newkey);
+    }
+
+}

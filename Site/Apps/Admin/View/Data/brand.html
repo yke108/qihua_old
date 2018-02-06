@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>数据管理--品牌</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/data/brand.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+<script>
+    var brandListUrl="{:U('Data/brandList')}";//品牌列表
+    var addBrandUrl="{:U('Data/addBrand')}";//添加品牌
+    var updateBrandUrl="{:U('Data/modify')}";//修改品牌
+    var delBrandUrl="{:U('Data/delBrand')}";//删除品牌
+
+
+</script>
+    <div class="easyui-layout" style="width:100%; height: 500px;">
+        <div data-options="region:'north'" style="width: 100%; height: 50px">
+            <div id="toolbar">
+                <div class="btns">
+                    <a href="javascript:void(0);" class="easyui-linkbutton addChild"  data-options="iconCls:'icon-add',disabled:true">新增品牌</a>
+                    <a href="javascript:void(0);" class="easyui-linkbutton remove" data-options="iconCls:'icon-remove',disabled:true">删除</a>
+                </div>
+               <!--  <div class="search">
+                    <input type="text" class="easyui-searchbox" data-options="prompt:'请输入名称'" style="width: 280px; height: 26px;">
+                </div> -->
+            </div>
+        </div>
+        <div data-options="region:'west'" style="width:300px;">
+            <ul id="tree"></ul>
+        </div>
+        <div data-options="region:'center'">
+            <form id="dataForm">
+                <div class="item">
+                    <label for="dataName">选项名称：</label>
+                    <input type="text"  class="easyui-textbox dataName" name="dataName" style="width:180px; height:30px" data-options="required:true" value="名称">
+                </div>
+                <div class="item-2">
+                    <label >&nbsp;</label>
+                    <a href="javascript:void(0);" class="easyui-linkbutton js_dataSubmit" data-options="iconCls:'icon-save'" data-options="required:true" style="padding: 6px 18px;">保 存</a>
+                </div>
+                
+            </form>
+        </div>
+        <!-- <div data-options="region:'south'" style="height: 50px;">
+            <div id="footer">
+                <input class="easyui-filebox js_import" style="width:200px; height:26px" data-options="buttonText:'导入文件'">
+                <a href="javascript:void(0);" class="easyui-linkbutton js_saveImpot" iconCls="icon-reload" style="width:90px">上传</a>
+                <a id="js_downLoad" href="javascript:void(0)" class="easyui-linkbutton load" data-options="iconCls:'icon-save'">模板下载</a>  
+            </div>
+        </div> -->
+    </div>
+
+   
+    <!-- 新增品牌 -->
+    <div id="addChildDialog" class="operate-dialog">
+        <form id="addChildForm" >
+            <div class="form-item">
+                <label><span>*</span>选项名称：</label><input type="text" id="addChildName" class="easyui-textbox" name="addChildName" style="width:200px; height:30px" data-options="required:true">
+            </div> 
+            <div id="btns">
+            <a href="javascript:void(0);" class="easyui-linkbutton js_saveAddChildForm" iconCls="icon-save" style="width:90px">保存</a>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/page/data/brand.js"></script>
+</body>
+
+</html>

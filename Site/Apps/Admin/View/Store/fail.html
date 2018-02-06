@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>商品仓库--审核不通过的商品</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/page/store/fail.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+    <table id="dataGrid"></table>
+    <!-- 表单操作栏 -->
+    <div id="toolbar">
+        <div class="serch">
+            <input id="js_goodName" name="keyword" class="easyui-textbox" data-options="prompt:'商品名称/CAS号'" style="width:200px;height:26px">
+            <input id="js_getKind_LV1" class="easyui-combobox" data-options="prompt:'商品分类'" name="categoryFirst" style="width:100px;height:26px;"/>
+            <input id="js_getKind_LV2" class="easyui-combobox" data-options="prompt:'请选择'" name="categorySecond" style="width:100px;height:26px;"/>
+            <input id="js_getKind_LV3" class="easyui-combobox" data-options="prompt:'请选择'" name="categoryThird" style="width:100px;height:26px;"/>
+            <input id="js_company" name="companyName" class="easyui-textbox" data-options="prompt:'公司名称'" style="width:200px;height:26px">
+
+            <!-- <input id="js_operator" name="operator" class="easyui-textbox" data-options="prompt:'审核人'" style="width:200px;height:26px"> -->
+
+            <a href="javascript:void(0);" id="js_search" class="easyui-linkbutton" iconCls="icon-search">搜  索</a>
+        </div>
+    </div>
+    <div id="footerBar">
+        <a id="js_express" href="javascript:void(0);" data-operation="export" class="easyui-linkbutton" style="float: left;"  iconCls="icon-save" >批量导出</a>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/page/store/fail.js"></script>
+</body>
+
+</html>

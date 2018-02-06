@@ -1,0 +1,64 @@
+#toolbar {
+    position: relative;
+    padding: 10px;
+    overflow: hidden;
+}
+#toolbar .btns {
+    float: left;
+}
+
+#toolbar .btns-sub {
+    display: none;
+    margin-left: 18%;
+    padding-left: 10px;
+
+}
+.easyui-linkbutton {
+    outline: none;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+.tree-node {
+    height: 26px;
+}
+.tree-title {
+    height: 26px;
+    line-height: 26px;
+}
+.tree-expanded, .tree-collapsed, .tree-folder, .tree-file, .tree-checkbox, .tree-indent {
+    margin-top: 4px;
+}
+
+
+
+.title {
+    line-height: 36px;
+    font-size: 14px;
+}
+.wrapper {
+    display: none;
+    padding: 10px 0 20px 20px;
+}
+.save-btn {
+    padding: 6px 16px;
+    margin-top: 20px;
+    outline: none;
+}
+.partner-img {
+    width: 280px;
+    height: 160px;
+    background: #ccc;
+    margin-bottom: 20px;
+}
+
+.tips {
+    line-height: 30px;
+    color: #f00;
+}
+
+.layout-panel-center {
+    display: none;
+}

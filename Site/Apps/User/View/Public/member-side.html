@@ -1,0 +1,73 @@
+<div class="fl member-menu">
+    <?php $routeUrl = strtolower(CONTROLLER_NAME.'/'.ACTION_NAME) ?>
+    <dl <?php echo in_array(strtolower(CONTROLLER_NAME), [strtolower('Account')]) && in_array(strtolower(ACTION_NAME), [strtolower('Index')]) ? 'class="active"' : '' ?>>
+        <dt <?php echo $routeUrl == strtolower('Account/Index') ? 'class="current"' : ''?>>
+            <a href="{:U('User/Account/index')}" class="sp">Dashboard</a>
+            <i class="icon-rt"></i>
+        </dt>
+    </dl>
+
+    <dl <?php echo in_array(strtolower(CONTROLLER_NAME), [strtolower('Account')]) && in_array(strtolower(ACTION_NAME), [strtolower('info'),strtolower('submit_auth'),strtolower('exam_auth'),strtolower('auth_history')]) ? 'class="active"' : '' ?>>
+        <dt><a href="{:U('User/Account/info')}" class="sp">My Account</a><i class="icon-rt"></i></dt>
+        <dd <?php echo $routeUrl == strtolower('Account/info') ? 'class="current"' : ''?>><a href="{:U('User/Account/info')}" class="sp">Profile</a><i class="icon-rt"></i></dd>
+
+        <?php
+        if(!empty($_SESSION['country'])){
+        if($_SESSION['country'] == 'CN'){ ?>
+        <dd <?php echo in_array(strtolower(ACTION_NAME), [strtolower('submit_auth'),strtolower('exam_auth'),strtolower('auth_history')]) ? 'class="current"' : ''?>><a href="{:U('User/Account/exam_auth')}" class="sp">License Info.</a><i class="icon-rt"></i></dd>
+        <?php } } ?>
+        <!--<dd><a href="#" class="sp">License Info</a><i class="icon-rt"></i></dd>-->
+    </dl>
+    <dl <?php echo in_array(strtolower(CONTROLLER_NAME), [strtolower('AccountSecurity')]) && in_array(strtolower(ACTION_NAME), [strtolower('editPassword'), strtolower('bindPhone'), strtolower('bindEmail')]) ? 'class="active"' : '' ?>>
+        <dt>
+            <a href="{:U('User/AccountSecurity/editPassword')}" class="sp">Settings</a>
+            <i class="icon-rt"></i>
+        </dt>
+        <dd <?php echo $routeUrl == strtolower('AccountSecurity/editPassword') ? 'class="current"' : ''?>>
+            <a href="{:U('User/AccountSecurity/editPassword')}" class="sp">Change Password</a>
+            <i class="icon-rt"></i>
+        </dd>
+        <?php if (session('country') == 'CN') { ?>
+        <dd <?php echo $routeUrl == strtolower('AccountSecurity/bindPhone') ? 'class="current"' : ''?>>
+            <a href="{:U('User/AccountSecurity/bindPhone')}" class="sp">Manage Verification Phones</a>
+            <i class="icon-rt"></i>
+        </dd>
+        <?php } ?>
+        <dd <?php echo $routeUrl == strtolower('AccountSecurity/bindEmail') ? 'class="current"' : ''?>>
+            <a href="{:U('User/AccountSecurity/bindEmail')}" class="sp">Manage Verification Email Address</a>
+            <i class="icon-rt"></i>
+        </dd>
+    </dl>
+    <dl <?php echo in_array(strtolower(CONTROLLER_NAME), [strtolower('Message')]) && in_array(strtolower(ACTION_NAME), [strtolower('systemList'), strtolower('mailBox')]) ? 'class="active"' : '' ?>>
+        <dt>
+            <a href="{:U('Message/systemList')}" class="sp">Message</a>
+            <i class="icon-rt"></i>
+        </dt>
+        <dd <?php echo $routeUrl == strtolower('Message/systemList') ? 'class="current"' : ''?>>
+            <a href="{:U('Message/systemList')}" class="sp">Syetem Message({:getUnreadSystem()})</a>
+            <i class="icon-rt"></i>
+        </dd>
+        <dd <?php if($routeUrl == strtolower('Message/mailBox')||$routeUrl == strtolower('Message/mailDetail')||$routeUrl == strtolower('Message/reply')){echo 'class="current"';} ?>>
+            <a href="{:U('Message/mailBox')}?send=1" class="sp">Mailbox({:getUnReadMessage()})</a>
+            <i class="icon-rt"></i>
+        </dd>
+    </dl>
+    <dl <?php echo in_array(strtolower(CONTROLLER_NAME), [strtolower('Member')]) && in_array(strtolower(ACTION_NAME), [strtolower('favorites')]) ? 'class="active"' : '' ?>>
+        <dt <?php echo $routeUrl == strtolower('Member/favorites') ? 'class="current"' : ''?>>
+            <a href="{:U('Member/favorites')}" class="sp">My Favorites</a>
+            <i class="icon-rt"></i>
+        </dt>
+    </dl>
+    <dl <?php echo in_array(strtolower(CONTROLLER_NAME), [strtolower('Buyoffer')]) || in_array(strtolower(ACTION_NAME), [strtolower('BuyOfferList')]) ? 'class="active"' : '' ?>>
+        <dt <?php echo $routeUrl == strtolower('Buyoffer/BuyOfferList') ? 'class="current"' : ''?>>
+            <a href="{:U('Buyoffer/BuyOfferList')}" class="sp">My Buy Offers</a>
+            <i class="icon-rt"></i>
+        </dt>
+    </dl>
+        <dl <?php echo in_array(strtolower(CONTROLLER_NAME), [strtolower('Supply')]) || in_array(strtolower(ACTION_NAME), [strtolower('lists')]) ? 'class="active"' : '' ?>>
+        <dt <?php echo $routeUrl == strtolower('Supply/lists') ? 'class="current"' : ''?>>
+            <a href="{:U('Supply/lists')}" class="sp">My Supply Offers</a>
+            <i class="icon-rt"></i>
+        </dt>
+    </dl>
+</div>

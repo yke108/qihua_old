@@ -1,0 +1,20 @@
+<ul class="fl member-menu">
+    <li <?php echo ($navUrl = (strtolower(CONTROLLER_NAME) == 'content' && strtolower(ACTION_NAME) == 'description')) ? ' class="active"' : '' ?>>
+        <a href="{:U('Home/Content/description')}"><span>About Us</span></a>
+        <?php if ($navUrl) { ?>
+        <i class="icon-rt"></i>
+        <?php } ?>
+    </li>
+    <li <?php echo ($navUrl = (strtolower(CONTROLLER_NAME) == 'content' && strtolower(ACTION_NAME) == 'contact')) ? ' class="active"' : '' ?>>
+        <a href="{:U('Home/Content/contact')}"><span>Contact Us</span></a>
+        <?php if ($navUrl) { ?>
+        <i class="icon-rt"></i>
+        <?php } ?>
+    </li>
+    <li <?php echo ($navUrl = (strtolower(CONTROLLER_NAME) == 'content' && (strtolower(ACTION_NAME) == 'news' || strtolower(ACTION_NAME) == 'newsdetails'))) ? ' class="active"' : '' ?>>
+        <a href="{:U('Home/Content/news')}"><span>Media Report</span></a>
+        <?php if ($navUrl) { ?>
+        <i class="icon-rt"></i>
+        <?php } ?>
+    </li>
+</ul>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Media Report</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/media-report.css">
+</head>
+<body>
+<!-- 滚动公告 -->
+
+<!-- 网站头部 -->
+<include file="Public/index-head" />
+
+<!-- 网站导航 -->
+<include file="Public/index-nav" />
+
+<!-- 网页主体内容 -->
+<div class="wrapper clearfix member-wraper">
+    <include file="Public/aboutus-left-nav" />
+
+    <div class="main">
+        <h3>Media Report</h3>
+        <div class="report">
+            <?php if (!empty($newsList)) { ?>
+            <?php foreach($newsList as $row) { ?>
+            <div class="item">
+                <img src="<?php echo $row['img'] ?>" alt="">
+                <a href="{:U('Home/Content/newsdetails?id='.$row['id'])}">
+                    <div class="report-content">
+                        <h4><?php echo $row['title'] ?></h4>
+                        <div class="newsContent"><?php echo strip_tags(html_entity_decode($row['content'])) ?></div>
+                        <span class="times"><?php echo $row['referer'] ?> | <?php echo $row['reportDate'] ?></span>
+                    </div>
+                </a>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <!--<div class="pagination">-->
+                <!--<div class="handle">-->
+                    <!--<a href="" class="prev"><i class="icon-prev"></i>Previous Page</a>-->
+                    <!--<a href="" class="size current">2</a>-->
+                    <!--<span class="sl">…</span>-->
+                    <!--<a href="" class="next">Next Page<i class="icon-next"></i></a>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/Home/js/media-report.js"></script>
+</html>

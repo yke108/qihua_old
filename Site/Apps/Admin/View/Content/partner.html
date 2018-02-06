@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>系统管理--管理员列表</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/content/partner.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+    <div class="easyui-layout" style="width:100%; height: 500px;">
+        <div data-options="region:'north'" style="width: 100%; height: 50px">
+            <div id="toolbar">
+                <div class="btns">
+                    <a href="javascript:void(0);" class="easyui-linkbutton addPartner" data-options="iconCls:'icon-add',disabled:true">新增</a>
+                    <a href="javascript:void(0);" class="easyui-linkbutton  removePartner" data-options="iconCls:'icon-remove',disabled:true">删除</a>
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'west'" style="width:300px;">
+            <ul id="tree"></ul>
+        </div>
+        <div data-options="region:'center'">
+            <form id="partnerForm" method="post">
+                <div class="wrapper">
+                    <p class="title">标题：</p>
+                    <input type="text" class="easyui-textbox js_partnerDialogTitle" data-options="required:true" name="title" style="width:218px; height:30px">
+                    <p class="title">图标：</p>
+                    <div class="thumbnail-wrap">
+                        <img alt="">
+                    </div>
+                    <input type="file" class="file-btn js_imgUpload">
+                    <input type="hidden" name="img">
+                    <div></div>
+                    <p class="tips">要求：图片宽219px,高105px</p>
+                    <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_save" data-options="iconCls:'icon-save'">保存</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="dlg" class="operate-dialog">
+      <form id="addPartner" method="post">
+            <p class="title">标题：</p>
+            <input type="text" class="easyui-textbox title" data-options="required:true" name="title" style="width:218px; height:30px">
+            <p class="title">图标：</p>
+            <div class="thumbnail-wrap">
+                <img alt="">
+            </div>
+            <input type="file" class="file-btn js_imgUpload">
+            <input type="hidden" name="img"  data-options="required:true">
+            <div></div>
+            <p class="tips">要求：图片宽219px,高105px</p>
+            <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_save" data-options="iconCls:'icon-save'">保存</a>
+      </form>
+    </div>
+    <script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/page/content/partner.js"></script>
+</body>
+
+</html>

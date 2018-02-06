@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Enterprice License</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-company-auth.css">
+</head>
+
+<body>
+   <!-- 滚动公告 -->
+    <include file="Public/user-notice" />
+    <!-- 网站头部 -->
+    <include file="Public/member-head" />
+<br>
+    <div class="wrapper clearfix member-body">
+       <include file="Public/member-side" />
+        <p class="main-title">
+            License Info.
+            <a href="{:U('/User/Account/auth_history')}">Operation History</a>
+        </p>
+        <div class="member-main">
+            <form class="info" method="post" action="{:U('/Account/submit_auth')}" enctype="multipart/form-data">
+
+                <div class="title">
+                    <span>Enterprice License</span>
+                    <p><span>"Red character"</span> is mandatory field</p>
+                </div>
+                <div class="item">
+                    <label for="">Company Name</label>
+                    <div class="cont">{$companyName}
+                        <a class="edit" href="{:U('User/Account/info')}"></a>
+                    </div>
+                </div>
+                <div class="item">
+                    <label for="">License Type</label>
+                    <div class="cont">
+                        <input type="radio" name="type" <if condition="($type eq '1') or ($type eq '')"> checked="checked" </if> id="typeNormal" value="1">
+                        <label for="typeNormal">Business License</label>
+                        <input type="radio" name="type" <if condition="($type eq '2')"> checked="checked" </if> id="typeSpt" value="2">
+                        <label for="typeSpt">Integrate License</label>
+                    </div>
+                </div>
+
+                <div class="auth-upload">
+                    <div class="auth-item">
+                        <p class="card-name required">
+                            Corporate Business License
+                        </p>
+                        <div class="file-upload">
+                            <if condition="$rest.businessCert eq ''"><img class="def" src="__PUBLIC__/User/images/unload.jpg"><else/><img src="{$rest.businessCert}"></if>
+                        </div>
+                        <div class="oper">
+                            <a href="javascript:void(0)" class="js_upload" id="js_businessCert">Upload</a>
+                            <a href="__PUBLIC__/User/doc/Corporate-Business-License.jpg" target="_blank" class="js_example" >Example</a>
+                        </div>
+                        <input type="hidden" name="businessCert" id="businessCert" value="{$rest.businessCert}">
+                    </div>
+                    <div class="auth-item type-normal"  <if condition="($type eq '2')">style="display:none;"</if> >
+                        <p class="card-name required">
+                            Organization Code
+                        </p>
+                        <div class="file-upload">
+                            <if condition="$rest.codeCert eq ''"><img class="def" src="__PUBLIC__/User/images/unload.jpg"><else/><img src="{$rest.codeCert}"></if>
+                        </div>
+                        <div class="oper">
+                            <a href="javascript:void(0)" class="js_upload" id="js_codeCert">Upload</a>
+                            <a href="__PUBLIC__/User/doc/Organization-Code.jpg" target="_blank" class="js_example">Example</a>
+                        </div>
+                        <input type="hidden" name="codeCert" id="codeCert" value="{$rest.codeCert}">
+                    </div>
+                    <div class="auth-item type-normal"  <if condition="($type eq '2')">style="display:none;"</if> >
+                        <p class="card-name required">
+                            Tax Registration Certificate
+                        </p>
+                        <div class="file-upload">
+                            <if condition="$rest.taxCert eq ''"><img class="def" src="__PUBLIC__/User/images/unload.jpg"><else/><img src="{$rest.taxCert}"></if>
+                        </div>
+                        <div class="oper">
+                            <a href="javascript:void(0)" class="js_upload" id="js_taxCert">Upload</a>
+                            <a href="__PUBLIC__/User/doc/Tax-Registration-Certificate.jpg" target="_blank" class="js_example" >Example</a>
+                        </div>
+                        <input type="hidden" name="taxCert" id="taxCert"  value="{$rest.taxCert}">
+                    </div>
+                    <div class="auth-item">
+                        <p class="card-name">
+                            Account Opening License
+                        </p>
+                        <div class="file-upload">
+                            <if condition="empty($rest['accountCert'])"><img class="def" src="__PUBLIC__/User/images/unload.jpg"><else/><img src="{$rest.accountCert}"></if>
+                        </div>
+                        <div class="oper">
+                            <a href="javascript:void(0)" class="js_upload" id="js_accountCert">Upload</a>
+                            <a href="__PUBLIC__/User/doc/Account-Opening-License.JPG" target="_blank" class="js_example" >Example</a>
+                        </div>
+                        <input type="hidden" name="accountCert" id="accountCert" value="{$rest.accountCert}">
+                    </div>
+                </div>
+                <div class="requirement">
+                    Requirement： <br>1. The uploading photo or file should under 2MB and be in Jpg/ gif/ png/ jpeg format only.
+                    <br>2. True, valid and clear files with <span>official seal.</span>
+                </div>
+                <div class="title">
+                    <span>Enterprise Authentication Authority</span>
+                    <p><span>"Red character"</span> is mandatory field</p>
+                </div>
+                <div class="item clearfix">
+                    <label for="">Designated  Contact Person</label>
+                    <div class="contact">{$contact}
+                        <a class="edit" href="{:U('User/Account/info')}"></a>
+                    </div>
+                </div>
+                <div class="auth-upload">
+                    <div class="auth-item">
+                        <p class="card-name required long">
+                            Enterprise Authentication Authority
+                        </p>
+                        <div class="file-upload">
+                             <if condition="$rest.authCert eq ''"><img class="def" src="__PUBLIC__/User/images/unload.jpg"><else/><img src="{$rest.authCert}"></if>
+                        </div>
+                        <div class="oper">
+                            <a href="javascript:void(0)" class="js_upload" id="js_authCert">Upload</a>
+                            <a href="__PUBLIC__/User/doc/Enterprise-Authentication-Authority.jpg" target="_blank" class="js_example" >Example</a>
+                        </div>
+                        <input type="hidden" name="authCert" id="authCert" value="{$rest.authCert}">
+                    </div>
+                    <div class="temp">
+                        <p>Sample notice: Please download the template for referance first before you upload the file.</p>
+                        <a href="__PUBLIC__/User/doc/《奇化网会员授权书模板》.docx"><span>Template</span><i class="download"></i></a>
+                    </div>
+                </div>
+                <div class="requirement">
+                    Requirement： <br>1. The uploading photo or file should under 2MB and be in Jpg/ gif/ png/ jpeg format only.
+                    <br>2. True, valid and clear files with<span>official seal.</span>
+                </div>
+                <div class="operate">
+                    <a href="javascript:void(0)" class="submit">
+                    Submit
+                </a>
+                    <a href="{:U('User/Account/exam_auth')}" class="cancel">Cancel</a>
+                </div>
+            </form>
+           <div class="succ-info-wrap">
+                <div class="content">
+                    <i class="succ-icon"></i>
+                    <div class="info">
+                        <p class="title">Submitted Successful !</p>
+                        <p class="tips">
+                            It will take 1-2 working days to complete the audit, please wait patiently!
+                        </p>
+                        <p class="times">Enter My Keywa page after <span id="times">5</span> seconds...</p>
+                        <p class="link">
+                            <a href="{:U('User/Account/exam_auth')}" class="auth">Enter Now</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+        <include file="Public/footer"/>
+
+</body>
+<script src="__PUBLIC__/User/js/member-company-auth.js"></script>
+
+</html>

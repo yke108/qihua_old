@@ -1,0 +1,37 @@
+<?php
+ $_loginUid = session( 'Uid' );
+ $is_China = D( 'Home/Product' )->getIsUserAllowAccessProductList( array( 'uid' => $_loginUid ) );
+ $count=getUnReadMessage();
+?>
+<div class="top-barline">
+    <div class="wrapper clearfix">
+        <div class="fr top-tags">
+            <a class="tag" href="/"><i class="icon-home"></i>Home</a>
+            <a class="tag" href="mailto:service@keywa.com"><i class="icon-email"></i>service@keywa.com</a>
+        </div>
+    </div>
+</div>
+<div class="head">
+    <div class="wrapper">
+        <div class="logo-search clearfix">
+            <div class="d-logo fl">
+                <a href="/"><img class="logo" src="__PUBLIC__/User/images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="fl head-tag"><a class="alink" href="{:U( '/User/Account/index' )}">My Keywa</a>
+                <if condition="$is_China eq 1">
+                  <a class="alink active" href="{:U( '/Seller/products' )}">Sell on Keywa</a>
+               </if>
+            </div>
+
+            <div class="part-rt">
+            <?php if($count>0&&$count<10){ ?>
+                <div class="msg-num">…<!--  <?php echo $count; ?>--></div>
+            <?php }elseif($count>=10){ ?>
+                <div class="msg-num">…</div>
+            <?php } ?>
+                <p class="user-p logout"><a href="{:U('User/Account/index')}"><img class="hd-pic" src="<?php echo !empty($_SESSION['userHeadImg']) ? $_SESSION['userHeadImg'] : '/Public/User/images/user_hd_pic.png' ?>" alt=""></a><a href="{:U('User/index/logout')}" class="name">Sign out</a></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>My Buy Offers - Edit</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-findGoods-detail.css">
+</head>
+<body>
+<include file="Public/user-notice" />
+<include file="Public/member-head" />
+
+<div class="wrapper clearfix member-wraper">
+<include file="Public/member-side" />
+    <div class="fl member-main">
+        <div class="top-bar clearfix"><span class="fl bar-tl">Modify offers</span><a href="{:U('Buyoffer/Operation')}?id={$res.id}" class="fr re-btn">Operation History</a></div>
+        <div class="main-content">
+			<notempty name='op'>
+            <!--审核不通过 提示信息-->
+            <div class="warn-msg">
+                <span class="msg-er"><i class="icon-error"></i>{$op.msg} <em class="red">[ Reason:{$op.reason} ]</em></span>
+            </div>
+			</notempty>
+            <form class="form" action="modify" method='post'>
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Subject</span><input type="text" class="field" name='title' value="{$res.title}">
+                    </label>
+                </div>
+                <input type="hidden" name='id' value="{$res.id}">
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Type</span>
+                        <select name="type" class="field">
+                        	<volist name='mold' id='vo' key='k'>
+                        	 <option <if condition="($res.type eq $k) ">selected="selected"</if>  value="{$k}">{$vo}</option>
+                            </volist>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Content</span>
+                        <textarea name="content"  class="field">{$res.content}</textarea>
+                    </label>
+                </div>
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Period of validity</span>
+                        <select name="expire" class="field">
+                            <?php foreach ($date as $d => $v) {?>
+                            <option value="<?php echo $d ?>" <?php echo $res['expire'] == $d ? 'selected="selected"' : '' ?>><?php echo $v ?></option>
+                            <?php } ?>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-btn">
+                    <a href="javascript:void(0);" class="submit submit-btn">Submit</a>
+                    <a href="{:U('Buyoffer/BuyOfferList')}" class="cancel-btn">cancel</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<include file="Public/footer" />
+</body>
+<script src="__PUBLIC__/User/js/member-findGoods-detail.js"></script>
+</html>

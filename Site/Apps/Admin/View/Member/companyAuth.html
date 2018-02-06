@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>商家管理--企业认证</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/user/company-authentic.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+<script>
+    var companyListUrl="{:U('Member/companyAuthList')}";//企业列表
+    var companyVerifyUrl="{:U('Member/companyVerify')}";//批量禁用
+</script>
+<table id="dataGrid"></table>
+<!-- 表单操作栏 -->
+<div id="toolbar">
+    <input id="js_company" name="companyName" class="easyui-textbox" data-options="prompt:'公司名'" style="width:120px;height:26px">
+    <select id="js_statusSelect" class="easyui-combobox" data-options="prompt:'证照类型'" name="certType" style="width:120px;height:26px;">
+        <option value="">全部</option>
+        <option value="1">普通营业执照</option>
+        <option value="2">企业三证合一</option>
+    </select>
+    <select id="js_stateSelect" class="easyui-combobox" data-options="prompt:'认证状态'" name="state" style="width:120px;height:26px;">
+        <option value="">全部</option>
+        <option value="1">有效</option>
+        <option value="2">待审核</option>
+        <option value="3">已撤销</option>
+        <option value="0">审核不通过</option>
+    </select>
+<!--     <input id="js_operator" name="operator" class="easyui-textbox" data-options="prompt:'审核人'" style="width:120px;height:26px"> -->
+    <a href="javascript:void(0);" id="js_search" class="easyui-linkbutton" iconCls="icon-search" style="width:120px;height:26px;">搜  索</a>
+</div>
+
+<div id="footerBar">
+    <a id="js_express" href="javascript:void(0);" data-operation="export" class="easyui-linkbutton" style="float: left;"  iconCls="icon-save" >批量导出</a>
+</div>
+
+<!-- 审核不通过弹窗 -->
+<div id="dlg" class="operate-dialog">
+        <form id="js_revokeForm" method="post">
+            <div class="form-wrap">
+                <label for="reason">原因:</label>
+                <input id="js_revokeReason" type="text" data-options="required:true"  name="reason" class="easyui-validatebox" style="width: 60%" />
+            </div>
+        </form>
+    </div>
+
+<script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+<script type="text/javascript" src="/Public/Admin/js/page/user/company-authentic.js"></script>
+</body>
+
+</html>

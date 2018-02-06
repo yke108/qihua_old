@@ -1,0 +1,23 @@
+.title {
+    line-height: 36px;
+    font-size: 14px;
+}
+.wrapper {
+    padding: 10px 0 100px 20px;
+}
+.save-btn {
+    padding: 6px 16px;
+    margin-top: 20px;
+    outline: none;
+}
+.logo-img {
+    width: 300px;
+    height: 160px;
+    background: #ccc;
+    margin-bottom: 20px;
+}
+
+.tips {
+    line-height: 30px;
+    color: #f00;
+}

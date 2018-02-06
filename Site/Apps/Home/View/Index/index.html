@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>keywa,the global leader in chemical industry resource integration</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/index.css">
+</head>
+<body>
+<!-- 滚动公告 -->
+
+<!-- 网站头部 -->
+<include file="Public/index-head" />
+
+<!-- 网站导航 -->
+<include file="Public/index-nav" />
+
+<!-- 网页主体内容 -->
+<div class="banner">
+    <div id="js_banner" class="banner-inner">
+        <div class="hd">
+            <ul></ul>
+        </div>
+        <div class="bd">
+            <ul class="banner-list">
+                <li class="item"><a href="http://www.cdcif.cn/" target="_blank"><img src="__PUBLIC__/Home/images/E-banner.jpg" alt=""></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="floor-wraper">
+        <div class="floor-top clearfix">
+            <div class="floor-title fl">Mall's Products</div>
+            <a href="{:U( '/Product' )}" class="more-link fr">MORE+</a>
+        </div>
+        <div class="floor-content clearfix">
+            <?php
+            if( !empty( $products[0] ) ){
+?>
+            <div class="product product1 fl">
+                <a href="{:U( 'Product/detail', array( 'id' => $products[0]['id'] ) )}" class="pic-wrap"><img src="<?php echo $products[0]['images'][0]?>" alt="<?php echo $products[0]['title']?>" class="pic"></a>
+                <a href="{:U( 'Product/detail', array( 'id' => $products[0]['id'] ) )}" class="name"><?php echo $products[0]['title']?></a>
+                <p class="spec"><?php echo $products[0]['cas']?><br><?php echo $products[0]['attribute']['format']?></p>
+                <p class="price"><?php echo $products[0]['priceTip']?><em class="t"><?php echo $products[0]['weightUnitTip'] ? '/'.$products[0]['weightUnitTip']:'';?></em></p>
+                <a href="{:U( 'Product/detail', array( 'id' => $products[0]['id'] ) )}" class="detail-link">DETAILS</a>
+            </div>
+            <?php
+            }else{
+            ?>
+            <div class="product product1 fl">
+                <a href="javascript:void(0)" class="pic-wrap"></a>
+                <a href="javascript:void(0)" class="name"></a>
+                <p class="spec"><br></p>
+                <p class="price"><em class="t"></em></p>
+                <a href="javascript:void(0)" class="detail-link" style="visibility: hidden">DETAILS</a>
+            </div>
+            <?php
+            }
+            if( !empty( $products[1] ) ){
+?>
+            <div class="product product2 fl">
+            <a href="{:U( 'Product/detail', array( 'id' => $products[1]['id'] ) )}" class="name"><?php echo $products[1]['title']?></a>
+                <p class="spec"><?php echo $products[1]['cas']?><br><?php echo $products[1]['attribute']['format']?></p>
+                <a href="{:U( 'Product/detail', array( 'id' => $products[1]['id'] ) )}" class="pic-wrap"><img src="<?php echo $products[1]['images'][0]?>" alt="<?php echo $products[1]['title']?>" class="pic"></a> 
+                <p class="price"><?php echo $products[1]['priceTip']?><em class="t"><?php echo $products[1]['weightUnitTip'] ? '/'.$products[1]['weightUnitTip']:'';?></em></p>
+                <a href="{:U( 'Product/detail', array( 'id' => $products[1]['id'] ) )}" class="detail-link">DETAILS</a>
+            </div>
+            <?php
+            }else{
+            ?>
+            <div class="product product2 fl">
+                <a href="javascript:void(0)" class="name"></a>
+                <p class="spec"><br></p>
+                <a href="javascript:void(0)" class="pic-wrap"></a>
+                <p class="price"><em class="t"></em></p>
+                <a href="javascript:void(0)" class="detail-link" style="visibility: hidden">DETAILS</a>
+        </div>
+            <?php
+            }
+?>
+
+            <div class="fr">
+                <?php
+                if( !empty( $products[2] ) ){
+?>
+                <div class="product product3">
+                    <a href="{:U( 'Product/detail', array( 'id' => $products[2]['id'] ) )}" class="name"><?php echo $products[2]['title']?></a>
+                    <a href="{:U( 'Product/detail', array( 'id' => $products[2]['id'] ) )}" class="pic-wrap"><img src="<?php echo $products[2]['images'][0]?>" alt="<?php echo $products[2]['title']?>" class="pic"></a>
+                    <p class="price"><?php echo $products[2]['priceTip']?><em class="t"><?php echo $products[2]['weightUnitTip'] ? '/'.$products[2]['weightUnitTip']:'';?></em></p>
+                    <a href="{:U( 'Product/detail', array( 'id' => $products[2]['id'] ) )}" class="detail-link">DETAILS</a>
+                </div>
+                <?php
+                }else{
+                ?>
+                <div class="product product3">
+                    <a href="javascript:void(0)" class="name"></a>
+                    <a href="javascript:void(0)" class="pic-wrap"></a>
+                    <p class="price"><em class="t"></em></p>
+                    <a href="javascript:void(0)" class="detail-link" style="visibility: hidden">DETAILS</a>
+                </div>
+                <?php
+                }
+                if( !empty( $products[3] ) ){
+?>
+                <div class="product product3">
+                    <a href="{:U( 'Product/detail', array( 'id' => $products[3]['id'] ) )}" class="name"><?php echo $products[3]['title']?></a>
+                    <a href="{:U( 'Product/detail', array( 'id' => $products[3]['id'] ) )}" class="pic-wrap"><img src="<?php echo $products[3]['images'][0]?>" alt="<?php echo $products[2]['title']?>" class="pic"></a>
+                    <p class="price"><?php echo $products[3]['priceTip']?><em class="t"><?php echo $products[3]['weightUnitTip'] ? '/'.$products[3]['weightUnitTip']:'';?></em></p>
+                    <a href="{:U( 'Product/detail', array( 'id' => $products[3]['id'] ) )}" class="detail-link">DETAILS</a>
+                </div>
+                <?php
+                }else{
+                ?>
+                <div class="product product3">
+                    <a href="javascript:void(0)" class="name"></a>
+                    <a href="javascript:void(0)" class="pic-wrap"></a>
+                    <p class="price"><em class="t"></em></p>
+                    <a href="javascript:void(0)" class="detail-link" style="visibility: hidden">DETAILS</a>
+                </div>
+                <?php
+                }
+?>
+            </div>
+        </div>
+    </div>
+
+    <?php
+    $_categoryCount = 5;
+    $_subCategoryCount = 4;
+    $_categoryProductCount = 4;
+
+    foreach( $newCategory as $v ){
+        $_i = $_j = 0;
+        if( $_i < $_categoryCount ){
+?>
+    <div class="floor-wraper js_floor">
+        <div class="floor-top clearfix">
+            <div class="floor-title fl"><?php echo $v['text']?></div>
+            <ul class="floor-menu fl clearfix">
+                <?php
+                foreach( $v['childrenCategory'] as $v1 ){
+                    $_class = '';
+                    if( $_j == 0 ){
+                        $_class = 'active';
+                    }
+                    $_param = array(
+                        'categoryFirst' => $v['id'],
+                        'categorySecond' => $v1['attributes']['parentId'],
+                        'categoryThird' => $v1['id'],
+                    );
+                    if( $_j < $_subCategoryCount ){
+                ?>
+                <li class="fl lr-item <?php echo $_class?>" data-category-id="<?php echo $v1['id']?>"><a class="lr-link" href="{:U( 'Product/index', $_param )}"><?php echo $v1['text']?></a></li>
+                <?php
+                    }
+                    $_j++;
+                }
+?>
+            </ul>
+            <a href="{:U( 'Product/index', array( 'categoryFirst' => $v['id'] ) )}" class="more-link fr">MORE+</a>
+        </div>
+        <div class="floor-content">
+            <?php
+                $_j = 0;
+                foreach( $v['childrenCategory'] as $v1 ){
+                    $_class = 'category-product-'.$v1['id'];
+                    $_show = false;
+                    if( $_j == 0 ){
+                        $_show = true;
+                    }
+                if( $_j < $_subCategoryCount ){
+                ?>
+            <ul class="product-list clearfix <?php echo $_class?>" <?php echo $_show ? '':'style="display:none"';?>>
+                <?php
+                foreach( $v1['product'] as $product ){
+?>
+                <li class="product fl">
+                    <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="pic-wrap"><img src="<?php echo $product['images'][0]?>" alt="<?php echo $product['title']?>" class="pic"></a>
+                    <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="name"><?php echo $product['title']?></a>
+                    <p class="price"><?php echo $product['priceTip']?><em class="t"><?php echo $product['weightUnitTip'] ? '/'.$product['weightUnitTip']:'';?></em></p>
+                    <a href="{:U( 'Product/detail', array( 'id' => $product['id'] ) )}" class="detail-link">DETAILS</a>
+                </li>
+            <?php
+                }
+                if( count( $v1['product'] ) < $_categoryProductCount ){
+                    $_lastCount = $_categoryProductCount - count( $v1['product'] );
+                    for( $_k = 0; $_k < $_lastCount; $_k++ ){
+                        ?>
+                <li class="product fl">
+                    <a href="javascript:void(0)" class="pic-wrap"></a>
+                    <a href="javascript:void(0)" class="name">&nbsp;</a>
+                    <p class="price"><em class="t">&nbsp;</em></p>
+                    <a href="javascript:void(0)" class="detail-link" style="visibility: hidden">DETAILS</a>
+                </li>
+            <?php
+                    }
+                }
+?>
+            </ul>
+            <?php
+                }
+                $_j++;
+            }
+?>
+        </div>
+    </div>
+    <?php
+        }
+        $_i++;
+    }
+?>
+
+
+    <div class="floor-wraper">
+        <div class="floor-top clearfix">
+            <div class="floor-title fl">Buy offers</div>
+            <a href="{:U( 'Buyoffer/indexlist' )}" class="more-link fr">MORE+</a>
+        </div>
+        <div class="floor-content">
+            <div class="floor-buyoffers">
+                <p class="tips">update list</p>
+                <div id="js_offers">
+
+                    <div class="bd">
+                <ul class="offers-list">
+                <volist name='buyoffer' id='vo' >
+                    <li class="offers-item">
+
+                        <div class="men">
+                            <img src="{$vo.img}" alt="">
+                            <p class="name">{$vo.username}</p>
+                        </div>
+                        <div class="msg">
+                            <a class="msg-title" href="Buyoffer/BuyOfferDetails?id={$vo.id}">{$vo.title}</a>
+                            <div class="msg-content">{$vo.content}</div>
+                        </div>
+
+                        <p class="tag"><span class="tag-time">{$vo.updateTime|date="F d,Y,H:s",###}</span></p>
+                    </li>
+				</volist>
+                </ul>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--Our Partners-->
+<div class="fuller">
+    <div class="wrapper">
+        <h3 class="b-title">Our Partners</h3>
+
+        <div id="js_partners" class="slider">
+            <div class="bd">
+                <ul class="list clearfix">
+                    <?php
+                    foreach( $partners as $partner ){
+?>
+                    <li class="item">
+                        <div class="inner">
+                            <img src="<?php echo $partner['img']?>" alt="<?php echo $partner['text']?>">
+                        </div>
+                    </li>
+                    <?php
+                    }
+?>
+                </ul>
+            </div>
+
+            <span class="slider-handle prev"><i class="icon-slider-left"></i></span>
+            <span class="slider-handle next"><i class="icon-slider-right"></i></span>
+        </div>
+
+    </div>
+</div>
+
+<div class="wrapper">
+    <h3 class="b-title trade-b-title">How to trade on Keywa？</h3>
+    <div class="trade-step clearfix">
+        <div class="fl step step1">
+            <div class="tag">STEP 1</div>
+            <i class="icon-step1"></i>
+            <p class="tips">Create an Account</p>
+        </div>
+        <div class="fl step step2">
+            <div class="tag">STEP 2</div>
+            <i class="icon-step2"></i>
+            <p class="tips">Completed Your Profiles</p>
+        </div>
+        <div class="fl step step3">
+            <div class="tag">STEP 3</div>
+            <i class="icon-step3"></i>
+            <p class="tips">Contact and Trade</p>
+        </div>
+    </div>
+</div>
+
+
+<dl class="float-nav">
+    <dd>
+        <!--<span class="title">导航</span>-->
+        <a class="floor-pointer floor-pointer1" href="javascript:void(0);">日用化工</a>
+        <a class="floor-pointer floor-pointer2" href="javascript:void(0);">农业化工</a>
+        <a class="floor-pointer floor-pointer3" href="javascript:void(0);">石油化工</a>
+        <a class="floor-pointer floor-pointer4" href="javascript:void(0);">食品化工</a>
+        <a class="floor-pointer floor-pointer5" href="javascript:void(0);">医疗化工</a>
+    </dd>
+    <dt><a href="#">Top</a></dt>
+</dl>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/Home/js/index.js"></script>
+
+</html>

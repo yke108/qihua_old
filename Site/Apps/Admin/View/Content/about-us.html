@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>内容管理--关于我们</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/content/about-us.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+    <div id="js_sysTab" class="easyui-tabs" style="width: 100%; height: auto; ">
+        <div title="平台简介">
+            <div class="wrapper">
+                <p class="title">平台简介：</p>
+                <textarea  id="editAbout">{$data.about}</textarea>
+                <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_saveAboutEdit" data-options="iconCls:'icon-save'">保存</a>
+            </div>
+        </div>
+
+        <div title="网站公告">
+            <table id="website-notice"></table>
+            <div id="notice-bar" class="toolbar">
+                <div class="btns">
+                    <a href="javascript:void(0);" class="easyui-linkbutton js_noticeAdd" data-title="新增"  iconCls="icon-add" >新增公告</a>
+                </div>
+
+                <!-- <div class="search">
+                    <input id="js_searchNotice" name="notice" class="easyui-searchbox" data-options="prompt:'标题'" style="width:200px; height: 26px;">
+                </div> -->
+            </div>
+            <div id="notice-footer" class="footer-bar">
+                <a href="javascript:void(0);" data-operation="removeSome" class="easyui-linkbutton js_multiRemoveNotices" iconCls="icon-remove" >批量删除</a>
+            </div>
+        </div>
+
+        <!--<div title="招聘英才">-->
+            <!--<table id="job-list"></table>-->
+            <!--<div id="job-bar" class="toolbar">-->
+                <!--<div class="btns">-->
+                    <!--<a href="javascript:void(0);" class="easyui-linkbutton js_jobAdd" data-title="新增" data-href="./sys/add.html"  iconCls="icon-add" >新增职位</a>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; <div class="search">-->
+                    <!--<input id="js_searchJob" name="notice" class="easyui-searchbox" data-options="prompt:'职位'" style="width:200px; height: 26px;">-->
+                <!--</div> &ndash;&gt;-->
+            <!--</div>-->
+            <!--<div id="job-footer" class="footer-bar">-->
+                <!--<a href="javascript:void(0);" data-operation="removeSome" class="easyui-linkbutton js_multiRemoveOffer" iconCls="icon-remove" >批量删除</a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div title="媒体报道">
+            <table id="news-list"></table>
+            <div id="news-bar" class="toolbar">
+                <div class="btns">
+                    <a href="javascript:void(0);" class="easyui-linkbutton js_newsAdd" data-title="新增" data-href="./sys/add.html"  iconCls="icon-add" >新增报道</a>
+                </div>
+
+                <!-- <div class="search">
+                    <input id="js_searchNews" name="notice" class="easyui-searchbox" data-options="prompt:'标题'" style="width:200px; height: 26px;">
+                </div> -->
+            </div>
+            <div id="news-footer" class="footer-bar">
+                <a href="javascript:void(0);" data-operation="removeSome" class="easyui-linkbutton js_multiRemoveNews" iconCls="icon-remove" >批量删除</a>
+            </div>
+        </div>
+
+        <div title="法律声明">
+            <div class="wrapper">
+                <p class="title">法律声明：</p>
+                <textarea  id="legalEditor">{$data.com}</textarea>
+                <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_saveLegalEditor" data-options="iconCls:'icon-save'">保存</a>
+            </div>
+        </div>
+
+        <div title="联系我们">
+            <div class="company">
+                <p class="title-contact">佛山总公司</p>
+                <form action="">
+                    <div class="form-item">
+                        <label>公司名称：</label> <input type="text" class="easyui-textbox companyFs" data-options="required:true" value="{$fs.companyName}"  style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>公司地址：</label> <input type="text" class="easyui-textbox addressFs" data-options="required:true" value="{$fs.address}"  style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>服务热线：</label> <input type="text" class="easyui-textbox fuwuFs" data-options="required:true"  value="{$fs.serviceTel}" style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>固话：</label> <input type="text" class="easyui-textbox phoneFs" data-options="required:true" value="{$fs.tel}"  style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>传真：</label> <input type="text" class="easyui-textbox faxFs" data-options="required:true" value="{$fs.fax}"  style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>邮箱：</label> <input type="text" class="easyui-textbox mailFs" data-options="required:true" value="{$fs.email}"  style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>&nbsp;</label> <a href="javascript:void(0);" class="easyui-linkbutton company-save js_saveFs" data-options="iconCls:'icon-save'">保存</a>
+                    </div>
+                    
+                </form>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="company">
+                <p class="title-contact">广州分公司</p>
+                <form action="">
+                    <div class="form-item">
+                        <label>公司名称：</label> <input type="text" class="easyui-textbox companyGz" data-options="required:true" value="{$gz.companyName}" style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>公司地址：</label> <input type="text" class="easyui-textbox addressGz" data-options="required:true" value="{$gz.address}" style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>服务热线：</label> <input type="text" class="easyui-textbox fuwuGz" data-options="required:true" value="{$gz.serviceTel}"  style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>固话：</label> <input type="text" class="easyui-textbox phoneGz" data-options="required:true" value="{$gz.tel}" style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>传真：</label> <input type="text" class="easyui-textbox faxGz" data-options="required:true"  value="{$gz.fax}" style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>邮箱：</label> <input type="text" class="easyui-textbox mailGz" data-options="required:true" value="{$gz.email}" style="width:280px; height:30px">
+                    </div>
+                    <div class="form-item">
+                        <label>&nbsp;</label> <a href="javascript:void(0);" class="easyui-linkbutton company-save  js_saveGz" data-options="iconCls:'icon-save'">保存</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="line"></div>
+
+            <!-- 商务合作 -->
+            <div class="cooperation">
+                <form action="">
+                   <p class="title-contact">商务合作</p>
+                   <div class="list-wrap">
+                       <dl>
+                           <dt>销售合作</dt>
+                           <dd>
+                                <div class="form-item">
+                                    <label>联系人：</label> <input type="text" class="easyui-textbox provider" data-options="required:true" value="{$p.name}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>固话：</label> <input type="text" class="easyui-textbox providephone" data-options="required:true" value="{$p.phone}"   style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>邮箱：</label> <input type="text" class="easyui-textbox providemail" data-options="required:true" value="{$p.mail}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>QQ：</label> <input type="text" class="easyui-textbox provideqq" data-options="required:true" value="{$p.qq}"   style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                       </dl>
+                       <dl>
+                           <dt>采购合作</dt>
+                           <dd>
+                                <div class="form-item">
+                                    <label>联系人：</label> <input type="text" class="easyui-textbox buyer" data-options="required:true" value="{$b.name}"   style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>固话：</label> <input type="text" class="easyui-textbox buyphone" data-options="required:true" value="{$b.phone}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>邮箱：</label> <input type="text" class="easyui-textbox buymail" data-options="required:true" value="{$b.mail}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>QQ：</label> <input type="text" class="easyui-textbox buyqq" data-options="required:true" value="{$b.qq}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                       </dl>
+                       <dl>
+                           <dt>品牌推广</dt>
+                           <dd>
+                                <div class="form-item">
+                                    <label>联系人：</label> <input type="text" class="easyui-textbox extender" data-options="required:true"  value="{$e.name}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>固话：</label> <input type="text" class="easyui-textbox extendphone" data-options="required:true" value="{$e.phone}" style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>邮箱：</label> <input type="text" class="easyui-textbox extendmail" data-options="required:true"  value="{$e.mail}" style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>QQ：</label> <input type="text" class="easyui-textbox extendqq" data-options="required:true" value="{$e.qq}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                       </dl>
+                       <dl>
+                           <dt>投资洽谈</dt>
+                           <dd>
+                                <div class="form-item">
+                                    <label>联系人：</label> <input type="text" class="easyui-textbox invest" data-options="required:true" value="{$i.name}"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>固话：</label> <input type="text" class="easyui-textbox investphone" data-options="required:true" value="{$i.phone}" style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>邮箱：</label> <input type="text" class="easyui-textbox investmail" data-options="required:true" value="{$i.mail}" style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>QQ：</label> <input type="text" class="easyui-textbox investqq" data-options="required:true" value="{$i.qq}" style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                       </dl>
+                       <dl>
+                           <dt>客户服务</dt>
+                           <dd>
+                                <div class="form-item">
+                                    <label>联系人：</label> <input type="text" class="easyui-textbox kefu" value="{$k.name}" data-options="required:true"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>固话：</label> <input type="text" class="easyui-textbox kefuphone" value="{$k.phone}"   data-options="required:true"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>邮箱：</label> <input type="text" class="easyui-textbox kefumail" value="{$k.mail}"  data-options="required:true"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                           <dd>
+                                <div class="form-item">
+                                    <label>QQ：</label> <input type="text" class="easyui-textbox kefuqq" value="{$k.qq}"  data-options="required:true"  style="width:280px; height:30px">
+                                </div>
+                           </dd>
+                       </dl>
+                       <!--<dl>-->
+                           <!--<dt>招聘英才</dt>-->
+                           <!--<dd>-->
+                                <!--<div class="form-item">-->
+                                    <!--<label>联系人：</label> <input type="text" class="easyui-textbox complain" data-options="required:true" value="{$c.name}"  style="width:280px; height:30px">-->
+                                <!--</div>-->
+                           <!--</dd>-->
+                           <!--<dd>-->
+                                <!--<div class="form-item">-->
+                                    <!--<label>固话：</label> <input type="text" class="easyui-textbox complainphone" data-options="required:true" value="{$c.phone}"  style="width:280px; height:30px">-->
+                                <!--</div>-->
+                           <!--</dd>-->
+                           <!--<dd>-->
+                                <!--<div class="form-item">-->
+                                    <!--<label>邮箱：</label> <input type="text" class="easyui-textbox complainmail" data-options="required:true" value="{$c.mail}"  style="width:280px; height:30px">-->
+                                <!--</div>-->
+                           <!--</dd>-->
+                           <!--<dd>-->
+                                <!--<div class="form-item">-->
+                                    <!--<label>QQ：</label> <input type="text" class="easyui-textbox complainqq" data-options="required:true" value="{$c.qq}" style="width:280px; height:30px">-->
+                                <!--</div>-->
+                           <!--</dd>-->
+                       <!--</dl>-->
+                   </div>
+                </form>
+                <div class="form-item-2">
+                    <label>&nbsp;</label> <a href="javascript:void(0);" class="easyui-linkbutton cooperation-save  js_saveCooperation" data-options="iconCls:'icon-save'">保存</a>
+                </div>
+            </div>
+        </div>
+
+        <!--<div title="发展历程">-->
+            <!--<table id="history-list"></table>-->
+            <!--<div id="history-bar" class="toolbar">-->
+                <!--<div class="btns">-->
+                    <!--<a href="javascript:void(0);" class="easyui-linkbutton js_historyAdd" data-title="新增" data-href="./sys/add.html"  iconCls="icon-add" >新增大事件</a>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; <div class="search">-->
+                    <!--<input id="js_searchHistory" name="notice" class="easyui-searchbox" data-options="prompt:'标题'" style="width:200px; height: 26px;">-->
+                <!--</div> &ndash;&gt;-->
+            <!--</div>-->
+            <!--<div id="history-footer" class="footer-bar">-->
+                <!--<a href="javascript:void(0);" data-operation="removeSome" class="easyui-linkbutton js_multiRemoveHistory" iconCls="icon-remove" >批量删除</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <!-- 新增和编辑公告 -->
+    <div id="noticeDialog" class="operate-dialog">
+        <form id="js_noticeDialog" >
+            <div class="wrapper">
+                <p class="title">标题：</p>
+                <input type="text" class="easyui-textbox js_noticeDialogTitle" style="width:280px; height:30px">
+                <p class="title">内容：</p>
+                <textarea  id="js_noticeDialogEditor">333</textarea>
+
+                <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_noticeDialogSave" data-options="iconCls:'icon-save'">保存</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- 新增和编辑发展历程 -->
+    <div id="historyDialog" class="operate-dialog">
+        <form id="js_historyDialog" >
+            <div class="wrapper">
+                <p class="title">标题：</p>
+                <input type="text" class="easyui-textbox js_historyDialogTitle" style="width:280px; height:30px">
+                <p class="title">时间点：</p>
+                <input type="text" class="easyui-datebox js_historyDialogDate" style="width:280px; height:30px">
+                <p class="title">内容：</p>
+                <textarea  id="js_historyDialogEditor">333</textarea>
+
+                <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_historyDialogSave" data-options="iconCls:'icon-save'">保存</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- 新增和编辑媒体报道 -->
+    <div id="newsDialog" class="operate-dialog">
+        <form action='news' id="js_newsDialog" enctype="multipart/form-data" method="post">
+            <div class="wrapper">
+                <p class="title">标题：</p>
+                <input type="text" class="easyui-textbox js_newsDialogTitle" name='title' style="width:280px; height:30px">
+                <input type="hidden" name='id' id='newsid' value=''>
+               <p class="title">缩略图：</p>
+               <input type="file" class="file-btn js_imgUpload"> <span class="warning">图片宽316px*高214px</span>
+               <input type="hidden" name="img">
+                <p class="title">内容：</p>
+                <textarea  id="js_newsDialogEditor" name='content' >333</textarea>
+                <p class="title">来源：</p>
+                <input type="text" class="easyui-textbox js_newsDialogFrom" name='from' style="width:280px; height:30px">
+                <p class="title">报道日期：</p>
+                <input type="text" class="easyui-datebox js_newsDialogDate" name='date' style="width:280px; height:30px">
+                <div></div>
+                <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_newsDialogSave" data-options="iconCls:'icon-save'">保存</a>
+            </div>
+            <div class="thumbnail-wrap">
+              <img  alt="">
+            </div>
+        </form>
+    </div>
+
+    <!-- 新增和编辑招聘信息 -->
+    <div id="jobDialog" class="operate-dialog">
+        <form id="js_jobDialog" >
+            <div class="wrapper">
+                <p class="title">地点：</p>
+                <select class="easyui-combobox js_jobDialogArea" style="width:280px; height:30px">
+                    <option value="1">佛山</option>   
+                    <option value="2">广州</option>   
+                </select> 
+                <p class="title">职位名称：</p>
+                <input type="text" class="easyui-textbox js_jobDialogOffer" style="width:280px; height:30px">
+                <p class="title">人数：</p>
+                <input type="text" class="easyui-textbox js_jobDialogNumber" style="width:280px; height:30px">
+                <p class="title">描述：</p>
+                <textarea  id="js_jobDialogEditor">333</textarea>
+                
+                <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_jobDialogSave" data-options="iconCls:'icon-save'">保存</a>
+            </div>
+        </form>
+    </div>
+    
+
+    <script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/editor/kindeditor-min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/page/content/about-us.js"></script>
+</body>
+
+</html>

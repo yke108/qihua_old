@@ -1,0 +1,69 @@
+.good-info {
+    width: 90%;
+    margin: 30px auto;
+    font-size: 14px;
+    text-indent: 10px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+}
+.info-title {
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+    background: #f4f4f4;
+    color: #333;
+}
+
+.attr-item {
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px dotted #ddd;
+}
+.attr-item .title {
+    float: left;
+    width: 150px;
+    background: #eaf2ff;
+}
+.attr-item .desc {
+    margin-left: 150px;
+}
+.good-info .wrap {
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+    border-bottom: 1px dotted #ddd;
+}
+.wrap .attr-item {
+    width: 50%;
+    float: left;
+}
+.reason {
+    color: #f00;
+}
+.operation-list {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
+.operate-btns  {
+    width: 90%;
+    margin: 0 auto 30px;
+}
+.operate {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    padding: 0 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-right: 20px;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.form-wrap {
+    text-align: center;
+    margin-top: 30px;
+}

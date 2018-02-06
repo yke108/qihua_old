@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>My Buy Offers - Publish</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-findGoods-pub.css">
+</head>
+<body>
+<include file="Public/user-notice" />
+<include file="Public/member-head" />
+
+<div class="wrapper clearfix member-wraper">
+
+<include file="Public/member-side" />
+    <div class="fl member-main">
+        <div class="top-bar">New Offers</div>
+
+        <div class="main-content">
+            <form class="form" action='BuyOfferRelease' method='POST'>
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Subject</span><input type="text" name='title' class="field">
+                    </label>
+                </div>
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Type</span>
+                        <select name="type" class="field">
+                        <volist name="type" id="vo">
+                            <option value={$key}>{$vo}</option>
+                        </volist>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-item form-item-content">
+                    <label>
+                        <span class="field-name">Content</span>
+                        <textarea name="content"  class="field"></textarea>
+                    </label>
+                </div>
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Period of validity</span>
+                        <select name="expire" class="field">
+                        <volist name="date" id="vo">
+                            <option value={$key}>{$vo}</option>
+                            </volist>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-btn">
+                    <a href="javascript:void(0);" class="submit submit-btn">Submit</a>
+                    <a href="{:U('Buyoffer/BuyOfferList')}" class="cancel-btn">cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!--发布成功提示-->
+        <div class="pub-success">
+            <div class="inner">
+                <i class="icon-success"></i>
+                <p class="tips">Have been submitted</p>
+                <p class="tips">please wait for the auditing</p>
+                <div class="btns"><a href="BuyOfferRelease" class="add-btn">Add Again</a><a href="{:U('Buyoffer/BuyOfferList')}" class="cancel-btn">Return</a></div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<include file="Public/footer" />
+</body> 
+    <script src="__PUBLIC__/User/js/member-findGoods-pub.js"></script>
+</html>

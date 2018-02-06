@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Verification Phones</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-manage-phone.css">
+</head>
+
+<body>
+<!-- 网站顶部 -->
+<!-- 滚动公告 -->
+<include file="Public/user-notice" />
+
+<!-- 网站头部 -->
+<include file="Public/member-head"/>
+
+<!-- 网页主体内容 -->
+<div class="wrapper clearfix">
+    <!-- 左边导航 -->
+    <include file="Public/member-side"/>
+
+    <div class="member-main">
+        <p class="main-title">
+            Manage Verification Phones
+        </p>
+        <?php
+        $email = '';
+        if(empty($memberObj['phone'])){
+          $email = 'style = "display:block;"';
+        }
+        $show = '';
+        if (($memberObj['bind'] + 0 & C('STATUS_BIND')['BIND_PHONE']) <= 0) {
+            $show = 'style = "display:none;"';
+            $email = 'style = "display:block;"';
+        }
+        ?>
+        <div class="change-password" <?php echo $email?>>
+            <p class="title">Change bound phone number</p>
+            <form>
+                <div class="form-item">
+                    <label>New Mobile</label>
+                    <input type="text" name="mobile" id="mobile">
+                </div>
+                <div class="form-item">
+                    <div class="clearfix">
+                        <label>SMS verification code</label>
+                        <input type="text" class="code" name="code" id="code">
+                        <a href="javascript:void(0)" class="send" disabled>send</a>
+                    </div>
+                </div>
+                <input type="hidden" name="uv_r" value="<php>echo mobileCache();</php>" id="uv_r">
+            </form>
+            <div class="operate">
+                <a href="javascript:void(0)" class="submit">Submit</a>
+                <a href="/User/AccountSecurity/bindPhone.html" class="cancel">Cancel</a>
+            </div>
+        </div>
+        <div class="succeed">
+            <i class="icon-succeed"></i>
+            <div class="cont">
+                <p>Phone Number Changed Successfully！</p>
+                <span>Binding +86 <span class="newPhone">1380-0013-8000 </span>and it will take you to the change phone number page after  <span
+                        class="second">5</span>  seconds</span>
+                <a href="javascript:void(0)" class="js_return">Return Now</a>
+            </div>
+        </div>
+        <div class="current" <?php echo $show ?>>
+            <i class="icon-phone"></i>
+            <div class="cont">
+                <p>Current verification phone number is +86 <?php echo substr_replace($memberObj['phone'],'******',3,3);?> </p>
+                <a class="js_Change" href="javascript:void(0)">Change</a>
+            </div>
+            <if condition="$PhoneCount gt 3">
+            <div class="tips"><i class="icon-tips"></i>
+                <div class="trigon-border"></div>
+                <div class="trigon"></div>
+                Three SMS Verification Codes a day only
+            </div>
+                </if>
+        </div>
+    </div>
+</div>
+
+<!-- 网页尾部 -->
+<include file="Public/footer"/>
+
+</body>
+<script src="__PUBLIC__/User/js/member-manage-phone.js"></script>
+</html>

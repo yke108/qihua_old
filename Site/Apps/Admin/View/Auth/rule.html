@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>系统管理--权限列表</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/page/sys/permissions.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+<script>
+    var authRuleUrl="{:U('Auth/ruleList')}";
+    var ruleAddUrl="{:U('Auth/ruleAdd')}";
+    var ruleSaveUrl="{:U('Auth/ruleSave')}";
+    var ruleDelUrl="{:U('Auth/ruleDel')}";
+</script>
+    <div id="js_sysTab" class="easyui-tabs" style="width: 100%; height: auto;">
+        <div title="WEB">
+            <div class="easyui-layout" style="width:100%; height: 500px;">
+                <div data-options="region:'north'" style="width: 100%; height: 50px">
+                    <div id="WEBToolbar" class="toolbar">
+                        <div class="btns">
+                            <a href="javascript:void(0);" class="easyui-linkbutton addTop" data-options="iconCls:'icon-add'">新增顶级</a>
+                            <a href="javascript:void(0);" class="easyui-linkbutton addMenu" data-options="iconCls:'icon-add',disabled:true">新增菜单</a>
+                            <a href="javascript:void(0);" class="easyui-linkbutton addControl" data-options="iconCls:'icon-add',disabled:true">新增操作功能</a>
+                            <a href="javascript:void(0);" class="easyui-linkbutton remove" data-options="iconCls:'icon-remove',disabled:true">删除</a>
+                        </div>
+                    </div>
+                </div>
+                <div data-options="region:'west'" style="width:300px;">
+                    <ul id="WEBTree"></ul>
+                </div>
+                <div data-options="region:'center'">
+                    <form action="" id="WEBForm">
+                        <div class="form-item">
+                            <label><span>*</span>权限名称：</label><input type="text" id="ruleTitle" class="easyui-textbox" name="title" style="width:200px; height:30px" data-options="required:true">
+                            <input type="hidden" name="parentid" id="parentid"/>
+                        </div>
+                        <div class="form-item">
+                            <label><span>*</span>规则标识：</label><input type="text" id="permissionsCode" class="easyui-textbox" name="name" style="width:200px; height:30px" data-options="required:true">
+                        </div>
+                        <div class="item-2">
+                            <label>&nbsp;</label>
+                            <button class="easyui-linkbutton js_submit" data-options="iconCls:'icon-save'" data-options="required:true" style="padding: 6px 18px;">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增菜单 -->
+    <div id="addDlg" class="operate-dialog">
+        <form id="js_addMenu" >
+            <div class="form-item">
+                <label><span>*</span>权限名称：</label><input type="text"  class="easyui-textbox title" name="title" style="width:200px; height:30px" data-options="required:true">           
+            </div>
+            <div class="form-item">
+                <label><span>*</span>规则标识：</label><input type="text" id="permissionsCode" class="easyui-textbox" name="name" style="width:200px; height:30px" data-options="required:true">
+            </div>
+            <input type="hidden" name="parentid" class="parentid"/>
+            <div id="btns">
+            <a href="javascript:void(0);" class="easyui-linkbutton js_saveAdd" iconCls="icon-save" style="width:90px">保存</a>
+            </div>
+        </form>
+    </div>
+
+
+
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/page/sys/permissions.js"></script>
+</body>
+
+</html>

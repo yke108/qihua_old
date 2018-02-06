@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Center - Modify Product</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/member-addGoods-infoModify.css">
+</head>
+<body>
+<include file="Public/member-head" />
+
+<?php
+    $targetState = $data['state'];
+    if( in_array( $targetState, array( 4,5,6 ) ) ){
+        $targetState = 3;
+    }
+?>
+<div class="wrapper brand-wraper">
+    <div class="top-bar clearfix"><a href="<?php echo U( 'Seller/products', array( 'state' => $targetState ) )?>" class="blu fl">&lt;Back</a><a href="{:U(  'Seller/productHistories', array( 'id' => $data['id'] ) )}" class="oper fr">Operation History </a></div>
+    <?php
+    if( !empty( $data['lastHistory']['reason'] ) && $data['state'] != '1'){
+        if( in_array( $data['state'], array( 0 ) ) ){
+            $reasonTip = 'Product Audit Not Passed ';
+        }elseif( in_array( $data['state'], array( 3, 5, 6 ) ) ){
+            $reasonTip = 'Product Revoke Passed';
+        }
+    ?>
+    <div class="sys-tips"><?php echo $reasonTip?> [<span class="reason">Reason:<?php echo $data['lastHistory']['reason'];?></span>]</div>
+    <?php
+       }
+?>
+
+    <div class="tl-bar">Modify</div>
+    <p class="tl-tips">Tips: Will be audited after the information is modify</p>
+    <div class="checked-tips">
+        <p class="tips">Your current  product category selection is:</p>
+        <p class="tag"><span><?php echo implode( ' > ', $data['selectedCategory'] )?></span><a href="{:U( 'Seller/selectCategory', $data['selectedCategoryParam'] )}" class="modify">Change</a></p>
+    </div>
+
+    <form action="" id="form-addGoods">
+        <input type="hidden" name="categoryList" value="<?php echo $data['categoryList']?>">
+        <input type="hidden" name="id" value="<?php echo $data['id']?>">
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Product Basic Information</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Chemical Name</span>
+                <input type="text" class="field fl" placeholder="Please enter product's English name （Chemical Name）" name="enName" value="<?php echo $data['enName']?>">
+                <span class="fl tips-wrap"><em class="tips">Product's Chemical Name,<br>from 1 to 50 Characters</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Synonyms</span>
+                <textarea class="field fl" placeholder="Please enter product's Synonyms" name="enAlias"><?php echo $data['enAlias']?></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Optional, 50 Characters at most</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Manufacturer/Supplier</span>
+                <!--<select type="text" class="field fl" name="producerId">-->
+                    <!--<option value="<?php echo intval( $data['producer']['id'] )?>"><?php echo empty( $data['producer']['title'] ) ? 'Please select the Manufacturer/Supplier' : $data['producer']['title'];?></option>-->
+                <!--</select>-->
+                <input type="hidden" name="producerId" class="saveId" value="<?php echo $data['producer']['id'];?>">
+                <input type="text" class="field fl js-chooseBox" readonly="readonly" data-name="producerId" value="<?php echo $data['producer']['title'];?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Brand</span>
+                <!--<select type="text" class="field fl" name="brandId">-->
+                    <!--<option value="<?php echo intval( $data['brand']['id'] )?>"><?php echo empty( $data['brand']['title'] ) ? 'Please select the brand' : $data['brand']['title'];?></option>-->
+
+                <!--</select>-->
+                <input type="hidden" name="brandId" class="saveId" value="<?php echo $data['brand']['id'];?>">
+                <input type="text" class="field fl js-chooseBox" readonly="readonly" data-name="brandId" value="<?php echo $data['brand']['title'];?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix js_area">
+                <span class="field-name fl">Origin</span>
+                <input type="hidden" name="placeList" value="<?php echo $data['placeList']?>">
+                <select type="text" class="field fl field-min js_country">
+                    <option value="">Country</option>
+                    <?php
+                    foreach( $countries as $country ){
+                    ?>
+                    <option <?php echo in_array( $country['id'], $data['placeListIds'] ) ? 'selected="selected"':'';?> value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <select type="text" class="field fl field-min js_province">
+                    <option value="">Province/Municipality</option>
+                    <?php
+                    foreach( $placeList_0 as $country ){
+                    ?>
+                    <option <?php echo in_array( $country['id'], $data['placeListIds'] ) ? 'selected="selected"':'';?> value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <select type="text" class="field fl field-min js_city">
+                    <option value="">City</option>
+                    <?php
+                    foreach( $placeList_1 as $country ){
+                    ?>
+                    <option <?php echo in_array( $country['id'], $data['placeListIds'] ) ? 'selected="selected"':'';?> value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+            </div>
+            <div class="field-item clearfix js_area">
+                <span class="field-name fl">Product Location</span>
+                <input type="hidden" name="seatList" value="<?php echo $data['seatList']?>">
+                <select type="text" class="field fl field-min js_country">
+                    <option value="">Country</option>
+                    <?php
+                    foreach( $countries as $country ){
+                    ?>
+                    <option <?php echo in_array( $country['id'], $data['seatListIds'] ) ? 'selected="selected"':'';?> value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <select type="text" class="field fl field-min js_province">
+                    <option value="">Province/Municipality</option>
+                    <?php
+                    foreach( $seatList_0 as $country ){
+                    ?>
+                    <option <?php echo in_array( $country['id'], $data['seatListIds'] ) ? 'selected="selected"':'';?> value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <select type="text" class="field fl field-min js_city">
+                    <option value="">City</option>
+                    <?php
+                    foreach( $seatList_1 as $country ){
+                    ?>
+                    <option <?php echo in_array( $country['id'], $data['seatListIds'] ) ? 'selected="selected"':'';?> value="<?php echo $country['id']?>"><?php echo $country['text']?></option>
+                    <?php
+                    }
+?>
+                </select>
+            </div>
+        </div>
+
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Key Indexes</span>
+                <span class="fr">The newly key index sequence is exactly the order of product details.</span>
+            </div>
+            <div class="field-item clearfix goods-item indicator">
+                <?php if (!empty($data['keyIndex'])) { ?>
+                <?php $im = 0 ?>
+                <?php foreach($ks = json_decode($data['keyIndex'], true) as $pk => $pv) { ?>
+                <?php if (isset($keyIndexList[$pk])) { ?>
+                <div class="combo-item">
+                    <i class="clear" disabled=true></i>
+                    <input type="text" class="text" data-combo="combo" value="<?php echo $keyIndexList[$pk] ?>" data-name="<?php echo $pk ?>" placeholder="请输入关键字选择">
+                    <input type="text" class="text" placeholder="请填写指标内容" value="<?php echo $pv ?>" name="<?php echo $pk ?>">
+                    <!-- 添加 -->
+                    <!-- 删除 -->
+
+                    <?php if (++$im == count($ks)) { ?>
+                    <a href="javascript:void(0)" class="add">Delete</a>
+                    <?php }else{ ?>
+                    <a href="javascript:void(0)" class="del">Delete</a>
+                    <?php } ?>
+                </div>
+                <?php } ?>
+                <?php } ?>
+                <?php } else { ?>
+                <div class="combo-item">
+                    <i class="down" ></i>
+                    <input type="text" class="text" data-combo="combo" placeholder="请输入关键字选择">
+                    <input type="text" class="text" placeholder="请填写指标内容">
+                    <!-- 添加 -->
+                    <a href="javascript:void(0)" class="add">Delete</a>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Product Properties</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Purity</span>
+                <input type="text" class="field fl" placeholder="eg.: 99.5%" name="format" value="<?php echo $data['attribute']['format']?>">
+                <span class="fl tips-wrap"><em class="tips">The highest numerical value can be accurate <br>to two decimal plac</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Appearance</span>
+                <input type="text" class="field fl" placeholder="eg.: Solid" name="character" value="<?php echo $data['attribute']['character']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Quality Grade</span>
+                <select type="text" class="field fl" name="qualityGradeID">
+                    <option value="">Select</option>
+                    <?php
+                    foreach( $qualityGrade as $value ){
+                    ?>
+                    <option <?php echo $data['attribute']['qualityGradeID'] == $value['value'] ? 'selected="selected"':'';?> value="<?php echo $value['value']?>"><?php echo $value['enTitle']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name red fl">Item No/Model</span>-->
+                <!--<input type="text" class="field fl" placeholder="eg.: 123456" name="model" value="<?php echo $data['attribute']['model']?>">-->
+                <!--<span class="fl tips-wrap"><em class="tips"></em></span>-->
+            <!--</div>-->
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Package</span>
+                <input type="text" class="field fl" placeholder="eg.: 100 kg/bag" name="pack" value="<?php echo $data['attribute']['pack']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">CAS NO.</span>
+                <input type="text" class="field fl" placeholder="eg.: 1234-234-23" name="cas" value="<?php echo $data['cas']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">EINECS NO.</span>
+                <input type="text" class="field fl" placeholder="EINECS No." name="einecs_no" value="<?php echo $data['einecsNO']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Odor</span>
+                <input type="text" class="field fl" placeholder="eg.: Pungent" name="smell" value="<?php echo $data['attribute']['smell']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Melting Point</span>
+                <input type="text" class="field fl" placeholder="eg.: 18℃" name="melting" value="<?php echo $data['attribute']['melting']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Boiling Point</span>
+                <input type="text" class="field fl" placeholder="eg.: 18℃" name="boiling" value="<?php echo $data['attribute']['boiling']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Flash Point</span>
+                <input type="text" class="field fl" placeholder="eg.: 18℃" name="flash" value="<?php echo $data['attribute']['flash']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">pH</span>
+                <input type="text" class="field fl" placeholder="eg.: 7.2" name="ph" value="<?php echo $data['attribute']['ph']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Relative Density</span>
+                <input type="text" class="field fl" placeholder="eg.: 100g/ml" name="density" value="<?php echo $data['attribute']['density']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Solubility</span>
+                <input type="text" class="field fl" placeholder="" name="solubility" value="<?php echo $data['attribute']['solubility']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name fl">Sensitivity</span>-->
+                <!--<input type="text" class="field fl" placeholder="" name="susceptibility" value="<?php echo $data['attribute']['susceptibility']?>">-->
+                <!--<span class="fl tips-wrap"><em class="tips"></em></span>-->
+            <!--</div>-->
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name fl">PSA</span>-->
+                <!--<input type="text" class="field fl" placeholder="" name="psa" value="<?php echo $data['attribute']['psa']?>">-->
+                <!--<span class="fl tips-wrap"><em class="tips"></em></span>-->
+            <!--</div>-->
+            <div class="field-item clearfix">
+                <span class="field-name fl">Molecular weight</span>
+                <input type="text" class="field fl" placeholder="" name="formula" value="<?php echo $data['attribute']['formula']?>">
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name fl">Upload Document</span>
+                <div class="field fl up-wrap">
+                    <div class="up-item">
+                        <input type="hidden" name="msds" value="<?php echo $data['attribute']['msds']?>">
+                        <span class="up-name">MSDS</span>
+                        <?php
+                        if( !empty( $data['attribute']['msds'] ) ){
+?>
+                        <span class="up-tips"><i class="icon-rit"></i>Uploaded</span>
+                        <?php
+                        }
+?>
+                        <div class="up-btn js_upFile">Upload</div>
+                    </div>
+                    <div class="up-item">
+                        <input type="hidden" name="tds" value="<?php echo $data['attribute']['tds']?>">
+                        <span class="up-name">TDS</span>
+                        <?php
+                        if( !empty( $data['attribute']['tds'] ) ){
+?>
+                        <span class="up-tips"><i class="icon-rit"></i>Uploaded</span>
+                        <?php
+                        }
+?>
+                        <div class="up-btn js_upFile">Upload</div>
+                    </div>
+                    <div class="up-item">
+                        <input type="hidden" name="coa" value="<?php echo $data['attribute']['coa']?>">
+                        <span class="up-name">CoA</span>
+                        <?php
+                        if( !empty( $data['attribute']['coa'] ) ){
+?>
+                        <span class="up-tips"><i class="icon-rit"></i>Uploaded</span>
+                        <?php
+                        }
+?>
+                        <div class="up-btn js_upFile">Upload</div>
+                    </div>
+                </div>
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+
+        </div>
+
+        <div class="field-col introduction">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Fill in the Product Details</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Brief Introduction</span>
+                <textarea class="field fl" name="summary"><?php echo $data['attribute']['summary']?></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Please give a brief introduction to the product, <br>30-2000 characters</em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name red fl">Features</span>-->
+                <!--<textarea class="field fl" name="features"><?php echo $data['attribute']['features']?></textarea>-->
+                <!--<span class="fl tips-wrap bt"><em class="tips">Please outline the features of the product, <br>10-500 characters</em></span>-->
+            <!--</div>-->
+            <div class="field-item clearfix">
+                <span class="field-name fl">Application</span>
+                <textarea class="field fl" name="purpose"><?php echo $data['attribute']['purpose']?></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Please describe the applications of the product,<br> 30-3000 characters</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Storage Condition</span>
+                <textarea class="field fl" name="condition"><?php echo $data['attribute']['condition']?></textarea>
+                <span class="fl tips-wrap bt"><em class="tips">Please write down the product's storage methods <br>and conditions, 10-500 characters</em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name red fl">Emergency Measures</span>-->
+                <!--<textarea class="field fl" name="emergency"><?php echo $data['attribute']['emergency']?></textarea>-->
+                <!--<span class="fl tips-wrap bt"><em class="tips">Please write down the product's emergency <br>processing measures, 10-1000 characters</em></span>-->
+            <!--</div>-->
+        </div>
+
+        <div class="field-col">
+            <div class="col-bar clearfix">
+                <input type="hidden" name="images" value="<?php echo implode( ',', $data['images'] )?>">
+                <span class="fl tl">Product's Photo</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+
+            <div class="photo-box">
+                <div class="up-box-wrap clearfix">
+                <?php
+                $totalImageCount = 7;
+                $uploadedImageCount = count( $data['images'] );
+                $lastImageCount = $totalImageCount - $uploadedImageCount;
+                foreach( $data['images'] as $image ){
+                ?>
+                    <div class="up-box fl finishUp">
+                        <p class="tips <?php echo $class?>"><?php echo $imageTip?> Photos</p>
+                        <div class="up-tips js_upImg">Upload</div>
+                        <div class="js_showwrap img-wrap">
+                            <img src="<?php echo $image?>" alt="">
+                            <div class="layer">
+                                <i class="icon-del"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php
+                }
+                for( $i = 0; $i < $lastImageCount; $i++ ){
+                    $imageTip = 'Detail';
+                    if( $lastImageCount == $totalImageCount ){
+                        $imageTip = 'Main';
+                        $class = 'red';
+                    }
+                ?>
+                    <div class="up-box fl">
+                        <p class="tips <?php echo $class?>"><?php echo $imageTip?> Photos</p>
+                        <div class="up-tips js_upImg">Upload</div>
+                        <div class="js_showwrap img-wrap">
+                            <img alt="">
+                            <div class="layer">
+                                <i class="icon-del"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+?>
+            </div>
+                <div class="photo-tips">
+                    <p class="ph-tips">Prompt:</p>
+                    <p class="ph-tips">1.  Recommended image 2M Max.; jpg/jpeg/png formats only.</p>
+                    <p class="ph-tips">2.  The photo should be clear, do not blur. Background in white is Perfect.<span class="pop">View example <em class="pop-img"><img
+                            src="__PUBLIC__/Home/images/p2.jpg" alt=""></em></span></p>
+                    <p class="ph-tips">3.  Please upload at least 1 pictures.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-col productBasic">
+            <div class="col-bar clearfix">
+                <span class="fl tl">Product Basic Information</span>
+                <span class="fr"><em class="red">"Red character"</em> is mandatory field</span>
+            </div>
+
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Sales Title</span>
+                <input type="text" class="field fl" placeholder="" name="title" value="<?php echo $data['title']?>">
+                <span class="fl tips-wrap"><em class="tips abs">Suggested Example: <br>
+【Brand Name】+ <br>
+【Purity/Specification】+【Chemical Name】+【Quality Grade】,<br>
+ike Lonkey 99.5%  Sodium hydroxide<br> industrial-grade</em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Reference Price</span>
+                <div class="fl field-w">
+                    <span class="e js_cyseat"><?php echo $currency[$data['currency']]['character']?></span>
+                    <input type="text" class="field field-min2" placeholder="" name="price" value="<?php echo $data['price']?>">
+                </div>
+                <span class="line fl">/</span>
+                <select class="fl field field-min3 selecting" name="weightUnit">
+                    <?php
+                    foreach( $weightUnit as $value ){
+?>
+                    <option <?php echo $data['weightUnit'] == $value['value'] ? 'selected="selected"':'';?> value="<?php echo $value['value']?>"><?php echo $value['enTitle']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <span class="field-name field-name2 red fl">Currency</span>
+                <select class="fl field field-min3 selecting" name="currency">
+                    <?php
+                    foreach( $currency as $value ){
+?>
+                    <option <?php echo $data['currency'] == $value['value'] ? 'selected="selected"':'';?> value="<?php echo $value['value']?>" data-character="<?php echo $value['character']?>"><?php echo $value['enTitle']?></option>
+                    <?php
+                    }
+?>
+                </select>
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name red fl">Min. Order Quatity (MOQ)</span>
+                <input type="text" class="field fl field-min2" placeholder="" name="moq" value="<?php echo $data['moq']?>">
+                <span class="line fl">&nbsp;</span>
+                <span class="fl tips-wrap js_unitseat kp"><?php echo $weightUnit[$data['weightUnit']]['enTitle']?></span>
+                <span class="fl tips-wrap"><em class="tips"></em></span>
+            </div>
+            <!--<div class="field-item clearfix">-->
+                <!--<span class="field-name red fl">In Stock quantity</span>-->
+                <!--<input type="text" class="field fl field-min" placeholder="" name="inventory" value="<?php echo $data['inventory']?>">-->
+                <!--<span class="fl tips-wrap js_unitseat kp"><?php echo $weightUnit[$data['weightUnit']]['enTitle']?></span>-->
+            <!--</div>-->
+            <div class="field-item clearfix stock-bar-wrap">
+                <span class="field-name red fl">Stock</span>
+                <div class="fl stock-bar stock-bar1 <?php echo $data['inventoryType'] == 1 ? 'active': '' ?>">
+                    <label class="bar-name">
+                        <input type="radio" checked name="inventoryType" class="inventoryType" value="1" <?php echo $data['inventoryType'] == 1 ? 'checked': '' ?>>
+                        <span>In Stock</span>
+                    </label>
+                    <div class="stock-bar-content stock-avail">
+                        <label>
+                            <input type="radio" name="inventory" class="inventory" value="2" <?php echo $data['inventoryType'] == 1 && $data['inventoryNum'] ==0 ? 'checked': '' ?>>
+                            <span>No Specific Inventory</span>
+                        </label>
+                        <label class="label-inventoryNum">
+                            <input type="radio" name="inventory" class="inventory" value="1" <?php echo $data['inventoryType'] == 1 && $data['inventoryNum'] > 0 ? 'checked': '' ?>>
+                            <span>Inventory</span>
+                            <input type="text" class="text short inventoryNum" name="inventoryNum" value="<?php echo $data['inventoryType'] == 1 && $data['inventoryNum'] >=0 ? $data['inventoryNum'] : '' ?>" id="inventoryNum" placeholder="Fill in the inventory quantity" <?php echo $data['inventoryType'] == 1 && $data['inventoryNum'] ==0 ? 'disabled' : '' ?>>
+                            <span class="count-tips weightUnit js_unitseat"><?php echo $weightUnit[$data['weightUnit']]['enTitle']?></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="fl stock-bar stock-bar2">
+                    <label class="bar-name">
+                        <input type="radio" name="inventoryType" class="inventoryType" value="2" <?php echo $data['inventoryType'] == 2 ? 'checked': '' ?>>
+                        <span>Out Of Stock</span>
+                    </label>
+                </div>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Payment Mode</span>
+                <label class="fl tips-wrap"><input type="checkbox" disabled checked>Contract Agreement </label>
+            </div>
+            <div class="field-item clearfix">
+                <span class="field-name fl">Logistics Mode</span>
+                <label class="fl tips-wrap"><input type="checkbox" disabled checked>Contract Agreement </label>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="btn-wrap">
+        <div class="submit-next" data-id="<?php echo $data['id']?>">Next</div>
+        <a href="<?php echo U( 'Seller/products', array( 'state' => $targetState ) )?>" class="cancel">cancel</a>
+    </div>
+
+</div>
+
+<include file="Public/footer" />
+
+</body>
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/member-addGoods-infoModify.js"></script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>My Favorites</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-collect.css">
+</head>
+<body>
+<include file="Public/user-notice" />
+<include file="Public/member-head" />
+<div class="wrapper clearfix member-wraper">
+
+<include file="Public/member-side" />
+    <div class="fl member-main">
+        <div class="top-bar clearfix"><span class="fl bar-tl">My Favorites</span></div>
+        <?php if(!empty($_GET['type'])){  ?>
+	        <div class="choose">
+	                <a href="__ACTION__" <?php if($_GET['type']==0||empty($_GET['type'])){ ?> class="select" <?php } ?>>Buy Offers</a>
+	                <a href="__ACTION__?type=2" <?php if($_GET['type']==2){ ?> class="select" <?php } ?> >Supply</a>
+	                <a href="__ACTION__?type=1" <?php if($_GET['type']==1){ ?> class="select" <?php } ?> >Product</a>
+	        </div>
+        <?php }else{ ?>
+            <div class="choose">
+                    <a href="__ACTION__" class="select">Buy Offers</a>
+                    <a href="__ACTION__?type=2" class="">Supply</a>
+                    <a href="__ACTION__?type=1"  class="" >Product</a>
+            </div>
+        <?php } ?>
+        <div class="main-content">
+
+            <div class="list-search">
+                <div class="btns clearfix"><span class="fl btn checkall">Select All</span><span class="fl btn uncheckall">Unselect All</span> <span class="fl btn multi-delete">Delete</span></div>
+                <div class="search-bar clearfix">
+                    <notempty name='ret'><span class="size-sp fl"><em class="red">{$ret.count}</em>results <em class="red">{$ret.page}</em>/{$ret.pagecount}</span></notempty>
+                    <form action="__ACTION__" method='get' class="js_searchForm">
+                    <label class="key-label fr"><input type="text" name='title' value="<?php if(!empty($_GET['title'])){ echo htmlspecialchars($_GET['title']); } ?>"  placeholder="Enter a Keywords"><span class="submit-btn"><i class="icon-gl"></i></span></label>
+					<input type="hidden" name='type' value="<?php if(!empty($_GET['type'])){ echo htmlspecialchars($_GET['type']); } ?>" class="searchkey" >
+					</form>
+					<!-- 
+                    <label class="sr-label fr">
+                        <span class="field-name">Time</span>
+                        <select name="" class="field">
+                            <option value="">last 30 days</option>
+                        </select>
+                    </label> 
+ 					-->
+                </div>
+				<empty name='list'>
+				        <!--我的收藏列表为空-->
+			        <div class="list-none">
+			        
+			            <div class="warn-wrap">
+			                <i class="icon-warn"></i>
+			                <p class="tips">No Favorites</p>
+			            </div>
+			        </div>
+				<else/>
+                <table class="findGoods-list">
+                    <tr>
+                        <th colspan="2">Title</th>
+                        <th class="time">Add Time</th>
+                        <th class="oper">Operation</th>
+                    </tr>
+                    <volist name='list' id='vo'>
+                    <tr class="list-item" data-id="{$vo.id}">
+                        <td><input type="checkbox" class="checkone"></td>
+                        <td><div class="inner"><a class="link" <?php if(empty($_GET['type'])||$_GET['type']==0){ ?> href="{:U('Home/Buyoffer/BuyOfferDetails')}?id={$vo.id}"  <?php }elseif($_GET['type']==1){ ?> href="{:U('Home/Product/detail')}?id={$vo.id}" <?php }elseif($_GET['type']==2){ ?> href="{:U('Home/Supply/SupplyDetails')}?id={$vo.id}" <?php } ?>   >{$vo.title}</a></div></td>
+                        <td>{$vo.time|date="F d,Y",###}</td>
+                        <td>
+                            <span class="icon-del"></span>
+                        </td>
+                    </tr>
+                    </volist>
+                   
+                </table>
+				</empty>
+                <div class="pagination">
+                    <div class="handle"><!--  
+                        <a href="" class="prev"><i class="icon-prev"></i>Previous Page</a>
+                        <a href="" class="size">1</a>
+                        <a href="" class="size current">2</a>
+                        <a href="" class="size">3</a>
+                        <a href="" class="size">4</a>
+                        <span class="sl">…</span>
+                        <a href="" class="size">20</a>
+                        <a href="" class="next">Next Page<i class="icon-next"></i></a>
+                        -->
+                        {$show}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<include file="Public/footer" />
+
+</body> 
+    <script src="__PUBLIC__/User/js/member-collect.js"></script>
+</html>

@@ -1,0 +1,24 @@
+#toolbar {
+    padding: 10px;
+    display: none;
+}
+#toolbar .btns {
+    float: left;
+}
+#toolbar .serch {
+    margin-left: 10px;
+}
+.form-wrap {
+    text-align: center;
+    margin-top: 30px;
+}
+.area-select {
+    display: none;
+}
+.easyui-linkbutton {
+    outline: none;
+}
+#footerBar {
+    padding: 6px;
+    visibility: hidden;
+}

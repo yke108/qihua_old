@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Operation History</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-auth-history.css">
+</head>
+<body>
+    <!-- 滚动公告 -->
+    <include file="Public/user-notice" />
+    <!-- 网站头部 -->
+    <include file="Public/member-head" />
+<br>
+    <!-- 网页主体内容 -->
+    <div class="wrapper clearfix member-body">
+        <include file="Public/member-side" />
+        <p class="main-title">
+            Operation History
+            <a href="javascript:history.go(-1);" >Back</a>
+        </p>
+        <div class="member-main">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="550">Operation Item</th>
+                        <th width="200">Operation Time</th>
+                        <th width="200">Operator</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <volist name="info" id="data">
+                    <tr>
+                        <td>{$data.opera} <span><br>
+                        <if condition="$data.reason neq null">[Reason:{$data.reason}]</if></span></td>
+                        <td>{$data.addTime}</td>
+                        <td>{$data.oid}</td>
+                    </tr>
+                </volist>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <include file="Public/footer"/>
+
+</body>
+    <script src="__PUBLIC__/User/js/member-auth-history.js"></script>
+</html>

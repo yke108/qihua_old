@@ -1,0 +1,111 @@
+/*reset*/
+html{ background:#fff; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;}
+body{  line-height:1.4; font-family:"微软雅黑","宋体";    font-size: 12px; }
+input,textarea,select{ font-size:100%; font-family:inherit;}
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dd,form{ margin:0;}
+h4,h5,h6{ font-size:1em;}
+ul,ol{ padding-left:0; list-style-type:none;}
+ins,a { text-decoration:none;}
+a:hover { text-decoration:none;}
+img{ border:0;vertical-align: middle;}
+button,input,select,textarea{ font:12px/1.5,tahoma,arial; outline: none;}
+table{ border-collapse:collapse; border-spacing:0;}
+th{ text-align:inherit;}
+caption,th { text-align:left;}
+/* operate dialog */
+.operate-dialog {
+    display: none;
+}
+/* operate btn */
+.operate-wrap {
+    text-align: center;
+}
+.operate-btn {
+    display: inline-block;
+    margin:4px 3px;
+    padding: 2px 6px;
+    background-color: #fafafa;
+    color: #444;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+}
+.file-btn {
+    display: inline-block;
+    margin:4px 0;
+    padding: 4px 6px;
+    background-color: #fafafa;
+    color: #444;
+    border: 1px solid #95B8E7;
+    border-radius: 4px;
+}
+.operate-btn:hover {
+    background-color: #eaf2ff;
+    color: #000000;
+    border-color: #b7d2ff;
+}
+
+.layout-panel-west .panel-title  {
+    font-size: 14px;
+}
+/* header style */
+.header-title {
+    float: left;
+    line-height: 60px;
+    font-size: 20px;
+    color: #333;
+}
+.header-panel {
+    float: right;
+    line-height: 60px;
+    text-align: right;
+}
+
+/* sideMenu style */
+.side-menu li:hover {
+    background: #E0ECFF;
+}
+.side-menu a {
+    display: block;
+    cursor: pointer;
+}
+.side-menu .panel-title {
+    font-size: 13px;
+}
+.sideLink {
+    margin-left: 16px;
+    line-height: 30px;
+}
+.side-menu .panel-header {
+    padding: 8px;
+}
+.side-menu .panel-icon {
+    left: 0px;
+}
+.menu-wrap {
+    padding: 8px;
+    height: 16px;
+    font-size: 14px;
+    border-bottom: 1px solid #95B8E7;
+    background: #E0ECFF;
+}
+.menu-wrap a {
+    color: #0E2D5F;
+    font-weight: bold;
+}
+.side-menu .accordion .accordion-header-selected {
+    background: #fff;
+}
+
+
+.succ {
+    padding-left: 10px;
+    color: #008000;
+}
+.def {
+    padding-left: 10px;
+    color:  #999;
+}
+.wranning {
+    padding-left: 10px;
+    color: #f00;
+}

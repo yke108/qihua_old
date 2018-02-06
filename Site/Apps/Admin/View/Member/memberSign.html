@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>商家管理--商家详情</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/user/sign.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/webuploader/webuploader.js"></script>
+</head>
+
+<body>
+<a href="javascript:void(0);" id="js_newContract" class="easyui-linkbutton" iconCls="icon-add" style="height:26px; position:absolute; right: 2%; top:2px; z-index:99">录入新签约商家</a>
+
+<div id="js_sysTab" class="easyui-tabs" style="width: 99%; height: auto; ">
+    <div title="录入签约">
+        <table id="signDataGrid"></table>
+
+        <!-- 表单操作栏 -->
+        <div id="signToolbar" class="toolbar">
+            <div class="serch">
+                <input  name="code" class="easyui-textbox code" data-options="prompt:'合同编号'" style="width:110px;height:26px">
+                <input name="companyName" class="easyui-textbox companyName" data-options="prompt:'公司名称'" style="width:110px;height:26px">
+
+               <!--  <select id="js_contractBgYear" class="easyui-combobox"  name="contractBgYear" style="width:110px;height:26px;">
+                    <option value="-1">合作年度</option>
+                    <option value="1">第一年</option>
+                    <option value="2">第二年</option>
+                </select>
+                <select id="js_contractEdYear" class="easyui-combobox"  name="contractEdYear" style="width:110px;height:26px;">
+                    <option value="-1">合作年度</option>
+                    <option value="1">第一年</option>
+                    <option value="2">第二年</option>
+                </select> -->
+
+                <select class="easyui-combobox state"  name="state" style="width:110px;height:26px;">
+                    <option value="">全部状态</option>
+                    <option value="0">审核不通过</option>
+                    <option value="1">有效</option>
+                    <option value="2">待审核</option>
+                    <option value="3">已撤销</option>
+                </select>
+                <!-- <input name="signer" class="easyui-textbox" data-options="prompt:'签约人'" style="width:110px;height:26px"> -->
+
+                <!-- <a href="javascript:void(0);" id="js_getAreaData" class="easyui-linkbutton" style="width:110px;height:26px;">选择地区</a>
+                    <span class="area-select js_select_province">
+                        <select id="js_province" class="easyui-combobox" name="province" style="width:110px;height:26px;">
+                            <option value="-1">选择省份</option>
+                        </select>
+                    </span>
+                    <span class="area-select js_select_city">
+                        <select id="js_city"  class="easyui-combobox area-select" name="city" style="width:110px;height:26px;">
+                            <option value="-1">选择市</option>
+                        </select>
+                    </span>
+                    <span class="area-select js_select_area">
+                        <select id="js_area"  class="easyui-combobox area-select" name="area" style="width:110px;height:26px;">
+                            <option value="-1">选择地区</option>
+                        </select>
+                    </span> -->
+
+                <!-- <div style="height: 10px"></div> -->
+
+                <!-- <input id="js_contractSignBgTime" name="contractSignBgTime" class="easyui-datebox" data-options="prompt:'合同签约时间'" style="width:110px;height:26px"> -
+                <input id="js_contractSignEdTime" name="contractSignEdTime" class="easyui-datebox" data-options="prompt:'合同签约时间'" style="width:110px;height:26px">
+                <span class="spt"></span>
+                <input id="js_contractSignBgTime" name="contractSignBgTime" class="easyui-datebox" data-options="prompt:'合同到期时间'" style="width:110px;height:26px"> -
+                <input id="js_contractSignEdTime" name="contractSignEdTime" class="easyui-datebox" data-options="prompt:'合同到期时间'" style="width:110px;height:26px">
+                <span class="spt"></span>
+                <input id="js_inputer" name="inputer" class="easyui-textbox" data-options="prompt:'录入人'" style="width:110px;height:26px">
+                <input id="js_approver" name="approver" class="easyui-textbox" data-options="prompt:'审核人'" style="width:110px;height:26px"> -->
+                <a href="javascript:void(0);" id="js_searchSign" class="easyui-linkbutton" iconCls="icon-search" style="width:110px;height:26px">搜  索</a>
+            </div>
+        </div>
+
+        <div id="signFooterBar" class="footerbar">
+            <a id="js_signExpress" href="javascript:void(0);" data-operation="export" class="easyui-linkbutton" style="float: left;"  iconCls="icon-save" >批量导出</a>
+            <span class="tips">备注：导出数据包含字段：合同编号、公司名称、所在地区、合作年度、合同签约时间、合同到期时间、状态、初始录入时间、初始录入人、最新修改时间、最新修改人、初始审核时间、初始审核人、最新审核时间、最新审核人等</span>
+        </div>
+    </div>
+    <div title="录入审核">
+        <table id="approveDataGrid"></table>
+
+        <!-- 表单操作栏 -->
+        <div id="approveToolbar" class="toolbar">
+            <div class="serch">
+                <input name="code" class="easyui-textbox code" data-options="prompt:'合同编号'" style="width:110px;height:26px">
+                <input name="companyName" class="easyui-textbox companyName" data-options="prompt:'公司名称'" style="width:110px;height:26px">
+
+               <!--  <select id="js_contractBgYear" class="easyui-combobox"  name="contractBgYear" style="width:110px;height:26px;">
+                    <option value="-1">合作年度</option>
+                    <option value="1">第一年</option>
+                    <option value="2">第二年</option>
+                </select>
+                <select id="js_contractEdYear" class="easyui-combobox"  name="contractEdYear" style="width:110px;height:26px;">
+                    <option value="-1">合作年度</option>
+                    <option value="1">第一年</option>
+                    <option value="2">第二年</option>
+                </select> -->
+
+                <select  class="easyui-combobox state"  name="state state" style="width:110px;height:26px;">
+                    <option value="">全部状态</option>
+                    <option value="0">审核不通过</option>
+                    <option value="1">有效</option>
+                    <option value="2">待审核</option>
+                    <option value="3">已撤销</option>
+                </select>
+               <!--  <input name="signer" class="easyui-textbox" data-options="prompt:'签约人'" style="width:110px;height:26px"> -->
+
+                <!-- <a href="javascript:void(0);" id="js_getAreaData" class="easyui-linkbutton" style="width:110px;height:26px;">选择地区</a>
+                    <span class="area-select js_select_province">
+                        <select id="js_province" class="easyui-combobox" name="province" style="width:110px;height:26px;">
+                            <option value="-1">选择省份</option>
+                        </select>
+                    </span>
+                    <span class="area-select js_select_city">
+                        <select id="js_city"  class="easyui-combobox area-select" name="city" style="width:110px;height:26px;">
+                            <option value="-1">选择市</option>
+                        </select>
+                    </span>
+                    <span class="area-select js_select_area">
+                        <select id="js_area"  class="easyui-combobox area-select" name="area" style="width:110px;height:26px;">
+                            <option value="-1">选择地区</option>
+                        </select>
+                    </span>
+
+                <div style="height: 10px"></div>
+
+                <input id="js_contractSignBgTime" name="contractSignBgTime" class="easyui-datebox" data-options="prompt:'合同签约时间'" style="width:110px;height:26px"> -
+                <input id="js_contractSignEdTime" name="contractSignEdTime" class="easyui-datebox" data-options="prompt:'合同签约时间'" style="width:110px;height:26px">
+                <span class="spt"></span>
+                <input id="js_contractSignBgTime" name="contractSignBgTime" class="easyui-datebox" data-options="prompt:'合同到期时间'" style="width:110px;height:26px"> -
+                <input id="js_contractSignEdTime" name="contractSignEdTime" class="easyui-datebox" data-options="prompt:'合同到期时间'" style="width:110px;height:26px">
+                <span class="spt"></span>
+                <input id="js_inputer" name="inputer" class="easyui-textbox" data-options="prompt:'录入人'" style="width:110px;height:26px">
+                <input id="js_approver" name="approver" class="easyui-textbox" data-options="prompt:'审核人'" style="width:110px;height:26px"> -->
+                <a href="javascript:void(0);" id="js_searchOperate" class="easyui-linkbutton" iconCls="icon-search" style="width:110px;height:26px">搜  索</a>
+            </div>
+        </div>
+
+        <div id="approveFooterBar" class="footerbar">
+            <a id="js_approveExpress" href="javascript:void(0);" data-operation="export" class="easyui-linkbutton" style="float: left;"  iconCls="icon-save" >批量导出</a>
+            <span class="tips">备注：导出数据包含字段：合同编号、公司名称、所在地区、合作年度、合同签约时间、合同到期时间、状态、初始录入时间、初始录入人、最新修改时间、最新修改人、初始审核时间、初始审核人、最新审核时间、最新审核人等</span>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="dlg" class="operate-dialog">
+    <form class="contract-info">
+        <input type="hidden" name="id">
+        <div class="sort-wrap">
+            <p class="sort">
+                <span class="title">公司名称：</span><input  name="companyName" class="easyui-textbox  js_company" data-options="prompt:'公司名称',required:true" style="width:160px;height:26px">
+            </p>
+            <p class="sort">
+                <span class="title">合同编号：</span><input  name="code" class="easyui-textbox js_contractNo" data-options="prompt:'合同编号',required:true" style="width:160px;height:26px">
+            </p>
+            <p class="sort">
+                <span class="title">签约人：</span><input  name="signatory" class="easyui-textbox js_signer" data-options="prompt:'签约人',required:true" style="width:160px;height:26px">
+            </p>
+            <p class="sort">  
+                <span class="title">合作年度：</span><select  class="easyui-combobox js_contractBgYear"  name="cooperation" style="width:160px;height:26px;" data-options="required:true, editable: false, prompt:'合作年度'">
+                <option value="1">第一年</option>
+                <option value="2">第二年</option>
+            </select>
+            </p>
+            <p class="sort">
+                <span class="title">合同签约时间：</span><input name="contractTime" class="easyui-datebox js_contractSignBgTime" data-options="prompt:'合同签约时间',required:true" style="width:160px;height:26px">
+
+            </p>
+            <p class="sort">
+                <span class="title">合同到期时间：</span> <input  name="expireTime" class="easyui-datebox js_contractSignEdTime" data-options="prompt:'合同到期时间',required:true" style="width:160px;height:26px">
+            </p>
+
+        </div>
+        <p class="long">
+            <span class="title title2">合同内容：</span>
+            <textarea  id="contractDetails" name="content"></textarea>
+        </p>
+        <div class="long upload-img-wrap">
+            <span class="title">附件：</span>
+            <div class="defList">
+                <div class="def-item">
+                    <img src="" alt="">
+                    <span class="del">删除</span>
+                </div>
+            </div>
+            <div id="fileList"  class="uploader-list"></div>
+            <div id="picker">选择文件</div>
+            <input type="hidden" name="attachment" value="">
+        </div>
+        <div></div>
+        <input type="hidden" name="state" value="">
+        <!-- <a href="javascript:void(0);" class="easyui-linkbutton save-btn js_saveContractInfo" data-options="iconCls:'icon-save'">保存</a> -->
+    </form>
+</div>
+
+<div id="dlg2" class="operate-dialog">
+        <form id="js_revokeForm" method="post">
+            <div class="form-wrap">   
+                <label for="reason">原因:</label>   
+                <input id="js_revokeReason" type="text" data-options="required:true"  name="reason" class="easyui-validatebox" style="width: 60%" />   
+            </div> 
+        </form>
+    </div>
+
+<script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+<script type="text/javascript" src="/Public/Admin/js/lib/editor/kindeditor-all-min.js"></script>
+<script type="text/javascript" src="/Public/Admin/js/page/user/sign.js"></script>
+</body>
+
+</html>

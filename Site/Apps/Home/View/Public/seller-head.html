@@ -1,0 +1,55 @@
+<!-- 网站顶部 -->
+<!-- 滚动公告 -->
+<?php
+    $_loginUid = session( 'Uid' );
+    $_loginUserInfo = D( 'Home/Member' )->detail( array( 'id' => $_loginUid ) );
+?>
+<?php //$noticeList = D('Home/Contents')->getLastestNoticeList() ?>
+<?php if (!empty($noticeList)) { ?>
+<div id="js_scrollNews" class="scroll-news">
+    <div class="news-wrapper clearfix">
+        <span class="title"><i class="icon-news"> </i>Notice:</span>
+        <div class="list-wrap">
+            <ul class="list">
+                <?php foreach($noticeList as $row) { ?>
+                <li><a href="#"><?php echo $row['content'] ?></a></li>
+                <?php } ?>
+            </ul>
+        </div>
+        <span class="txt-close">×</span>
+    </div>
+</div>
+<?php } ?>
+
+<!-- 网站头部 -->
+<div class="top-barline">
+    <div class="wrapper clearfix">
+        <div class="fr top-tags">
+            <a class="tag" href=""><i class="icon-home"></i>Home</a>
+            <a class="tag" href="mailto:Support: service@keywa.com"><i class="icon-email"></i>Support: service@keywa.com</a>
+        </div>
+    </div>
+</div>
+<div class="head">
+    <div class="wrapper">
+        <div class="logo-search clearfix">
+            <div class="d-logo fl">
+                <a href="/"><img class="logo" src="__PUBLIC__/Home/images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="fl head-tag">
+                <a class="alink " href="{:U( '/User/Account/index' )}">My Keywa</a>
+                <a class="alink  active " href="{:U( 'Seller/products' )}">Sell on Keywa</a>
+            </div>
+
+            <div class="part-rt">
+                <?php if($count>0&&$count<10){ ?>
+                <div class="msg-num">…<!--  <?php echo $count; ?>--></div>
+                <?php }elseif($count>=10){ ?>
+                <div class="msg-num">…</div>
+                <?php } ?>
+                <p class="user-p logout"><a href="{:U('User/Account/index')}"><img class="hd-pic" src="<?php echo empty( $_loginUserInfo['img'] ) ? '__PUBLIC__/Home/images/user_hd_pic.png' : $_loginUserInfo['img'];?>" alt=""></a><a href="{:U('User/index/logout')}"><span class="name">Sign out</span></a></p>
+            </div>
+        </div>
+    </div>
+</div>

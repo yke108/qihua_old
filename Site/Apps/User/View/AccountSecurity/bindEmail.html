@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Verification Email Address</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-manage-email.css">
+</head>
+
+<body>
+<!-- 网站顶部 -->
+<!-- 滚动公告 -->
+<include file="Public/user-notice" />
+
+<!-- 网站头部 -->
+<include file="Public/member-head" />
+
+<!-- 网页主体内容 -->
+<div class="wrapper clearfix">
+    <!-- 左边导航 -->
+    <include file="Public/member-side" />
+
+    <div class="member-main">
+        <p class="main-title">
+            Manage Verification Email Address
+        </p>
+    <?php
+        $email = '';
+        if(empty($memberObj['email'])){
+          $email = 'style = "display:block;"';
+        }
+        $show = '';
+        if (($memberObj['bind'] + 0 & C('STATUS_BIND')['BIND_EMAIL']) <= 0) {
+            $show = 'style = "display:none;"';
+            $email = 'style = "display:block;"';
+        }
+    ?>
+        <div class="change-password" <?php echo $email?>>
+            <p class="title">Change Email Address</p>
+            <form>
+                <div class="form-item">
+                    <label>Email Address</label>
+                    <input type="text" id="email" name="email">
+                    <span class="email-address">eg:abc@abc.com</span>
+                </div>
+                <div class="form-item">
+                    <div class="clearfix">
+                        <label>Email verification code</label>
+                        <input type="text" id="code" name="code" class="code">
+                        <a href="javascript:void(0)" class="send">send</a>
+                    </div>
+                </div>
+                <input type="hidden" name="uv_r" value="<php>echo mobileCache();</php>" id="uv_r">
+            </form>
+            <div class="operate">
+                <a href="javascript:void(0)" class="submit">Submit</a>
+                <a href="/User/AccountSecurity/bindEmail.html" class="cancel">Cancel</a>
+            </div>
+        </div>
+
+        <div class="succeed" >
+            <i class="icon-succeed"></i>
+            <div class="cont">
+                <p>Email Address Changed Successfully！</p>
+                <span>Binding <span id="newEmail"></span> and it will take you to the change email address page after <span class="second"> 5</span> seconds</span>
+                <a href="javascript:void(0)" class="js_return">Return Now</a>
+            </div>
+        </div>
+
+        <div class="current" <?php echo $show ?>>
+            <i class="icon-email" ></i>
+            <div class="cont">
+                <p>
+                    Current verification email address is <?php echo $memberObj['email'];?>
+                </p>
+                <a class="js_Change" href="javascript:void(0)">Change</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 网页尾部 -->
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/User/js/member-manage-email.js"></script>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Supply - Profile</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/suppliers-profile.css">
+</head>
+<body>
+<div class="top-barline">
+    <div class="wrapper clearfix">
+        <div class="fr top-tags">
+            <a class="tag" href="/"><i class="icon-home"></i>Home</a>
+            <a class="tag" href="mailto:service.cn@keywa.com"><i class="icon-email"></i>service.cn@keywa.com</a>
+        </div>
+    </div>
+</div>
+<div class="head">
+    <div class="wrapper">
+
+        <div class="logo-search clearfix">
+            <div class="d-logo fl">
+                <a href="/"><img class="logo" src="__PUBLIC__/Home/images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="fl head-tag"><a class="alink" href="{:U('/Supplier/lists')}">Suppliers</a></div>
+
+            <div class="part-rt">
+                <?php ?>
+                <?php if(session('Uid')) { ?>
+                 	<?php 
+                    $count = isset($count)?$count:0;
+                    if($count>0&&$count<10){ ?>
+            		<div class="msg-num"><?php echo $count; ?></div>
+            		<?php }elseif($count>=10){ ?>
+					<div class="msg-num">…</div>
+					<?php } ?>
+                <p class="user-p logout"><a href="{:U('User/Account/index')}"><img class="hd-pic" src="<?php echo !empty(session(userHeadImg)) ? session(userHeadImg) : '/Public/User/images/user_hd_pic.png' ?>" alt=""></a><a href="{:U('User/Index/logout')}" class="name">Sign out</a></p>
+                <?php }else{ ?>
+                <span class="user-p sign-in"><a class="u-link" href="{:U('User/Index/login')}">Sign in</a><em class="cut-line">or</em><a class="u-link" href="{:U('User/Index/register')}">Register</a></span>
+                <?php } ?>
+            </div>
+       
+        </div>
+    </div>
+</div>
+<div class="wrapper suppliers-name">{$data.companyName}</div>
+
+<div class="wrapper clearfix suppliers-wraper">
+    <ul class="fl member-menu">
+    <li class="active">
+    <a href="{:U('Supplier/profile',array('uid'=>$supplier))}">Profile</a>
+    <i class="icon-rt"></i>
+    </li>
+    <li >
+    <a href="{:U('Supplier/productList',array('uid'=>$supplier))}">Products</a>
+    
+    </li>
+    <li >
+    <a href="{:U('Supplier/BuyofferList',array('uid'=>$supplier))}">Buy Offers</a>
+    
+    </li>
+    <li >
+    <a href="{:U('Supplier/supplyList',array('uid'=>$supplier))}">Supply Offers</a>
+    
+    </li>
+    <li >
+        <?php if(empty($loginUid)){ ?>
+    	<a href="{:U('User/Index/login')}">Contact Now</a>
+    <?php }else{ ?>
+    	<?php if($loginUid==$supplier){ ?>
+    			<a href="javascript:void(0);">Contact Now</a>
+    		<?php }else{ ?>
+    			<a class="checkComplate" data-complate = "{$complete}" href="/User/Message/sendMessage?id={$supplier}" target="_blank">Contact Now</a>
+    		<?php } ?>  	
+    <?php } ?>
+    
+    
+    </li>
+</ul>
+    <div class="suppliers-inner">
+        <div class="inner-title">Profile</div>
+        <div class="inner-content">
+            <table class="table table-profile">
+            <?php if(!empty($data['trade'])){ ?>
+                <tr>
+                    <td>Industry</td>
+                    <td>{$data.trade}</td>
+                </tr>
+				<?php } ?>
+				<?php if(!empty($data['model'])){ ?>
+                    <td>Business type</td>
+                    <td>{$data.model}</td>
+                </tr>
+				<?php } ?>
+			<?php if(!empty($data['employee'])){ ?>
+                <tr>
+                    <td>Number of Staff</td>
+                    <td>{$data.employee}</td>
+                </tr>
+				<?php } ?>
+				<?php if(!empty($data['turnover'])){ ?>
+                <tr>
+                    <td>Annual Turnover</td>
+                    <td>{$data.turnover}</td>
+                </tr>
+				<?php } ?>
+				<?php if($data['businessScope']){ ?>
+                <tr>
+                    <td>Business Range</td>
+                    <td>{$data.businessScope}</td>
+                </tr>
+				<?php } ?>			
+				<?php if($data['companyIntroduction']){ ?>
+                <tr>
+                    <td>Introduction</td>
+                    <td>{$data.companyIntroduction}</td>
+                </tr>
+				<?php } ?>		
+				<?php if($data['other']['address']){ ?>
+                <tr>
+                    <td>Contact Address</td>
+                    <td>{$data.other.address},{$area['area_c'] },{$area['area_s'] },{$area['country']}</td>
+                </tr>
+			  <?php	} ?>
+            </table>
+        </div>
+    </div>
+</div>
+
+<include file="Public/footer" />
+</body>
+<script src="__PUBLIC__/User/lib/jquery/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/Home/js/suppliers-profile.js"></script>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Center - Add New Product</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/member-addGood-brand.css">
+</head>
+<body>
+    <include file="Public/member-head" />
+
+
+<div class="wrapper brand-wraper">
+    <div class="top-bar"><a href="<?php echo U( 'Seller/products' )?>" class="blu">&lt;Back</a></div>
+    <div class="tl-bar">Add new Product</div>
+    <ul class="step-bar clearfix">
+        <li class="step-item active">Step 1:  Select A Product Category</li>
+        <li class="step-item">Step 2:  Fill in the Product Details</li>
+        <li class="step-item">Step 3:  Wait For Auditing</li>
+    </ul>
+
+    <?php
+        $secondCategories = $thirdCategories = $maxCategories = array();
+?>
+    <div class="brand-bar clearfix">
+        <ul class="brand-box fl js_cates">
+            <?php
+             if(empty($_GET['firstCategory'])){
+                 $_GET['firstCategory'] = '';   
+               }
+            foreach( $categories as $category ){
+                $class = '';
+                if( $category['id'] == $_GET['firstCategory'] ){
+                    $class = 'checked';
+                    $secondCategories = isset($category['children'])?$category['children']:'';
+                    $maxCategories[] = $category['text'];
+                }
+
+?>
+            <li class="brand-item <?php echo $class?>" data-id="<?php echo $category['id']?>"><?php echo $category['text']?><i class="icon-rt"></i></li>
+            <?php
+            }
+?>
+        </ul>
+        <span class="icon-rt-b fl"></span>
+        <ul class="brand-box fl js_cates">
+            <?php
+            if( !empty( $secondCategories ) ){
+                foreach( $secondCategories as $category ){
+                    $class = '';
+                    if( $category['id'] == $_GET['secondCategory'] ){
+                        $class = 'checked';
+                        $thirdCategories = isset($category['children'])?$category['children']:'';
+                        $maxCategories[] = $category['text'];
+                    }
+                    ?>
+            <li class="brand-item <?php echo $class?>" data-id="<?php echo $category['id']?>"><?php echo $category['text']?><i class="icon-rt"></i></li>
+            <?php
+                }
+            }
+?>
+        </ul>
+        <span class="icon-rt-b fl"></span>
+        <ul class="brand-box fl js_cates">
+            <?php
+            if( !empty( $thirdCategories ) ){
+                foreach( $thirdCategories as $category ){
+                    $class = '';
+                    if( $category['id'] == $_GET['thirdCategory'] ){
+                        $class = 'checked';
+                        $maxCategories[] = $category['text'];
+                    }
+                    ?>
+            <li class="brand-item <?php echo $class?>" data-id="<?php echo $category['id']?>"><?php echo $category['text']?><i class="icon-rt"></i></li>
+            <?php
+                }
+            }
+?>
+        </ul>
+    </div>
+
+    <div class="checked-tips">
+        <p class="tips">Your current  product category selection is:</p>
+        <p class="tag js_cateSelect"><?php echo empty( $maxCategories ) ? 'Please select product category' : implode( ' > ', $maxCategories )?></p>
+    </div>
+
+    <!-- <div class="submit-next" data-id="<?php echo intval( $_GET['id'] )?>" data-first-category="<?php echo intval( $_GET['firstCategory'] )?>" data-second-category="<?php echo intval( $_GET['secondCategory'] )?>" data-third-category="<?php echo intval( $_GET['thirdCategory'] )?>">Next</div> -->
+    <div class="submit-next" data-id="<?php echo isset($_GET['id'])?intval( $_GET['id'] ):0;?>" data-first-category="" data-second-category="" data-third-category="">Next</div>
+
+</div>
+
+    <include file="Public/footer" />
+
+</body> 
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/member-addGood-brand.js"></script>
+</html>

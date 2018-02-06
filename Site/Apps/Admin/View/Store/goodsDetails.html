@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商品详情</title>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/page/store/goosDetails.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+ <php>
+     $states=array(
+      '0'=>'待审核',
+     '1'=>'有效',
+      '2'=>'审核不通过',
+     '3'=>'已撤销'
+     );
+     $qualityGrade=C('PRODUCT_DEPOT.QUALITY_GRADE');
+ </php>
+	<div class="goosSetails-wrap">	
+		<div class="goosNumber">	
+			<dl class="col-12">	
+				<dd>商品编号</dd>
+				<dt>{$arr.productCode}</dt>
+			</dl>
+			<dl class="col-12">	
+				<dd>状态</dd>
+				<dt><php>echo $states[$arr['state']['state']];</php><if condition="$arr['state']['state'] neq 1 and $arr['state']['state'] neq 0"><span style="color: red">【原因】{$arr.state.reason}</span></if></dt>
+			</dl>
+		</div>
+
+		<div class="information">
+			<h3 class="title">基本信息</h3>	
+			<dl class="col-6">	
+				<dd>公司名称</dd>
+				<dt>{$arr.companyName}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>商品类别</dd>
+				<dt>{$arr.categoryList}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>商品中文名（化学名）</dd>
+				<dt>{$arr.cnName}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>商品中文别名</dd>
+				<dt>{$arr.cnAlias}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>商品英文名称</dd>
+				<dt>{$arr.enName}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>商品英文别名</dd>
+				<dt>{$arr.enAlias}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>生产商</dd>
+				<dt>{$arr.producerId}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>品牌名</dd>
+				<dt>{$arr.brandId}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>产地</dd>
+				<dt>{$arr.placeList}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>货物所在地</dd>
+				<dt>{$arr.seatList}</dt>
+			</dl>
+		</div>
+
+		<div class="goosAttr">
+			<h3 class="title">产品属性
+			</h3>	
+			<dl class="col-6">	
+				<dd>规格/纯度</dd>
+				<dt>{$arr.attribute.format}%</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>性状</dd>
+				<dt>{$arr.attribute.character}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>质量等级</dd>
+				<dt><php>echo $qualityGrade[$arr['attribute'][qualityGradeID]]</php></dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>货号/型号</dd>
+				<dt>{$arr.attribute.model}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>CAS号</dd>
+				<dt>{$arr.cas}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>气味</dd>
+				<dt>{$arr.attribute.smell}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>熔点</dd>
+				<dt>{$arr.attribute.melting}°C</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>沸点</dd>
+				<dt>{$arr.attribute.boiling}°C</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>闪点</dd>
+				<dt>{$arr.attribute.flash}°C</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>PH值</dd>
+				<dt>{$arr.attribute.ph}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>密度</dd>
+				<dt>{$arr.attribute.density}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>溶解性</dd>
+				<dt>{$arr.attribute.solubility}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>敏感性</dd>
+				<dt>{$arr.attribute.susceptibility}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>PSA</dd>
+				<dt>{$arr.attribute.psa}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd> 分子量</dd>
+				<dt>{$arr.attribute.formula}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>外观与形状</dd>
+				<dt>{$arr.attribute.exterior}</dt>
+			</dl>
+			<dl class="col-6">	
+				<dd>资料</dd>
+				<dt><a href="{$arr.attribute.msds}">MSDS下载</a></dt>
+			</dl>
+		</div>
+
+		<div class="description">	
+			<h3 class="title">商品描述</h3>
+			<dl class="col-12">	
+				<dd>简介</dd>
+				<dt>{$arr.info.summary}</dt>
+			</dl>
+			<dl class="col-12">	
+				<dd>特性</dd>
+				<dt>{$arr.info.features}</dt>
+			</dl>
+			<dl class="col-12">	
+				<dd>用途</dd>
+				<dt>{$arr.info.purpose}</dt>
+			</dl>
+			<dl class="col-12">	
+				<dd>包装、存储</dd>
+				<dt>
+					<p>{$arr.info.condition}</p>
+
+				</dt>
+			</dl>
+			<dl class="col-12">	
+				<dd>应急处理</dd>
+				<dt>{$arr.info.emergency}</dt>
+			</dl>
+		</div>
+
+		<div class="goos-images">
+			<h3 class="title">商品图片</h3>
+			<div class="images-btn">
+                <foreach name="arr['img']" item="vo" key="k">
+				 <span>主图{$k+1}</span>
+                </foreach>
+			</div>
+			<div class="images">
+                <foreach name="arr['img']" item="vo">
+				  <img src="{$vo}" alt="">
+                </foreach>
+			</div>
+		</div>
+
+        <div class="check-botton">
+            <if condition="$arr['state']['state'] eq 0">
+              <a class="botton" data-status="{$arr.state.state}" data-id="{$arr.id}">审核通过</a> <a class="botton" data-id="{$arr.id}" data-status="{$arr.state.state}">审核不通过</a>
+            <elseif condition="$arr['state']['state'] eq 1"/>
+                <a class="botton" data-id="{$arr.id}" data-status="{$arr.state.state}">撤销通过</a>
+             <elseif condition="$arr['state']['state'] eq 2"/>
+                <a class="botton" data-id="{$arr.id}" data-status="{$arr.state.state}">重审通过</a>
+             <elseif condition="$arr['state']['state'] eq 3"/>
+                <a class="botton" data-id="{$arr.id}" data-status="{$arr.state.state}">恢复通过</a>
+            </if>
+        </div>
+        <table class="record-tb">
+            <thead>
+            <tr>
+                <th colspan="3">操作记录</th>
+            </tr>
+            <tr>
+                <th class="time">时间</th>
+                <th class="operate">操作事项</th>
+                <th class="operater">操作者</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="arr['history']" item="vo">
+             <tr>
+                <td><php>echo date('Y-m-d H:i:s',$vo['addTime'])</php></td>
+                <td>{$vo.opera}<if condition="!empty($vo['reason'])"><span class="red">【原因：{$vo.reason}】</span></if></td>
+                <td>{$vo.otype}</td>
+             </tr>
+            </foreach>
+            </tbody>
+        </table>
+	</div>
+ <!-- 审核不通过弹窗 -->
+ <div id="dlg" class="operate-dialog">
+     <form id="js_revokeForm" method="post">
+         <div class="form-wrap">
+             <label for="reason">原因:</label>
+             <input id="js_revokeReason" type="text" data-options="required:true"  name="reason" class="easyui-validatebox" style="width: 60%" />
+         </div>
+     </form>
+ </div>
+
+</body>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/data/staticData.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/page/store/goosDetails.js"></script>
+</html>

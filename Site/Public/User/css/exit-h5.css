@@ -1,0 +1,31 @@
+.wrapper {
+  position: relative;
+  margin: 0 auto;
+  max-width: 640px;
+  overflow: hidden;
+  height: 100%; }
+
+.content {
+  position: absolute;
+  top: 170px;
+  height: -webkit-calc(100% - 90px - 170px);
+  height: calc(100% - 90px - 170px);
+  overflow-y: scroll; }
+
+.info {
+  width: 100%;
+  margin: 0 auto; }
+
+.exit-img {
+  width: 100%;
+  text-align: center;
+  margin-top: .4rem; }
+  .exit-img img {
+    width: 15%; }
+
+.exit-tips {
+  width: 80%;
+  text-align: center;
+  color: #666;
+  margin: .6rem auto 0;
+  line-height: .4rem; }

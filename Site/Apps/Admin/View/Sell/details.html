@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>商城销售管理--商品销售信息详情</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/page/sell/details.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+
+<body>
+<input type="hidden" value="{$_GET['id']}" class="pageId">
+<div class="good-info">
+    <div class="info-title">商品销售信息</div>
+    <div class="attr-item">
+        <div class="title">状态</div>
+        <div class="desc">
+            {$vo['state']['state']}
+            <?php if(!in_array($vo['states'],array(1,2))){ ?>
+            <if condition="!empty($vo['state']['reason'])">【<span class="reason">原因：{$vo['state']['reason']}</span>】</if>
+            <?php };?>
+            {$vo['state']['addTime']}
+        </div>
+    </div>
+    <div class="attr-item">
+        <div class="title">信息编号</div>
+        <div class="desc">{$vo['productCode']}</div>
+    </div>
+    <div class="attr-item">
+        <div class="title">商城标题</div>
+        <div class="desc">{$vo['title']}</div>
+    </div>
+    <div class="attr-item">
+        <div class="title">商品名称</div>
+        <div class="desc productDepotCode">{$vo['enName']}（商品编号：{$vo['productCode']}，CAS号：{$vo['cas']}）</div>
+    </div>
+    <div class="wrap">
+        <div class="attr-item">
+            <div class="title">参考价格</div>
+            <div class="desc">{$vo['priceTip']}</div>
+        </div>
+        <div class="attr-item">
+            <div class="title">最低起订量</div>
+            <div class="desc">{$vo['moqTip']}</div>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="attr-item">
+            <div class="title">库存数量</div>
+            <div class="desc">{$vo['inventoryTip']}</div>
+        </div>
+        <div class="attr-item">
+            <div class="title">公司名称</div>
+            <div class="desc">{$vo['companyName']}</div>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="attr-item">
+            <div class="title">支付方式</div>
+            <div class="desc">{$vo['paymentMethodTip']}</div>
+        </div>
+        <div class="attr-item">
+            <div class="title">物流方式</div>
+            <div class="desc">{$vo['logisticsMethodTip']}</div>
+        </div>
+    </div>
+</div>
+<div class="operate-btns">
+    <!-- 待审核 -->
+    <?php
+        if( in_array( $vo['origin_state'], array( 2 ) ) ){
+?>
+    <a href="javascript:void(0)" class="operate js_agress">审核通过</a>
+    <a href="javascript:void(0)" class="operate js_disagress">审核不通过</a>
+    <?php
+        }
+        if( in_array( $vo['origin_state'], array( 0 ) ) ){
+?>
+    <!-- 审核不通过 -->
+    <a href="javascript:void(0)" class="operate js_reagress">重审通过</a>
+    <?php
+        }
+        if( in_array( $vo['origin_state'], array( 3, 4, 5, 6 ) ) ){
+?>
+    <!-- 工作人员下架 -->
+    <a href="javascript:void(0)" class="operate js_reNewaAgress">恢复上架</a>
+    <?php
+        }
+        if( in_array( $vo['origin_state'], array( 1 ) ) ){
+?>
+    <!-- 有效时 -->
+    <a href="javascript:void(0)" class="operate js_remove">下架</a>
+    <?php
+        }
+?>
+</div>
+<div class="history-wrap">
+    <p class="operation-list">操作记录</p>
+    <table id="historyDataGrid"></table>
+</div>
+<!-- 审核不通过弹窗 -->
+<div id="dlg" class="operate-dialog">
+    <form id="js_revokeForm" method="post">
+        <div class="form-wrap">
+            <label for="reason">原因:</label>
+            <input id="js_revokeReason" type="text" data-options="required:true"  name="reason" class="easyui-validatebox" style="width: 60%" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/data/staticData.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/page/sell/details.js"></script>
+</body>
+
+</html>

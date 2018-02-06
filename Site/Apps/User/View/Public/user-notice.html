@@ -1,0 +1,16 @@
+<?php //$noticeList = D('Home/Contents')->getLastestNoticeList() ?>
+<?php if (!empty($noticeList)) { ?>
+<div id="js_scrollNews" class="scroll-news">
+    <div class="news-wrapper clearfix">
+        <span class="title"><i class="icon-news"> </i>Notice:</span>
+        <div class="list-wrap">
+            <ul class="list">
+                <?php foreach($noticeList as $row) { ?>
+                <li><a href="#"><?php echo $row['content'] ?></a></li>
+                <?php } ?>
+            </ul>
+        </div>
+        <span class="txt-close">×</span>
+    </div>
+</div>
+<?php } ?>

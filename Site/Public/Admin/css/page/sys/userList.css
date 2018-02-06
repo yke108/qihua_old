@@ -1,0 +1,65 @@
+#toolbar {
+    padding: 10px;
+    display: none;
+    overflow: hidden;
+}
+#toolbar .btns {
+    float: right;
+}
+#toolbar .serch {
+    float: left;
+}
+.form-wrap {
+    text-align: center;
+    margin-top: 30px;
+}
+.area-select {
+    display: none;
+}
+.easyui-linkbutton {
+    outline: none;
+}
+
+#footerBar {
+    padding: 6px;
+}
+#addUser .item, #editUser .item {
+    width: 400px;
+}
+#js_addUserForm, #js_editUserForm {
+    width: 500px;
+    margin: 30px auto;
+}
+
+
+#js_userForm {
+    padding: 20px;
+}
+.form-item {
+    margin-bottom: 10px;
+}
+.form-item label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    font-size: 14px;
+    line-height: 30px;
+}
+.form-item label span {
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 4px;
+    color: #f00;
+}
+.role-wrap {
+    visibility: hidden;
+}
+.line {
+    margin-bottom: 15px;
+    height:0;
+    border-top: 1px solid #ddd;
+    width: 100%;
+}
+.easyui-linkbutton {
+    outline: none;
+}

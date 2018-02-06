@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Legal statement</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/legal-stat.css">
+
+</head>
+<body>
+<!-- 滚动公告 -->
+
+<!-- 网站头部 -->
+<include file="Public/index-head" />
+
+<!-- 网站导航 -->
+<include file="Public/index-nav" />
+
+<!-- 网页主体内容 -->
+<div class="main">
+    <div class="article">
+        <p class="title">
+            Legal statement
+        </p>
+        <div class="content">
+            <?php echo empty($legal['content']) ? '' : html_entity_decode($legal['content']) ?>
+        </div>
+    </div>
+</div>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/Home/js/legal-stat.js"></script>
+</html>

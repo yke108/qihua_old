@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<?php
+$arr = D('Admin/Auth')->getAuthRules();
+$del=array('name' =>'Admin/Auth/userDel');//批量删除
+$Active = array('name' =>'Admin/Auth/userBatchActive');//批量启用
+$Inactive = array('name' =>'Admin/Auth/userBatchInactive');//批量禁用
+$expAuth = array('name' =>'Admin/Auth/expUser');
+$field = 'id';
+$expAuth =D('Admin/Auth')->getAuthId($expAuth,$field);
+$del = D('Admin/Auth')->getAuthId($del,$field);
+$Active = D('Admin/Auth')->getAuthId($Active,$field);
+$Inactive = D('Admin/Auth')->getAuthId($Inactive,$field);
+?>
+<head>
+    <title>系统管理--管理员列表</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/page/sys/userList.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+<script>
+    var userListUrl="{:U('Auth/userList')}";
+    var userAddUrl="{:U('Auth/userAdd')}";
+    var userSaveUrl="{:U('Auth/userSave')}";
+    var userDelUrl="{:U('Auth/userDel')}";
+    var userBatchActiveUrl="{:U('Auth/userBatchActive')}";
+    var userBatchInactiveUrl="{:U('Auth/userBatchInactive')}";
+    var idGetGroupList="{:U('Auth/idGetGroupList')}";
+</script>
+<table id="dataGrid"></table>
+<div id="toolbar">
+    <div class="serch">
+        <input id="js_userName" name="username" class="easyui-textbox" data-options="prompt:'用户名'" style="width:150px;height:26px">
+        <input id="js_name" name="realname" class="easyui-textbox" data-options="prompt:'姓名'" style="width:150px;height:26px">
+        <input id="js_department"  name="department" class="easyui-combotree"  data-options="prompt:'所在部门'" style="width:150px;height:26px">
+        <select id="js_statusSelect" class="easyui-combobox"  name="state" style="width:150px;height:26px;">
+            <option >全部状态</option>
+            <option value="1">启用</option>
+            <option value="0">停用</option>
+        </select>
+        <a href="javascript:void(0);" id="js_userListSearch" class="easyui-linkbutton" iconCls="icon-search">搜  索</a>
+    </div>
+
+    <div class="btns">
+        <a href="javascript:void(0);" class="easyui-linkbutton js_addUser" data-title="新增用户" data-href="./sys/add.html"  iconCls="icon-add" >新增用户</a>
+    </div>
+
+</div>
+
+<div id="footerBar">
+    <?php if(in_array($del['id'],$arr) || $arr=='Admin'){?>
+    <a href="javascript:void(0);"  class="easyui-linkbutton js_multiRemove" iconCls="icon-remove" >批量删除</a>
+    <?php };?>
+    <?php if(in_array($Active['id'],$arr) || $arr=='Admin'){?>
+    <a href="javascript:void(0);"  class="easyui-linkbutton js_multiEnable" iconCls="icon-ok" >批量启用</a>
+    <?php };?>
+    <?php if(in_array($Inactive['id'],$arr) || $arr=='Admin'){?>
+    <a href="javascript:void(0);"  class="easyui-linkbutton js_multiDisable" iconCls="icon-cancel" >批量禁用</a>
+    <?php };?>
+    <?php if(in_array($expAuth['id'],$arr) || $arr=='Admin'){?>
+    <a id="js_express" href="javascript:void(0);" data-operation="export" class="easyui-linkbutton" style="float: right;"  iconCls="icon-save" >导出表格</a>
+    <?php };?>
+</div>
+
+
+<!-- 新增一级部门 -->
+<div id="dlg" class="operate-dialog">
+    <form id="js_userForm">
+        <div class="form-item">
+            <label><span>*</span>用户名：</label><input type="text" id="username" class="easyui-textbox" name="username" style="width:280px; height:30px" data-options="required:true" value="">
+        </div>
+        <div class="form-item">
+            <label><span>*</span>密码：</label><input type="password" id="password" class="easyui-textbox" name="password" style="width:280px; height:30px" data-options="required:true" value="">
+        </div>
+        <div class="line"></div>
+        <div class="form-item">
+            <label><span>*</span>姓名：</label><input type="text" id="realname" class="easyui-textbox" name="realname" style="width:280px; height:30px" data-options="required:true"  value="">
+        </div>
+        <div class="form-item">
+            <label><span>*</span>性别：</label><input type="radio" class="easyui-radio" checked name="sex" value="1">男 <input type="radio" class="easyui-radio" name="sex" value="0">女
+        </div>
+        <div class="form-item">
+            <label><span>*</span>手机号：</label><input type="text" id="mobile" class="easyui-textbox" name="mobile" style="width:280px; height:30px" data-options="required:true" value="">
+        </div>
+        <div class="form-item">
+            <label>固定电话：</label><input type="text" id="tel" class="easyui-textbox" name="tel" style="width:280px; height:30px" value="">
+        </div>
+        <div class="form-item">
+            <label>邮箱：</label><input type="text" id="email" class="easyui-textbox" name="email" style="width:280px; height:30px" value="">
+        </div>
+        <div class="form-item">
+            <label><span>*</span>所在部门：</label><input id="department" name="department" class="easyui-combotree"   style="width:280px; height:30px" data-options="required:true" value="">
+            <input type="hidden" name="did" class="did">
+        </div>
+        <div class="form-item role-wrap">
+            <label><span>*</span>角色：</label><input class="easyui-combobox" id="role" name="group" data-options="valueField:'id',textField:'text'" style="width:280px; height:30px" data-options="required:true" value="">
+            <input type="hidden" name="gid" class="gid">
+        </div>
+        
+        <div class="form-item userState">
+            <label><span>*</span>状态：</label><input type="radio" class="easyui-radio"  name="state" checked="checked" value="1">启用 <input type="radio" class="easyui-radio" name="state" value="0">停用
+        </div>
+
+        <div class="form-item">
+            <label>&nbsp;</label><a href="javascript:void(0);" class="easyui-linkbutton js_submit" data-options="iconCls:'icon-save'" data-options="required:true" style="padding: 6px 18px;">保 存</a>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/Admin/js/data/staticData.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/page/sys/userList.js"></script>
+</body>
+</html>

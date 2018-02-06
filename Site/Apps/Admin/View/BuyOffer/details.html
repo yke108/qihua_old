@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>求购管理--求购详情</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/findGoods/details.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="details">
+        <div class="sort-wrap">
+            <p class="sort">
+                <span class="title">标　　题：</span>
+                <span>{$data.title}</span>
+            </p>
+            <p class="sort">
+                <span class="title">信息编号：</span>
+                <span>{$data.number}</span>
+            </p>
+            <p class="sort">
+                <span class="title">信息类型：</span>
+                <span><?php echo $type[$data['type']]; ?></span>
+            </p>
+            <p class="sort">
+                <span class="title">状　　态：</span>
+                <span><?php echo $state[$data['state']]; ?></span>
+            </p>
+            <p class="sort">
+                <span class="title">公司名称：</span>
+                <span>{$info.companyName}</span>
+            </p>
+            <p class="sort">
+                <span class="title">所在地区：</span>
+                <span>{$info.area}</span>
+            </p>
+        </div>
+        <p class="long">
+            <span class="title">求购内容：</span>
+            <span class="long-content">{$data.content}</span>
+        </p>
+
+        <div class="line"></div>
+
+        <div class="btn-wrap">
+        	<if condition="$data['state'] eq 2">
+            	<a data-review='1' data-id="{$data.id}" class="operate-btn js_agree">审核通过</a>
+             	<a data-review='0' data-id="{$data.id}" class="operate-btn js_disagree">审核不通过</a>
+            <elseif condition="$data['state'] eq 1"/>
+            	<a data-review='4' data-id="{$data.id}" class="operate-btn js_disagree">撤销通过</a>
+            <elseif condition="$data['state'] eq 0"/>
+            	<a data-review='1' data-id="{$data.id}" class="operate-btn js_agree">重审通过</a>
+            <elseif condition="$data['state'] eq 4"/>
+            	<a data-review='1' data-id="{$data.id}" class="operate-btn js_agree">恢复通过</a>
+            <else/>
+              <span></span>
+            </if>
+        </div>
+        <input type="hidden" id="pageId" value={$data.id}>
+        <p class="operation-list">操作记录</p>
+        <table id="dataGrid"></table>
+    </div>
+
+    <!-- 审核不通过弹窗 -->
+    <div id="dlg" class="operate-dialog">
+        <form id="js_revokeForm" method="post">
+            <div class="form-wrap">
+                <label for="reason">原因:</label>
+                <input id="js_revokeReason" type="text" data-options="required:true"  name="reason" class="easyui-validatebox" style="width: 60%" />
+            </div>
+        </form>
+    </div>
+
+    
+
+    <script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/page/findGoods/details.js"></script>
+</body>
+
+</html>

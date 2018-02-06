@@ -1,0 +1,109 @@
+
+<?php
+    $_indexControllers = array( 'Index' );
+    $_productControllers = array( 'Product' );
+    $_buyOfferControllers = array( 'Buyoffer' );
+    $_aboutUsActions = array( 'description','contact','news','newsdetails' );
+    $_protocolActions = array( 'protocol' );
+	$_SupplyControllers = array( 'Supply' );
+	$_SupplierControllers=array("Supplier");
+?>
+
+<!-- 网站导航 -->
+<div class="nav">
+    <div class="wrapper">
+        <div class="nav-menu">
+            <div class="nav-title">all categories</div>
+            <div class="nav-column">
+                <ul class="column-list">
+                    <?php
+                    foreach( $cate as $_cate ){
+?>
+                    <li class="column-item">
+                        <div class="column-m">
+                            <a class="column-name" href="{:U('Product/index', array( 'categoryFirst' => $_cate['id'] ) )}">{$_cate.text}</a>
+                            <p class="recommen">
+                                <?php
+                                $_i = 0;
+                                if(!empty($_cate['children'])){foreach( $_cate['children'] as $_sub_cate ){
+                                    if( $_i >= 1 ){
+                                        break;
+                                    }
+?>
+                                <a class="recommen-a" href="{:U('Product/index', array( 'categoryFirst' => $_cate['id'], 'categorySecond' => $_sub_cate['id'] ) )}">{$_sub_cate.text}</a>
+                                <?php
+                                    $_i++;
+                                }}
+?>
+                            </p>
+                            <i class="icon-rt"></i>
+                        </div>
+                    </li>
+                    <?php
+                    }
+?>
+                </ul>
+
+                <div class="column-sub">
+                    <?php
+                    foreach( $cate as $_cate ){
+?>
+
+                    <div class="sub-bk clearfix">
+
+                        <div class="subs">
+                            <ul class="sub-list">
+                                <?php
+                                if(!empty($_cate['children'])){foreach( $_cate['children'] as $_sub_cate ){
+?>
+                                <li class="sub-item">
+                                    <a href="{:U('Product/index', array( 'categoryFirst' => $_cate['id'], 'categorySecond' => $_sub_cate['id'] ) )}" class="sub-title">{$_sub_cate.text}</a>
+                                    <p class="child">
+                                        <?php
+                                if(!empty($_sub_cate['children'])){foreach( $_sub_cate['children'] as $_sub_sub_cate ){
+?>
+                                        <a href="{:U('Product/index', array( 'categoryFirst' => $_cate['id'], 'categorySecond' => $_sub_cate['id'], 'categoryThird' => $_sub_sub_cate['id'] ) )}" class="child-item">{$_sub_sub_cate.text}</a>
+                                        <?php
+                                }}
+?>
+                                    </p>
+                                </li>
+                                <?php
+                                }}
+?>
+                            </ul>
+                        </div>
+
+                        <div class="sub-recommen">
+                            <ul class="sub-recommen-list">
+                                <?php
+                                if(!empty($_cate['children'])){foreach( $_cate['list'] as $_sub_cate_product ){
+?>
+                                <li class="sub-recommen-item">
+                                    <a class="title"><?php echo $_sub_cate_product['title']?></a>
+                                    <p class="price"><?php echo $_sub_cate_product['currency']?> <?php echo sprintf( '%.2f', $_sub_cate_product['price'] )?> <em class="t">/<?php echo $_sub_cate_product['weightUnit']?></em></p>
+                                    <a href="{:U( 'Product/detail', array( 'id' => $_sub_cate_product['id'] ) )}" class="pic-wrap"><img class="pic" src="<?php echo $_sub_cate_product['thumb']?>" alt="<?php echo $_sub_cate_product['title']?>"></a>
+                                </li>
+                                <?php
+                                }}
+?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php
+                    }
+?>
+                </div>
+            </div>
+        </div>
+        <div class="nav-link">
+            <a href="/" class="<?php echo in_array( CONTROLLER_NAME, $_indexControllers ) ? 'active' : '';?>">Home</a>
+            <a href="{:U('/Product')}" class="<?php echo in_array( CONTROLLER_NAME, $_productControllers ) ? 'active' : '';?>">Mall</a>
+            <a href="{:U('/Buyoffer/indexlist')}" class="<?php echo in_array( CONTROLLER_NAME, $_buyOfferControllers ) ? 'active' : '';?>">Buy offers</a>
+            <a href="{:U('/Supply/lists')}" class="<?php echo in_array( CONTROLLER_NAME, $_SupplyControllers ) ? 'active' : '';?>">Supply offers</a>
+            <a href="{:U('/Supplier/lists')}" class="<?php echo in_array( CONTROLLER_NAME, $_SupplierControllers ) ? 'active' : '';?>">Suppliers</a>
+            <a href="{:U('/Content/description')}" class="<?php echo in_array( ACTION_NAME, $_aboutUsActions ) ? 'active' : '';?>">About us</a>
+            <a href="{:U('/Content/protocol')}" class="<?php echo in_array( ACTION_NAME, $_protocolActions ) ? 'active' : '';?>">Terms of Use </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>The activation email</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/certifiedMail.css">
+</head>
+<body>
+   <!-- 滚动公告 -->
+<include file="Public/user-head" />
+
+
+
+<!-- 网页主体内容 -->
+<div class="wrapper">
+
+ 
+    <div id="emailActive" class="email-active">
+        <p class="b-tips"><p class="b-tips">{$content['0']}</p>
+        <p class="tips"><a href="{$url}">{$content['1']}</a></p>
+        <!--超过3次发送验证码输出 end-->
+    </div>
+
+</div>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer"/>
+
+
+</body> 
+    <script src="__PUBLIC__/User/js/emailAct.js"></script>
+</html>

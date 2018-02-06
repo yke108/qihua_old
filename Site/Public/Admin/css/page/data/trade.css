@@ -1,0 +1,71 @@
+#toolbar {
+    padding: 10px;
+    overflow: hidden;
+}
+#toolbar .btns {
+    float: left;
+}
+#toolbar .search {
+    margin-left: 100px;
+    float: left;
+}
+.easyui-linkbutton {
+    outline: none;
+}
+
+.easyui-layout {
+    visibility: hidden;
+}
+html, body {
+    min-height: 100%;
+}
+
+.tree-node {
+    height: 26px;
+}
+.tree-title {
+    height: 26px;
+    line-height: 26px;
+}
+.tree-expanded, .tree-collapsed, .tree-folder, .tree-file, .tree-checkbox, .tree-indent {
+    margin-top: 4px;
+}
+
+#dataForm {
+    display: none;
+    margin-top: 20px;
+}
+#dataForm .item {
+    width: 300px; 
+
+    margin-bottom: 20px;
+}
+#dataForm .item-2 {
+    margin-bottom: 20px;
+}
+
+form {  
+    margin-top: 20px;
+}
+
+form .item-2 {
+    margin-bottom: 20px;
+}
+form  label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+.form-item {
+    margin-bottom: 20px;
+}
+#btns {
+    text-align: center;
+}
+#footer {
+    padding: 10px;
+    overflow: hidden;
+}
+.load {
+    margin-left: 80px;
+}

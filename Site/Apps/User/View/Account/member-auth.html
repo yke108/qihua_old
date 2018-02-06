@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>License Info.</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-auth.css">
+</head>
+<body>
+    <!-- 滚动公告 -->
+    <include file="Public/user-notice" />
+    <!-- 网站头部 -->
+    <include file="Public/member-head" />
+<br>
+    <!-- 网页主体内容 -->
+    <div class="wrapper clearfix member-body">
+       <include file="Public/member-side" />
+        <p class="main-title">
+            License Info.
+            <a href="{:U('User/Account/auth_history')}" >Operation History</a>
+        </p>
+        <div class="member-main">
+            <!-- 未认证时提示 -->
+        <if condition="($state eq 4) or ($state eq null)">
+            <div class="auth-tips">
+                <i class="blue-tips"></i>
+                <span>Recommends that you complete certification as soon as possible,so that you can have more servies.</span></span>
+            </div>
+            <!-- 已撤销提示 -->
+        <elseif condition="($state eq 3) or ($state eq 0)"/>
+            <div class="auth-tips">
+                <i class="red-tips"></i>
+                <span>{$reason.opera}. <span><if condition="$reason.reason neq null">[Reason:{$reason.reason}]</if></span></span>
+            </div>
+        </if>
+
+            <div class="companyname">
+                {$companyName}
+            </div>
+
+
+            <!-- 未认证 -->
+        <if condition="($state eq 4) or ($state eq '')">
+            <div class="auth-state">
+                <i class="icon-unauth"></i>
+                <p>Uncertified</p>
+            </div>
+            <div class=" auth-btn">
+                <a  href="{:U('User/Account/submit_auth')}" class="go-auth">
+                    Apply for Certification
+                </a>
+            </div>
+
+
+            <!-- 正在审核 -->
+        <elseif condition="$state eq 2"/>
+            <div class="auth-state">
+                <i class="icon-pending"></i>
+                <p>Audit Pending</p>
+                <p class="pending-p">(take 1-2 working days to complete the audit)</p>
+            </div>
+            <div class="reload">
+                <a href="{:U('User/Account/submit_auth')}">Re-upload</a>
+                <p>Any updates in company profile or authorization information？</p>
+            </div>
+
+
+            <!-- 认证成功 -->
+        <elseif condition="$state eq 1"/>
+            <div class="auth-state">
+                <i class="icon-succeed"></i>
+                <p>Authenticated</p>
+            </div>
+            <div class="reload">
+                <a href="{:U('User/Account/submit_auth')}">Re-upload</a>
+                <p>Any updates in company profile or authorization information？</p>
+            </div>
+
+
+            <!-- 认证已撤销 -->
+        <elseif condition="($state eq 3)"/>
+            <div class="auth-state">
+                <i class="icon-revoked"></i>
+                <p class="red">Revoked</p>
+            </div>
+            <div class=" auth-btn">
+                <a href="{:U('User/Account/submit_auth')}" class="go-auth">
+                    Re-Certification
+                </a>
+            </div>
+
+           <!-- 认证不通过 -->
+        <elseif condition="($state eq 0)"/>
+            <div class="auth-state">
+                <i class="icon-revoked"></i>
+                <p class="red">Application Failed</p>
+            </div>
+            <div class=" auth-btn">
+                <a href="{:U('User/Account/submit_auth')}" class="go-auth">
+                    Re-Certification
+                </a>
+            </div>
+        </if>
+
+
+            <!-- 认证好处 -->
+            <!-- <div class="benefit"></div> -->
+
+
+            <!-- 提示 -->
+            <div class="notice">
+                <p class="notice-title">
+                    Notice Board
+                </p>
+                <ol>
+                    <li> When authentication,  please offer the scans of  Business License、Organization Code、Tax Registration Certificate、Account Opening License and ‘Enterprise Verification Authorization’ with company seal of your esteemd company. The uploading photo or file should under 2MB and be in Jpg/ gif/ png/ jpeg format only.</li>
+                    <li>Your submitted Enterprise Qualification Documents will be audited in 1-2 working days, Please wait!</li>
+                    <li>Should there be any changes in your company information, please contact our staffs for renewal immediately to ensure the smooth and safe transaction. Service Number: <span>4008-488-999.</span></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+        <include file="Public/footer"/>
+
+</body>
+    <script src="__PUBLIC__/User/js/member-auth.js"></script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Center - Operation History</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/member-addGoods-operHistory.css">
+</head>
+<body>
+<include file="Public/member-head" />
+
+<div class="wrapper clearfix member-wraper">
+
+
+    <div class="member-main">
+        <div class="top-bar"><a href="javascript:history.go(-1);" class="blu">&lt;Back</a></div>
+        <div class="main-content">
+            <div class="list-search">
+                <div class="tl-bar">Operation History</div>
+                <table class="findGoods-list">
+                    <tr>
+                        <th>Operation Item</th>
+                        <th>Operation Time</th>
+                        <th>Operator</th>
+                    </tr>
+                    <?php
+                    foreach( $histories as $history ){
+?>
+                    <tr>
+                        <td>
+                            <div class="inner">
+                                <?php
+                                if( empty( $history['reason'] ) ){
+                                ?>
+                                <?php echo $history['opera']?>
+                                <?php
+                                }else{
+                                ?>
+                                <p class="title"><?php echo $history['opera']?></p>
+                                <div class="red">[Reason:<?php echo $history['reason']?>]</div>
+                                <?php
+                                }
+?>
+                            </div>
+                        </td>
+                        <td><?php echo date( 'H:i:s M d, Y', $history['addTime'] )?></td>
+                        <td><?php echo $history['operator']['user_name']?></td>
+                    </tr>
+                    <?php
+                    }
+?>
+                </table>
+
+                <div class="pagination">
+                    <div class="handle">
+                        {$page_html}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<include file="Public/footer" />
+
+</body> 
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/member-addGoods-operHistory.js"></script>
+</html>

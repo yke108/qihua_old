@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>商家管理--商家详情</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/page/user/company-details.css">
+    <script type="text/javascript" src="/Public/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/lib/easyui/jquery.easyui.min.js"></script>
+
+</head>
+
+<body>
+<div id="js_detailsTab" class="easyui-tabs" style="width: 99%; height: auto; ">
+<div title="商家资料">
+    <div class="user-info info">
+        <div class="face">
+            <img src="{$info.personal.img}" alt="">
+        </div>
+        <ul class="details">
+            <li>
+                <span class="title">用 户&nbsp;&nbsp;名：</span><span>{$info.personal.username}</span>
+            </li>
+            <li>
+                <span class="title">绑定手机：</span><span>{$info.personal.phone}</span><span class="succ"><?php echo ($info['personal']['bind'] & 1)?'已绑定':'未绑定' ?></span>
+            </li>
+            <li>
+                <span class="title">绑定邮箱：</span><span>{$info.personal.email}</span><span class="<?php echo ($info['personal']['bind'] & 2)?'succ':'def' ?>"><?php echo ($info['personal']['bind'] & 2)?'已绑定':'未绑定' ?></span>
+            </li>
+            <li>
+                <span class="title">密　　码：</span><span class="code-txt">********</span>
+                <button class="easyui-linkbutton js_resetPassword"  data-id="{$info.personal.id}">重置密码</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="company-info info">
+        <h3 class="title">公司信息</h3>
+        <div class="sort-wrap">
+            <p class="sort">
+                <span class="title">公司名称：</span>
+                    <span>{$info.company.companyName}</span><span class="succ"><if condition="($info['company']['state'] eq '1')">已通过认证<else />未通过认证</if></span>
+            </p>
+            <p class="sort">
+                <span class="title">所在行业：</span>
+                <span>{$info.company.trade}</span>
+            </p>
+            <p class="sort">
+                <span class="title">经营模式：</span>
+                <span>{$info.company.model}</span>
+            </p>
+            <!-- <p class="sort">
+                <span class="title">单位性质：</span>
+                <span>{$info.company.property}</span>
+            </p> -->
+            <p class="sort">
+                <span class="title">单位人数：</span>
+                <span>{$info.company.employee}</span>
+            </p>
+            <p class="sort">
+                <span class="title">年营业额：</span>
+                <span>{$info.company.turnover}</span>
+            </p>
+        </div>
+        <p class="long">
+            <span class="title">经营范围：</span>
+            <span class="long-content">{$info.company.businessScope}</span>
+        </p>
+        <p class="long">
+            <span class="title">公司简介：</span>
+            <span class="long-content">{$info.company.companyIntroduction}</span>
+        </p>
+        <p class="long">
+            <span class="title">用户意向：</span>
+            <span class="long-content">{$info.company.intention}</span>
+        </p>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="company-info info">
+        <h3 class="title">联系方式</h3>
+        <div class="sort-wrap">
+            <p class="sort">
+                <span class="title">联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span>
+                    <span>{$info.company.contact}</span><span class="succ"><if condition="($info['company']['state'] eq '1')">已通过认证<else />未通过认证</if></span>
+            </p>
+            <p class="sort">
+                <span class="title">职　　位：</span>
+                <span>{$info.company.posstion}</span>
+            </p>
+            <p class="sort">
+                <span class="title">固　　话：</span>
+                <span>{$info.company.tel}</span>
+            </p>
+            <p class="sort">
+                <span class="title">手　　机：</span>
+                <span>{$info.personal.phone}</span>
+            </p>
+            <p class="sort">
+                <span class="title">邮　　箱：</span>
+                <span>{$info.personal.email}</span>
+            </p>
+            <p class="sort">
+                <span class="title">传　　真：</span>
+                <span>{$info.company.fax}</span>
+            </p>
+            <p class="sort addr">
+                <span class="title">公司地址：</span>
+                <span>{$info.company.address}</span>
+            </p>
+        </div>
+    </div>
+</div>
+<div title="企业认证">
+
+    <div class="auth-info">
+        <p>
+            <span class="title">认证状态：</span>
+            <span class="status wranning">{$company.state}</span>
+        </p>
+
+        <if condition="$company['type']==1">
+            <!-- 普通类型 -->
+            <p>
+                <span class="title">证件类型：</span>
+                <span class="status succ">普通营业执照</span>
+            </p>
+            <p>
+                <span class="title">营业执照：</span>
+                <span class="status succ"><eq name="company.businessCert.error" value="0">未上传<else/>已上传</eq></span>
+                <a href="{$company.businessCert}" class="show-img" data="{$company.businessCert}" target="_blank">查看大图</a>
+            </p>
+            <p>
+                <span class="title">组织机构代码证：</span>
+                <span class="status succ"><eq name="company.codeCert" value="">未上传<else/>已上传</eq></span>
+                <a href="{$company.codeCert}" class="show-img" data="{$company.codeCert}" target="_blank">查看大图</a>
+            </p>
+            <p>
+                <span class="title">税务登记证：</span>
+                <span class="status succ"><eq name="company.taxCert.error" value="0">未上传<else/>已上传</eq></span>
+                <a href="{$company.taxCert}" class="show-img" data="{$company.taxCert}" target="_blank">查看大图</a>
+            </p>
+            <p>
+                <span class="title">开户许可证：</span>
+                <span class="status succ"><empty name="company.accountCert">未上传</span><else />已上传</span>
+                <a href="{$company.accountCert}" class="show-img" target="_blank">查看大图</a></empty>
+            </p>
+            <p>
+                <span class="title">企业认证授权书</span>
+                <span class="status succ"><empty name="company.authCert">未上传</span><else />已上传</span>
+                <a href="{$company.authCert}" class="show-img" target="_blank">查看大图</a></empty>
+            </p>
+            <!-- 普通类型 end-->
+            <else/>
+            <!-- 三证合一 -->
+            <p>
+                <span class="title">证件类型：</span>
+                <span class="status succ">企业三证合一</span>
+            </p>
+            <p>
+                <span class="title">营业执照：</span>
+                <span class="status succ"><empty name="company.businessCert">未上传</span><else />已上传</span>
+                <a href="{$company.businessCert}" class="show-img" target="_blank">查看大图</a></empty>
+
+            </p>
+            <p>
+                <span class="title">开户许可证：</span>
+                <span class="status succ"><empty name="company.accountCert">未上传</span><else />已上传</span>
+                <a href="{$company.accountCert}" class="show-img" target="_blank">查看大图</a></empty>
+            </p>
+            <p>
+                <span class="title">企业认证授权书</span>
+                <span class="status succ"><empty name="company.authCert">未上传</span><else />已上传</span>
+                <a href="{$company.authCert}" class="show-img" target="_blank">查看大图</a></empty>
+            </p>
+        </if>
+    </div>
+    <div class="line"></div>
+    <notempty name="company.businessCert">
+        <div class="btn-wrap">
+
+            <if condition="$info['company']['state'] eq 1">
+                <a href="#" class="easyui-linkbutton  js_disableOne" data-state="1" data-tostate="3" data-id="{$info.personal.id}">审核不通过</a>
+                <elseif condition="$info['company']['state'] eq 2"/>
+                <a href="#" class="easyui-linkbutton js_enableOne" data-state="2" data-tostate="1" data-id="{$info.personal.id}">审核通过</a>
+                <a href="#" class="easyui-linkbutton  js_disableOne" data-state="2" data-tostate="0" data-id="{$info.personal.id}">审核不通过</a>
+                <elseif condition="$info['company']['state'] eq 3"/>
+                <a href="#" class="easyui-linkbutton js_enableOne" data-state="3" data-tostate="1" data-id="{$info.personal.id}">恢复通过</a>
+                <else/>
+                <a href="#" class="easyui-linkbutton js_enableOne" data-state="0" data-tostate="1" data-id="{$info.personal.id}">审核通过</a>
+            </if>
+        </div>
+    </notempty>
+
+    <input type="hidden" id="memberId" value="{$info.personal.id}">
+    <div class="history-wrap">
+        <p class="operation-list">操作记录</p>
+        <table id="historyDataGrid"></table>
+    </div>
+
+</div>
+<!-- <div title="供应商签约情况">
+    <div class="sign-info info">
+        <div class="sort-wrap">
+            <p class="sort">
+                <span class="title">公司名称：</span>
+                <span>{$sign.companyName}</span>
+            </p>
+            <p class="sort">
+                <span class="title">合同编号：</span>
+                <span>{$sign.code}</span>
+            </p>
+            <p class="sort">
+                <span class="title">签约人：</span>
+                <span>{$sign.signatory}</span>
+            </p>
+            <p class="sort">
+                <span class="title">合作年度：</span>
+                <span><if condition="!empty($sign['cooperation'])">第{$sign.cooperation}年</if></span>
+            </p>
+            <p class="sort">
+                <span class="title">合同签约时间：</span>
+                <span><if condition="!empty($sign['contractTime'])">{$sign.contractTime|date="Y-m-d",###}</if></span>
+            </p>
+            <p class="sort">
+                <span class="title">合同到期时间：</span>
+                <span><if condition="!empty($sign['expireTime'])">{$sign.expireTime|date="Y-m-d",###}</if></span>
+            </p>
+
+        </div>
+        <p class="long">
+            <span class="title">合同内容：</span>
+            <span class="long-content">{$sign.content}</span>
+        </p>
+        <p class="long">
+            <span class="title">附件：</span>
+                    <span class="long-content">
+                        <volist name="sign.attachment" id="data">
+                            <img src="{$data}" alt="">
+                        </volist>
+                    </span>
+        </p>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="history-wrap">
+        <p class="operation-list">操作记录</p>
+        <table id="signDataGrid"></table>
+    </div>
+</div> -->
+</div>
+
+<!-- 审核不通过弹窗 -->
+<div id="dlg" class="operate-dialog">
+    <form id="js_revokeForm" method="post">
+        <div class="form-wrap">
+            <label for="reason">原因:</label>
+            <input id="js_revokeReason" type="text" data-options="required:true"  name="reason" class="easyui-validatebox" style="width: 60%" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/Public/Admin/js/data/staticData.js"></script>
+<script type="text/javascript" src="/Public/Admin/js/lib/editor/kindeditor-all-min.js"></script>
+<script type="text/javascript" src="/Public/Admin/js/page/user/company-details.js"></script>
+</body>
+
+</html>

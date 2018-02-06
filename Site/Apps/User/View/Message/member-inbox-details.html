@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Mailbox Detail</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-inbox-details.css">
+</head>
+<body>
+    <!-- 网站顶部 -->
+    <!-- 滚动公告 -->
+    <include file="Public/user-notice" />
+    <!-- 网站头部 -->
+<include file="Public/member-head" />
+    <!-- 网页主体内容 -->
+    <div class="wrapper clearfix">
+    <include file="Public/member-side" />
+    <div class="main">
+            <h4><a href="{:U('Message/MailBox')}?send={$Think.get.send}" class="js_back">Back</a></h4>
+            <div class="mail">
+                <p class="mail-title">Message Details</p>
+                <div class="button clearfix">
+                <if condition="empty($_GET['send']) OR ($_GET['send'] eq 1)">
+                <a href="reply?id={$res.id}" class="btn-fl btn">Reply</a>
+                <input type='hidden' name='send' value='1' />
+                <else/>
+                <input type='hidden' name='send' value='2' />
+                </if>
+                    <a href="javascript:void(0)" data-id="{$res.id}" class="js_del btn-fl btn">Delete</a>
+                    <a href="javascript:void(0)" class="js_print btn">Print</a>
+                </div>
+                <div class="details">
+                    <div class="details-title">
+                        {$res.subject}
+                    </div>
+                    <div class="info">
+                        <div class="from clearfix">
+                            <label><?php if(!empty($_GET['send']) && $_GET['send']==2){  echo "To";}else{echo "From";} ?></label>
+                            <div class="user">
+                            <?php if(!empty($_GET['send']) && $_GET['send']==2){ ?>
+                                <p class="username">{$res.to}</p>
+                             <?php }else{ ?>
+                              <p class="username">{$res.from}</p>
+                            <?php } ?>
+                                <div class="userinfo">
+                                    <div class="trigonborder"></div>
+                                    <div class="trigon"></div>
+                                    <i class="icon-portrait"></i>
+                                    <div class="information">
+                                        <p>{$ret.username}</p>
+                                        <p>{$ret.companyName}</p>
+                                        <p><i class="icon-USA"></i> {$ret.country}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sent clearfix">
+                            <label>Sent</label>
+                            <div>
+                                <p>{$res.sendTime|date="H:i:s F d,Y",###}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cont">
+                        Dear Sirs <br>
+                        {$res.content}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<include file="Public/footer" />
+</body>
+    <script src="__PUBLIC__/User/js/member-inbox-details.js"></script>
+</html>

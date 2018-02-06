@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/login.css">
+</head>
+<body>
+<include file="Public/user-head" />
+
+
+<!-- 网页主体内容 -->
+<div class="wrapper">
+
+    <div class="tag-bar clearfix">
+        <div class="fl tl">Sign In</div>
+        <a href="{:U('User/Index/register')}" class="fr sign-link">Register Account</a>
+    </div>
+    <form id="loginForm" class="form">
+        <div id="error-tips"></div>
+        <div class="form-item">
+            <input type="text" name="username" id="username" placeholder="Member ID or Email or Mobile ">
+        </div>
+
+        <div class="form-item">
+            <input type="password" name="password" class="password" placeholder="Password ">
+        </div>
+
+        <div class="form-item form-item-code">
+            <div class="imgCode-wrap">
+                <img id="imgCode" src="" alt="">
+            </div>
+            <input type="text" name="captcha" placeholder="Please Type the Text you See Above">
+        </div>
+
+        <div class="form-item form-item-code"></div>
+        <a class="submit regSubmit" href="javascript:void(0);">Sign In</a>
+        <a href="{:U('User/Index/forgetPasswordStep')}" class="forgot-link">Forgot your password?</a>
+        <!--<p class="protocol">已有中文版（keywa.com）账号，可以直接用中文版账号登录</p>-->
+    </form>
+</div>
+
+<form id="loginPop">
+    <div id="error-tips">
+        <span class="msg-wrap"><i class="icon-error"></i>The email address and password do not match, or the email address is not valid or complete. </span>
+    </div>
+    <div class="form-item">
+        <input type="text" name="username" placeholder="Username or Email or Mobile">
+    </div>
+
+    <div class="form-item">
+        <input type="password" name="password" class="password" placeholder="Password ">
+    </div>
+
+    <div class="form-item form-item-code">
+        <div class="imgCode-wrap">
+            <img id="imgCode" src="" alt="">
+        </div>
+        <input type="text" name="code" placeholder="Please Type the Text you See Above">
+    </div>
+    <a href="{:U('User/Index/forgetPasswordStep')}" class="forgot-link">Forgot your password?</a>
+    <a class="submit regSubmit" href="javascript:void(0);">Sign In</a>
+    <a href="" class="free-link">Join Free</a>
+    <p class="protocol">已有中文版（keywa.com）账号，可以直接用中文版账号登录</p>
+</form>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer" />
+
+</body>
+<script src="__PUBLIC__/User/js/login.js"></script>
+
+</html>

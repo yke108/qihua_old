@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Mailbox Send</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/member-mailbox-reply.css">
+</head>
+<body>
+<include file="Public/user-notice" />
+<div class="head">
+    <div class="wrapper">
+        <div class="logo-search clearfix">
+            <div class="d-logo fl">
+                <a href="/"><img class="logo" src="__PUBLIC__/User/images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="fl head-tag">Contact Now</div>
+
+            <p class="tel fr"><span class="tel-sp"><i class="icon-tel"></i>Support:</span>4008-488-999</p>
+        </div>
+    </div>
+</div>
+<div class="wrapper main-wrap clearfix">
+<include file="Public/member-side" /> 
+    <div class="main fl">
+        <div class="top-bar"><a href="">&lt;Back </a></div>
+        <div class="main-content">
+            <div class="tips-bar">Send Message</div>
+            <form class="form" action="__ACTION__" method='post'>
+                <div class="user-wrap clearfix">
+                    <div class="fl field-txt">To</div>
+                    <div class="user-info fl">
+                        <div class="info-wrap">
+                            <img src="{$ret.img}" alt="">
+                            <p class="name">{$ret.username}</p>
+                            <p class="ltd"> {$ret.companyName} </p>
+                            <p class="country">{$ret.country}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label>
+                        <span class="field-name">Subject</span><input type="text" class="field" name='subject'>
+                   		<input type="hidden" class="field" name="to" value="{$id}">
+                    </label>
+                </div>
+              
+                <div class="form-item form-item-content">
+                    <label>
+                        <span class="field-name">Content</span>
+                        <textarea name="content"  class="field"></textarea>
+                    </label>
+                </div>
+
+                <div class="form-btn">
+                    <a href="javascript:void(0)" class="submit submit-btn">Send</a>
+                    <a href="" class="cancel-link">cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<include file="Public/footer" />
+</body>
+    <script src="__PUBLIC__/User/js/member-mailbox-reply.js"></script>
+</html>

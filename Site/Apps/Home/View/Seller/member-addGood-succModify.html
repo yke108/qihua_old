@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Center - Success</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/member-addGood-succModify.css">
+</head>
+<body>
+<include file="Public/member-head" />
+
+
+<div class="wrapper brand-wraper">
+    <div class="tl-bar">Modify</div>
+
+    <div class="succ-info-wrap">
+        <div class="content">
+            <i class="succ-icon"></i>
+            <div class="info">
+                <p class="title">Have been submitted,<br>please wait for the auditing</p>
+                <p class="tips">
+                    After approved, can be checked in 【 <a href="{:U( 'Seller/products', array( 'state' => 1 ) )}" class="blu">Valid</a>】
+                </p>
+            </div>
+        </div>
+
+        <p class="lin-bar">
+            <a href="{:U( 'Seller/products', array( 'state' => 2 ) )}" class="again-link">Returned to Warehouse</a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<include file="Public/footer" />
+
+</body> 
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/member-addGood-succModify.js"></script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>The activation email</title>
+    <link rel="stylesheet" href="__PUBLIC__/User/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/User/css/emailAct.css">
+</head>
+<body>
+   <!-- 滚动公告 -->
+    <include file="Public/user-notice" />
+    <include file="Public/member-head" />
+<br>
+
+
+
+<!-- 网页主体内容 -->
+<div class="wrapper">
+
+ 
+    <div id="emailActive" class="email-active">
+        <p class="b-tips"><p class="b-tips">{$content['0']}
+        <br> mailbox <b data-text="'email">{$email}</b></p>
+        <p class="tips">Please login your mailbox, and validate your registered email.</p>
+        <p class="tips">If you couldn’t receive the mail, you can send the confirmation mail gain.</p>
+        <!--正常输出 start-->
+    <if condition="($moreNum eq 0) && ($moreRate eq 0)">
+        <div class="btns default-bar">
+            <span class="btn-link send-again" data-email="{$email}">send mail again</span>
+        </div>
+        <div class="btns out-bar">
+            <span class="btn-link time-countdown">60s</span>
+            <span class="tips">Mail has been sent out, 60 seconds later can send again.</span>
+        </div>
+    <elseif condition="($moreNum eq 0) && ($moreRate eq 1)"/>
+        <div class="btns default-bar" style="display: none;">
+            <span class="btn-link send-again" data-email="{$email}">send mail again</span>
+        </div>
+        <div class="btns out-bar" style="display: block" data-countdown="60">
+            <span class="btn-link time-countdown">60s</span>
+            <span class="tips">Mail has been sent out, 60 seconds later can send again.</span>
+        </div>
+        <!--正常输出 end-->
+    <elseif condition="($moreNum eq 1) && ($moreRate eq 0)"/>
+        <!--超过3次发送验证码输出 start-->
+        <div class="btns out-bar" style="display: block">
+            <span class="btn-link">send out email</span>
+            <span class="tips">Can only send 3 emails a day.</span>
+        </div>
+    </if>
+
+        <!--超过3次发送验证码输出 end-->
+    </div>
+
+</div>
+
+<!-- 页面通用底部 -->
+<include file="Public/footer"/>
+
+
+</body> 
+    <script src="__PUBLIC__/User/js/emailAct.js"></script>
+</html>

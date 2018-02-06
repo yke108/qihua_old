@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Supply - Supply offers</title>
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/suppliers-buyOffers.css">
+</head>
+<body>
+<div class="top-barline">
+    <div class="wrapper clearfix">
+        <div class="fr top-tags">
+            <a class="tag" href="/"><i class="icon-home"></i>Home</a>
+            <a class="tag" href="mailto:service.cn@keywa.com"><i class="icon-email"></i>service.cn@keywa.com</a>
+        </div>
+    </div>
+</div>
+<div class="head">
+    <div class="wrapper">
+        <div class="logo-search clearfix">
+            <div class="d-logo fl">
+                <a href="/"><img class="logo" src="__PUBLIC__/Home/images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="fl head-tag"><a class="alink" href="{:U('/Supplier/lists')}">Suppliers</a></div>
+
+            <div class="part-rt">
+                <?php $count = isset($count)?$count:0; ?>
+                <?php if(session('Uid')) { ?>
+                 	<?php if($count>0&&$count<10){ ?>
+            		<div class="msg-num"><?php echo $count; ?></div>
+            		<?php }elseif($count>=10){ ?>
+					<div class="msg-num">…</div>
+					<?php } ?>
+                <p class="user-p logout"><a href="{:U('User/Account/index')}"><img class="hd-pic" src="<?php echo !empty(session(userHeadImg)) ? session(userHeadImg) : '/Public/User/images/user_hd_pic.png' ?>" alt=""></a><a href="{:U('User/Index/logout')}" class="name">Sign out</a></p>
+                <?php }else{ ?>
+                <span class="user-p sign-in"><a class="u-link" href="{:U('User/Index/login')}">Sign in</a><em class="cut-line">or</em><a class="u-link" href="{:U('/User/Index/register')}">Register</a></span>
+                <?php } ?>
+            </div>
+       
+        </div>
+    </div>
+</div>
+
+<div class="wrapper suppliers-name">{$companyName}</div>
+<div class="wrapper clearfix suppliers-wraper">
+    <ul class="fl member-menu">
+    <li >
+    <a href="{:U('Supplier/profile',array('uid'=>$supplier))}">Profile</a>
+    
+    </li>
+    <li >
+    <a href="{:U('Supplier/productList',array('uid'=>$supplier))}">Products</a>
+    
+    </li>
+    <li >
+    <a href="{:U('Supplier/BuyofferList',array('uid'=>$supplier))}">Buy Offers</a>
+    
+    </li>
+    <li class="active">
+    <a href="{:U('Supplier/supplyList',array('uid'=>$supplier))}">Supply Offers</a>
+    <i class="icon-rt"></i>
+    </li>
+    <li >
+          <?php if(empty($loginUid)){ ?>
+    	<a href="{:U('User/Index/login')}">Contact Now</a>
+    <?php }else{ ?>
+    	<?php if($loginUid==$supplier){ ?>
+    			<a href="javascript:void(0);">Contact Now</a>
+    		<?php }else{ ?>
+    			<a class="checkComplate" data-complate = "{$complete}" href="/User/Message/sendMessage?id={$supplier}" target="_blank">Contact Now</a>
+    		<?php } ?>  	
+    <?php } ?>
+    
+    </li>
+</ul>
+    <div class="suppliers-inner">
+        <div class="inner-title clearfix">
+            <span class="fl">Supply Offers</span>
+            <notempty name='pageinfo'>
+            <p class="result-num fr">
+                <span class="red">{$pageinfo.count}</span>
+                <span>results</span>
+                <span>
+                    <span class="red page">{$pageinfo.page}</span>
+                    <span>/</span>
+                    <span>{$pageinfo.pagecount}</span>
+                </span>
+            </p>
+            </notempty>
+        </div>
+<notempty name='list'>
+        <!-- 搜索有内容 -->
+        <div class="inner-content">
+
+		<volist name='list' id='vo'>
+            <div class="suppliers-product clearfix">
+
+                <a class="desc-title" href="{:U('Supply/SupplyDetails',array('id'=>$vo['id']))}">{$vo.title}</a>
+                <div class="desc-content">{$vo.content}</div>
+                <div class="desc-tags">
+                    <div class="tags"><span class="field">Info No.: </span><span class="value">{$vo.number}</span></div>
+                    <div class="tags"><span class="field">Post: </span><span class="value">{$vo.updateTime|date="F d,Y",###}</span></div>
+                    <div class="tags"><span class="field">Exp.: </span><span class="value">{$vo.times|date="F d,Y",###}</span></div>
+                    <div class="tags"><span class="field">Type: </span><span class="value">{$vo.type}</span></div>
+                </div>
+
+            </div>
+			</volist>
+            <div class="pagination">
+                <div class="handle">
+                    {$show}
+                </div>
+            </div>
+
+        </div>
+<else />
+        <!-- 搜索无结果列表 -->
+        <div class="search-none">
+            <div class="inner">
+                <i class="icon-warn"></i>
+                <p class="tips">Did not find related information</p>
+                <p class="tips-sm">Try modifying the condition</p>
+            </div>
+        </div>
+   </notempty>
+    </div>
+</div>
+
+ <include file="Public/footer" />
+</body> 
+    <script src="__PUBLIC__/Home/lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/Home/js/suppliers-buyOffers.js"></script>
+</html>

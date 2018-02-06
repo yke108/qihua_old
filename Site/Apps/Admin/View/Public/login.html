@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>奇化网管理后台--登陆</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/page/login/login.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/lib/jquery/jquery.min.js"></script>
+    <script>
+    /**
+     *  重载验证码
+     */
+    function fleshVerify(){
+        var timenow = new Date().getTime();
+        document.getElementById('verify').src= '{:U("Public/verify","","")}'+'/'+timenow;
+    }
+</script>
+</head>
+
+<body >
+<div class="login-bg"></div>
+<div class="login-wrap">
+    <h2 class="title">奇化网管理系统</h2>
+    <form id="fmLogin" method="post" novalidate>
+        <div class="form-itme">
+            <label for="userName">账 号：</label>
+            <input class="text" type="text" name="username" id="username" placeholder="请输入账号">
+        </div>
+        <div class="form-itme">
+            <label for="password">密 码：</label>
+            <input class="text" type="password" name="password" id="password" placeholder="请输入密码">
+        </div>
+        <div class="form-itme">
+            <label for="captcha">验证码：</label>
+            <input class="text text-code" type="text" name="captcha" id="captcha" placeholder="请输入验证码">
+            <img id="verify" src="{:U('Public/verify')}" class="captcha" alt="" onClick="fleshVerify()">
+        </div>
+        <input type="hidden" name="url" id="url" value="{$parent_url}"/>
+        <a href="javascript:void(0)" class="login-btn js_loginSubmit">登录</a>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/page/login/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,460 @@
+.icon-tel {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-top: -3px;
+  width: 16px;
+  height: 16px;
+  background-image: url(../icons/login/sprite.png);
+  background-position: 0px -18px; }
+
+.head {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 25px 0;
+  height: 80px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.1); }
+  .head .d-logo {
+    width: 96px;
+    padding-right: 30px;
+    margin-top: -3px; }
+    .head .d-logo .logo {
+      display: block;
+      max-width: 100%; }
+  .head .head-tag {
+    padding-left: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #0096e0;
+    font-size: 16px;
+    border-left: 1px solid #0096e0; }
+  .head .tel {
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #666; }
+    .head .tel .tel-sp {
+      color: #aaa;
+      font-weight: bold;
+      margin-right: 3px; }
+
+.top-tags {
+  height: 30px;
+  line-height: 30px; }
+  .top-tags .tag {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+    color: #999; }
+  .top-tags .icon-home, .top-tags .icon-email {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -3px;
+    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    background-image: url(../icons/login/sprite.png);
+    background-position: -16px -18px; }
+  .top-tags .icon-email {
+    margin-top: -1px;
+    width: 16px;
+    height: 12px;
+    background-image: url(../icons/login/sprite.png);
+    background-position: 0px -34px; }
+  .top-tags .tag:hover {
+    color: #4496f9; }
+    .top-tags .tag:hover .icon-home, .top-tags .tag:hover .icon-email {
+      background-image: url(../icons/login/sprite.png);
+      background-position: -36px 0px; }
+    .top-tags .tag:hover .icon-email {
+      background-image: url(../icons/login/sprite.png);
+      background-position: -16px -34px; }
+
+.modal-mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  opacity: .80;
+  filter: alpha(opacity=80);
+  z-index: 999;
+  display: none; }
+
+.modal {
+  display: none;
+  padding-bottom: 40px;
+  z-index: 1000;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px; }
+  .modal.tisType {
+    padding: 0;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 4px; }
+    .modal.tisType .modal-bd {
+      padding: 0 30px;
+      height: 46px;
+      line-height: 46px;
+      text-align: center;
+      color: #fff;
+      font-size: 16px; }
+  .modal .modal-hd {
+    position: relative;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    background: #4496f9;
+    font-size: 12px;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
+    .modal .modal-hd .close {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      right: 10px;
+      top: 6px;
+      background-image: url(../icons/login/sprite.png);
+      background-position: 0px 0px;
+      cursor: pointer; }
+  .modal .modal-bd {
+    padding: 50px 50px 0; }
+  .modal .modal-ft {
+    height: 35px;
+    line-height: 35px;
+    text-align: center; }
+    .modal .modal-ft .btn-modal {
+      display: inline-block;
+      margin-left: 40px;
+      padding: 0 20px;
+      height: 24px;
+      line-height: 24px;
+      border: 1px solid #3187F1;
+      background: #3187F1;
+      cursor: pointer;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px; }
+      .modal .modal-ft .btn-modal:first-child {
+        margin-left: 0; }
+    .modal .modal-ft .btn-cancel {
+      color: #3187F1;
+      background: #fff; }
+
+.modal .modal-bd {
+  padding: 40px 40px 0; }
+
+.modal #loginPop {
+  display: block; }
+
+#loginPop {
+  width: 330px;
+  margin: 0 auto;
+  display: none; }
+  #loginPop #error-tips {
+    position: relative;
+    padding: 10px 10px 10px 45px;
+    border: 1px solid #f99;
+    background-color: #ffdbdb;
+    margin-bottom: 20px;
+    margin-top: -20px; }
+    #loginPop #error-tips .icon-error {
+      position: absolute;
+      top: 50%;
+      margin-top: -9px;
+      left: -30px;
+      width: 18px;
+      height: 18px;
+      background-image: url(../icons/login/sprite.png);
+      background-position: -18px 0px; }
+    #loginPop #error-tips .msg-wrap {
+      position: relative;
+      line-height: 18px;
+      color: #f66; }
+  #loginPop .form-item {
+    width: 330px;
+    height: 40px;
+    position: relative;
+    margin-bottom: 20px; }
+  #loginPop .form-item-code {
+    display: block;
+    height: auto; }
+    #loginPop .form-item-code input {
+      float: none; }
+  #loginPop .get-code {
+    display: inline-block;
+    width: 138px;
+    height: 58px;
+    background: #d7efff;
+    line-height: 58px;
+    text-align: center;
+    cursor: pointer;
+    color: #0099ff;
+    border: 1px solid #0099ff; }
+  #loginPop input, #loginPop .ipt-text {
+    float: left;
+    width: 328px;
+    padding: 0;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #d6d6d6;
+    text-indent: 18px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff; }
+  #loginPop .ipt-text {
+    color: #999; }
+  #loginPop .submit {
+    display: block;
+    width: 330px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    background: #0099ff;
+    font-weight: bold; }
+    #loginPop .submit:hover {
+      text-decoration: none; }
+  #loginPop .tips {
+    padding: 14px 0;
+    text-align: right;
+    height: 26px;
+    line-height: 26px;
+    color: #999; }
+    #loginPop .tips a {
+      color: #999;
+      padding: 0 8px; }
+      #loginPop .tips a:hover {
+        color: #4496f9; }
+  #loginPop .forgot-link {
+    display: block;
+    margin-top: -15px;
+    margin-bottom: 15px;
+    color: #76b1f9; }
+  #loginPop .free-link {
+    display: block;
+    text-align: center;
+    line-height: 24px;
+    color: #76b1f9;
+    margin-top: 10px; }
+  #loginPop .protocol {
+    width: 100%;
+    color: #666;
+    text-align: center;
+    line-height: 32px;
+    font-size: 12px; }
+    #loginPop .protocol a {
+      color: #0099ff; }
+
+.imgCode-wrap {
+  border: 1px solid #d6d6d6;
+  border-bottom: none;
+  padding: 8px; }
+  .imgCode-wrap #imgCode {
+    display: block;
+    margin: 0 auto;
+    width: 312px;
+    height: 57px; }
+
+body {
+  background: #f4f4f4; }
+
+.border-box, .form .msg-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+.tag-bar {
+  width: 900px;
+  margin: 20px auto 10px;
+  height: 58px;
+  line-height: 58px;
+  border-bottom: 1px solid #ccc; }
+  .tag-bar .tl {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333; }
+  .tag-bar .sign-link {
+    color: #4496f9;
+    font-size: 16px; }
+
+.form {
+  width: 350px;
+  margin: 0 auto 230px;
+  padding-top: 40px; }
+  .form .msg-box {
+    width: 350px;
+    padding: 10px 20px 10px 50px;
+    border: 1px solid #f99;
+    background-color: #ffdbdb; }
+    .form .msg-box .icon-error {
+      position: absolute;
+      top: 50%;
+      left: -30px;
+      margin-top: -9px;
+      width: 18px;
+      height: 18px;
+      background-image: url(../icons/login/sprite.png);
+      background-position: -18px 0px; }
+    .form .msg-box .msg-er {
+      position: relative;
+      line-height: 16px;
+      color: #f66;
+      font-size: 14px; }
+  .form #error-tips {
+    display: none;
+    position: relative;
+    margin-bottom: 15px; }
+    .form #error-tips .msg-box {
+      display: none; }
+    .form #error-tips.error {
+      display: block; }
+      .form #error-tips.error .msg-box {
+        display: block; }
+  .form .form-item {
+    width: 350px;
+    height: 45px;
+    position: relative;
+    margin-bottom: 15px; }
+  .form .form-item-code {
+    display: none;
+    height: auto;
+    background: #fff; }
+    .form .form-item-code input {
+      float: none; }
+  .form .get-code {
+    display: inline-block;
+    width: 138px;
+    height: 43px;
+    background: #d7efff;
+    line-height: 43px;
+    text-align: center;
+    cursor: pointer;
+    color: #0099ff;
+    border: 1px solid #0099ff; }
+  .form input, .form .ipt-text {
+    float: left;
+    width: 348px;
+    padding: 0;
+    height: 43px;
+    line-height: 43px;
+    border: 1px solid #d6d6d6;
+    text-indent: 18px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff; }
+  .form .ipt-text {
+    color: #999; }
+  .form .code-input {
+    width: 348px; }
+  .form .code-img {
+    position: absolute;
+    left: 190px;
+    top: 0;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    background: #d2e6fd;
+    border: none; }
+  .form .code-reload {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    background: url(icons/code-reload.png); }
+  .form .submit {
+    display: block;
+    width: 350px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-size: 14px;
+    background: #0099ff;
+    color: #fff;
+    font-weight: bold; }
+    .form .submit:hover {
+      text-decoration: none; }
+  .form .tips {
+    padding: 14px 0;
+    text-align: right;
+    height: 26px;
+    line-height: 26px;
+    color: #999; }
+    .form .tips a {
+      color: #999;
+      padding: 0 8px; }
+      .form .tips a:hover {
+        color: #4496f9; }
+  .form .forgot-link {
+    display: block;
+    text-align: center;
+    padding: 12px 0 8px;
+    color: #76b1f9;
+    font-size: 12px; }
+  .form .protocol {
+    width: 350px;
+    color: #666;
+    text-align: center;
+    font-size: 12px; }
+    .form .protocol a {
+      color: #0099ff; }
+
+.imgCode-wrap {
+  border: 1px solid #d6d6d6;
+  border-bottom: none;
+  padding: 8px; }
+  .imgCode-wrap #imgCode {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%; }
+
+.email-active {
+  color: #666;
+  width: 420px;
+  margin: 60px auto 0; }
+  .email-active .b-tips {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 26px; }
+    .email-active .b-tips b {
+      color: #ff7422; }
+  .email-active .tips {
+    font-size: 12px;
+    margin-top: 10px; }
+  .email-active .btns {
+    margin-top: 45px; }
+    .email-active .btns .send-agin {
+      display: inline-block;
+      vertical-align: top;
+      line-height: 35px;
+      color: #4496f9;
+      margin-left: 15px;
+      cursor: pointer; }
+  .email-active .btn-link {
+    display: inline-block;
+    vertical-align: top;
+    width: 150px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+    color: #fff;
+    background: #4496f9;
+    border-radius: 3px; }
